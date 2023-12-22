@@ -1,0 +1,4 @@
+name: Kingdoms
+version: '${project.version}'
+main: de.kuscheltiermafia.kingdoms.Main
+api-version: '1.20'
