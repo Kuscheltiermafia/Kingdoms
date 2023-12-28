@@ -18,7 +18,7 @@ public class DescendEvent implements Listener {
         //declare variables
         Player p = e.getPlayer();
 
-        if(Objects.equals(p.getItemInUse(), DESCEND_ITEM)){
+        if(Objects.equals(e.getItem(), DESCEND_ITEM)){
 
             //teleport
             LobbyTeleport.teleport(p);

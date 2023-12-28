@@ -23,8 +23,7 @@ public class AscendEvent implements Listener {
         //declare variables
         Player p = e.getPlayer();
 
-        if(Objects.equals(p.getItemInUse(), ASCEND_ITEM)){
-
+        if(Objects.equals(e.getItem(), ASCEND_ITEM)){
 
             //effects for transition
             PotionEffect fade1 = new PotionEffect(PotionEffectType.BLINDNESS, 60, 255, false, false, false);
@@ -36,7 +35,7 @@ public class AscendEvent implements Listener {
                 @Override
                 public void run() {
                     //teleport
-                    Location GodlyRealmLoc = new Location(p.getWorld(), 54.5, 11.00, 127.5);
+                    Location GodlyRealmLoc = new Location(p.getWorld(), 54.5, -39.00, 127.5);
                     p.teleport(GodlyRealmLoc);
 
                     //build inventory
