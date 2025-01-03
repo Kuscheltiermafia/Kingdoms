@@ -16,7 +16,6 @@ public final class Main extends JavaPlugin {
 
         plugin = this;
 
-        ItemHandler.createItems();
 
         Bukkit.getPluginManager().registerEvents(new AscendEvent(), this);
         Bukkit.getPluginManager().registerEvents(new DescendEvent(), this);

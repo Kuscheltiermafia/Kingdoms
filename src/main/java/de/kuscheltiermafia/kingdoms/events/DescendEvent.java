@@ -1,14 +1,11 @@
 package de.kuscheltiermafia.kingdoms.events;
 
+import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import de.kuscheltiermafia.kingdoms.teleports.LobbyTeleport;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-
-import java.util.Objects;
-
-import static de.kuscheltiermafia.kingdoms.items.ItemHandler.DESCEND_ITEM;
 
 public class DescendEvent implements Listener {
 
@@ -18,7 +15,7 @@ public class DescendEvent implements Listener {
         //declare variables
         Player p = e.getPlayer();
 
-        if(Objects.equals(e.getItem(), DESCEND_ITEM)){
+        if(ItemHandler.checkItemID(p.getItemInUse(), "descend_item")){
 
             //teleport
             LobbyTeleport.teleport(p);
