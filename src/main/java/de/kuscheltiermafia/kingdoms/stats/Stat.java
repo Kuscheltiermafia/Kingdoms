@@ -21,5 +21,7 @@ public enum Stat {
     Stat(String displayName, String icon) {
         this.displayName = displayName;
         this.icon = icon;
+
+        System.out.println("Loaded Stats")
     }
 }
