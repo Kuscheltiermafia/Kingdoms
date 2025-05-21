@@ -2,7 +2,6 @@ package de.kuscheltiermafia.kingdoms.inventories;
 
 import org.bukkit.entity.Player;
 
-import static de.kuscheltiermafia.kingdoms.items.ItemHandler.DESCEND_ITEM;
 import static de.kuscheltiermafia.kingdoms.items.ItemHandler.descend_item;
 
 public class GoldyRealmInv {

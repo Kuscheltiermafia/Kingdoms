@@ -20,15 +20,30 @@ public class ItemHandler {
 
     public static ItemStack ascend_item;
     public static ItemStack descend_item;
+    public static ItemStack spacer;
+    public static ItemStack page_up;
+    public static ItemStack page_down;
+    public static ItemStack no_page_up;
+    public static ItemStack no_page_down;
+    public static ItemStack placeholder;
 
     //Executing ItemMeta Assignments
     public static void innitItems(){
-        ascend_item = createItem(Material.ENDER_EYE, ChatColor.AQUA + "Ascend", "ascend_item", 1, null, true, false, false);
-        descend_item = createItem(Material.ENDER_PEARL, ChatColor.AQUA + "Ascend", "ascend_item", 1, null, true, false, false);
+        //lobby items
+        ascend_item = createItem(Material.ENDER_EYE, ChatColor.AQUA + "Ascend", "ascend_item", 1, null, true, false, false, true);
+        descend_item = createItem(Material.ENDER_PEARL, ChatColor.AQUA + "Descend", "descend_item", 1, null, true, false, false, true);
+
+        //debug
+        spacer = createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " ", "spacer", 1, null, false, true, false, false);
+        page_up = createItem(Material.ARROW, "§4Next Page", "page_up_indicator", 1, null, false, false, false, false);
+        page_down = createItem(Material.ARROW, "§4Previous Page", "page_down_indicator", 1, null, false, false, false, false);
+        no_page_down = createItem(Material.BARRIER, "§4No previous Page available", "page_up_indicator", 1, null, false, false, false, false);
+        no_page_up = createItem(Material.BARRIER, "§4No next Page available", "no_page_up_indicator", 1, null, false, false, false, false);
+        placeholder = createItem(Material.STRUCTURE_VOID, "§5§l§kA§r§7 PLACEHOLDER §r§5§l§kA", "placeholder", 1, null, true, false, false, true);
     }
 
     //Assigning ItemMeta
-    public static ItemStack createItem(Material material, String name, String id, int stackSize, @Nullable List<String> lore, boolean glint, boolean hideTooltip, boolean hideAdditionalTooltip) {
+    public static ItemStack createItem(Material material, String name, String id, int stackSize, @Nullable List<String> lore, boolean glint, boolean hideTooltip, boolean hideAdditionalTooltip, boolean visible) {
 
         ItemStack genItem = new ItemStack(material);
         ItemMeta meta = genItem.getItemMeta();
@@ -46,7 +61,16 @@ public class ItemHandler {
 
         genItem.setItemMeta(meta);
 
-        itemList.add(genItem);
+        if(visible) {
+            itemList.add(genItem);
+        }
+
+        for(int i = 0; i < itemList.size(); i++) {
+            if (itemList.get(i).getItemMeta().getPersistentDataContainer().get(ID, PersistentDataType.STRING).equals(id)) {
+                System.out.println("Item with ID " + id + " already exists in itemList. Replacing it with " + id + ".");
+            }
+        }
+
         return genItem;
     }
 
