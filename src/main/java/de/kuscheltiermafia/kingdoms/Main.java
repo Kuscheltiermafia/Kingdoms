@@ -1,7 +1,9 @@
 package de.kuscheltiermafia.kingdoms;
 
+import de.kuscheltiermafia.kingdoms.debug.ItemList;
 import de.kuscheltiermafia.kingdoms.events.AscendEvent;
 import de.kuscheltiermafia.kingdoms.events.DescendEvent;
+import de.kuscheltiermafia.kingdoms.events.InventoryEvents;
 import de.kuscheltiermafia.kingdoms.events.JoinEvent;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import org.bukkit.Bukkit;
@@ -16,10 +18,14 @@ public final class Main extends JavaPlugin {
 
         plugin = this;
 
+        ItemHandler.innitItems();
 
         Bukkit.getPluginManager().registerEvents(new AscendEvent(), this);
         Bukkit.getPluginManager().registerEvents(new DescendEvent(), this);
         Bukkit.getPluginManager().registerEvents(new JoinEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryEvents(), this);
+
+        getCommand("itemlist").setExecutor(new ItemList());
 
     }
 

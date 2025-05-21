@@ -15,10 +15,10 @@ public class DescendEvent implements Listener {
         //declare variables
         Player p = e.getPlayer();
 
-        if(ItemHandler.checkItemID(p.getItemInUse(), "descend_item")){
-
+        if(ItemHandler.checkItemID(p.getItemInHand(), "descend_item")){
             //teleport
             LobbyTeleport.teleport(p);
+            e.setCancelled(true);
 
         }
 

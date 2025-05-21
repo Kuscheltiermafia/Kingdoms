@@ -14,7 +14,7 @@ public class LobbyTeleport {
 
         //effects for transition
         PotionEffect fade1 = new PotionEffect(PotionEffectType.BLINDNESS, 60, 255, false, false, false);
-        PotionEffect fade2 = new PotionEffect(PotionEffectType.SLOW, 40, 255, false, false, false);
+        PotionEffect fade2 = new PotionEffect(PotionEffectType.SLOWNESS, 40, 255, false, false, false);
         p.addPotionEffect(fade1);
         p.addPotionEffect(fade2);
 
@@ -32,7 +32,6 @@ public class LobbyTeleport {
             }
         }.runTaskLater(Main.getPlugin(), 30);
 
-        //TODO Different lobbies for different ages
     }
 
 }

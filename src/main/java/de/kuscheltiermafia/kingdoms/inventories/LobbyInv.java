@@ -2,7 +2,7 @@ package de.kuscheltiermafia.kingdoms.inventories;
 
 import org.bukkit.entity.Player;
 
-import static de.kuscheltiermafia.kingdoms.items.ItemHandler.ASCEND_ITEM;
+import static de.kuscheltiermafia.kingdoms.items.ItemHandler.ascend_item;
 
 public class LobbyInv {
 
@@ -12,7 +12,7 @@ public class LobbyInv {
         p.getInventory().clear();
 
         //build inventory
-        p.getInventory().setItem(2, ASCEND_ITEM);
+        p.getInventory().setItem(2, ascend_item);
 
     }
 
