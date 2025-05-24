@@ -1,6 +1,6 @@
 package de.kuscheltiermafia.kingdoms.items;
 
-import de.kuscheltiermafia.kingdoms.Main;
+import de.kuscheltiermafia.kingdoms.Kingdoms;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -10,13 +10,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nullable;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemHandler {
 
-    public static NamespacedKey ID = new NamespacedKey(Main.getPlugin(), "ID");
+    public static NamespacedKey ID = new NamespacedKey(Kingdoms.getPlugin(), "ID");
     public static ArrayList<ItemStack> itemList = new ArrayList<>();
 
     public static ItemStack ascend_item;

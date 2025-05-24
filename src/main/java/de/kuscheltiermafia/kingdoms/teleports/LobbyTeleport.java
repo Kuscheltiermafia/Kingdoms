@@ -1,6 +1,6 @@
 package de.kuscheltiermafia.kingdoms.teleports;
 
-import de.kuscheltiermafia.kingdoms.Main;
+import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.inventories.LobbyInv;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -14,7 +14,7 @@ public class LobbyTeleport {
 
         //effects for transition
         PotionEffect fade1 = new PotionEffect(PotionEffectType.BLINDNESS, 60, 255, false, false, false);
-        PotionEffect fade2 = new PotionEffect(PotionEffectType.SLOW, 40, 255, false, false, false);
+        PotionEffect fade2 = new PotionEffect(PotionEffectType.SLOWNESS, 40, 255, false, false, false);
         p.addPotionEffect(fade1);
         p.addPotionEffect(fade2);
 
@@ -28,9 +28,9 @@ public class LobbyTeleport {
                 p.teleport(PortalLoc);
 
                 //build inventory
-                LobbyInv.buildInv(p);
+//                LobbyInv.buildInv(p);
             }
-        }.runTaskLater(Main.getPlugin(), 30);
+        }.runTaskLater(Kingdoms.getPlugin(), 30);
 
         //TODO Different lobbies for different ages
     }
