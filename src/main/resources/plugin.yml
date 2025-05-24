@@ -5,4 +5,5 @@ api-version: '1.21'
 commands:
   itemlist:
     description: List all items in the Kingdoms plugin
-    usage: /itemlist
+  getstats:
+    description: Get the stats of a player
