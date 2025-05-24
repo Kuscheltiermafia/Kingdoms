@@ -1,8 +1,0 @@
-name: Kingdoms
-version: '1.0-SNAPSHOT'
-main: de.kuscheltiermafia.kingdoms.Main
-api-version: '1.21'
-commands:
-  itemlist:
-    description: List all items in the Kingdoms plugin
-    usage: /itemlist
