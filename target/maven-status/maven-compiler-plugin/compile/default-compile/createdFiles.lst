@@ -6,9 +6,13 @@ de\kuscheltiermafia\kingdoms\events\DescendEvent.class
 de\kuscheltiermafia\kingdoms\teleports\LobbyTeleport.class
 de\kuscheltiermafia\kingdoms\stats\Stat.class
 de\kuscheltiermafia\kingdoms\events\AscendEvent$1.class
+de\kuscheltiermafia\kingdoms\debug\GetStats.class
 de\kuscheltiermafia\kingdoms\teleports\LobbyTeleport$1.class
 de\kuscheltiermafia\kingdoms\debug\ItemList.class
 de\kuscheltiermafia\kingdoms\stats\Calculator.class
 de\kuscheltiermafia\kingdoms\events\JoinEvent.class
+de\kuscheltiermafia\kingdoms\stats\PlayerStatModel.class
+de\kuscheltiermafia\kingdoms\items\ItemStats.class
+de\kuscheltiermafia\kingdoms\stats\UpdatePlayerStats.class
 de\kuscheltiermafia\kingdoms\events\AscendEvent.class
 de\kuscheltiermafia\kingdoms\inventories\LobbyInv.class

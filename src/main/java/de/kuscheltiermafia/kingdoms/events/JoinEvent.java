@@ -1,5 +1,8 @@
 package de.kuscheltiermafia.kingdoms.events;
 
+import de.kuscheltiermafia.kingdoms.Main;
+import de.kuscheltiermafia.kingdoms.stats.PlayerStatModel;
+import de.kuscheltiermafia.kingdoms.stats.UpdatePlayerStats;
 import de.kuscheltiermafia.kingdoms.teleports.LobbyTeleport;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,6 +19,14 @@ public class JoinEvent implements Listener {
 
         //teleport to lobby
         LobbyTeleport.teleport(p);
+
+        //checkStats
+        if(!Main.playerStatModelIdentifier.containsKey(p)) {
+            Main.playerStatModelIdentifier.put(p, new PlayerStatModel(20f, 0f, 10f, 2f, 0.05f, 1f, 4f, 4f, 0.1f, 0f, 1f, 0f, 0f));
+            UpdatePlayerStats.updatePlayerStats(p);
+        }else{
+            UpdatePlayerStats.updatePlayerStats(p);
+        }
 
     }
 
