@@ -1,7 +1,6 @@
-package de.kuscheltiermafia.kingdoms.items;
+package de.kuscheltiermafia.kingdoms.data;
 
 import de.kuscheltiermafia.kingdoms.Kingdoms;
-import de.kuscheltiermafia.kingdoms.data.PlayerStats;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;

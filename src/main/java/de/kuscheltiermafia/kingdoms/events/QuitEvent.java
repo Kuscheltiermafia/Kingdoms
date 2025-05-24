@@ -1,7 +1,7 @@
 package de.kuscheltiermafia.kingdoms.events;
 
 import de.kuscheltiermafia.kingdoms.data.PlayerStats;
-import de.kuscheltiermafia.kingdoms.items.PlayerUtility;
+import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

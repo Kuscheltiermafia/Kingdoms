@@ -1,7 +1,7 @@
 package de.kuscheltiermafia.kingdoms.events;
 
 import de.kuscheltiermafia.kingdoms.data.PlayerStats;
-import de.kuscheltiermafia.kingdoms.items.PlayerUtility;
+import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
 import de.kuscheltiermafia.kingdoms.teleports.LobbyTeleport;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
