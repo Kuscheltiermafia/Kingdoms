@@ -48,7 +48,38 @@ public class PlayerStatModel {
         this.spellbound = 0f;
     }
 
-
+    public float getStat(Stat stat) {
+        switch (stat) {
+            case HEALTH:
+                return health;
+            case DEFENSE:
+                return defense;
+            case INTELLIGENCE:
+                return intelligence;
+            case MANA_REGENERATION:
+                return manaRegeneration;
+            case CRIT_CHANCE:
+                return critChance;
+            case CRIT_DAMAGE:
+                return critDamage;
+            case DAMAGE:
+                return damage;
+            case STRENGTH:
+                return strength;
+            case SPEED:
+                return speed;
+            case LUCK:
+                return luck;
+            case BREAKING_SPEED:
+                return breakingSpeed;
+            case FORTUNE:
+                return fortune;
+            case SPELLBOUND:
+                return spellbound;
+            default:
+                throw new IllegalArgumentException("Unknown stat: " + stat);
+        }
+    }
 
     public float getHealth() {
         return health;

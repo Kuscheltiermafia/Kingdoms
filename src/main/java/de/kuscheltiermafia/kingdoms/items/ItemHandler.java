@@ -25,6 +25,7 @@ public class ItemHandler {
     public static ItemStack iron_sword;
 
     public static ItemStack focken;
+    public static ItemStack toe;
 
     //Debug Items
     public static ItemStack spacer;
@@ -48,9 +49,13 @@ public class ItemHandler {
         focken_lore.add("§7- " + ChatColor.LIGHT_PURPLE + "Fantastisches orientiertes cooles kurioses entanguliertes Neutron" + "§7 -");
         focken_lore.add("§7oder kurz, FOCKEN!");
         focken_lore.add("§7Keine Ahnung was das ist...");
-
         focken = createItem(Material.DARK_OAK_BUTTON, ChatColor.LIGHT_PURPLE + "Focken", "focken", 1, focken_lore, true, false, false, true);
         ItemStats.addItemStats(focken, 0f, 0f, 999999f, 999999f, 0f, 0f, 0f, 0f, 0f, 696969f, 0f, 0f, 999999f);
+
+        ArrayList<String> toe_lore = new ArrayList<String>();
+        toe_lore.add(ChatColor.GRAY + "The key to unlimited power!");
+        toe_lore.add(ChatColor.GRAY + "Cou§kl§r§7d des§kt§r§7roy the k§kno§r§7wn univ§ker§r§7se...");
+        toe = createItem(Material.BOOK, ChatColor.LIGHT_PURPLE + "Tome of Eras", "tome_of_eras", 1, toe_lore, true, false, false, true);
 
         //debug
         spacer = createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " ", "spacer", 1, null, false, true, false, false);
@@ -73,6 +78,7 @@ public class ItemHandler {
         meta.setLore(lore);
         meta.setEnchantmentGlintOverride(glint);
         meta.setHideTooltip(hideTooltip);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
         if (hideAdditionalTooltip) {
             meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
@@ -82,12 +88,6 @@ public class ItemHandler {
 
         if(visible) {
             itemList.add(genItem);
-        }
-
-        for(int i = 0; i < itemList.size(); i++) {
-            if (itemList.get(i).getItemMeta().getPersistentDataContainer().get(ID, PersistentDataType.STRING).equals(id)) {
-                System.out.println("Item with ID " + id + " already exists in itemList. Replacing it with " + id + ".");
-            }
         }
 
         return genItem;

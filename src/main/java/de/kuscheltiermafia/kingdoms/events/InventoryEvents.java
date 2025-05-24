@@ -16,7 +16,7 @@ public class InventoryEvents implements Listener {
     public void onInventoryClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
         try {
-            if (e.getCurrentItem().equals(ItemHandler.spacer)) {
+            if (ItemHandler.checkItemID(e.getCurrentItem(), "spacer") || ItemHandler.checkItemID(e.getCurrentItem(), "placeholder")) {
                 e.setCancelled(true);
             }else if(e.getCurrentItem().equals(ItemHandler.page_up)) {
                 e.setCancelled(true);

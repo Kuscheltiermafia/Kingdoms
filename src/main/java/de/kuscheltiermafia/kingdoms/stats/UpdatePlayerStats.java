@@ -1,6 +1,6 @@
 package de.kuscheltiermafia.kingdoms.stats;
 
-import de.kuscheltiermafia.kingdoms.Main;
+import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import de.kuscheltiermafia.kingdoms.items.ItemStats;
 import org.bukkit.entity.Player;
@@ -25,7 +25,7 @@ public class UpdatePlayerStats {
     }
 
     public static void updatePlayerStats(Player p) {
-        PlayerStatModel playerStatModel = Main.playerStatModelIdentifier.get(p);
+        PlayerStatModel playerStatModel = Kingdoms.playerStatModelIdentifier.get(p);
         initPlayerStatSlots(p);
         playerStatModel.resetStats();
 

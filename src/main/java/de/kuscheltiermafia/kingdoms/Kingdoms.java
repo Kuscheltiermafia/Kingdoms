@@ -29,6 +29,7 @@ public final class Kingdoms extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new JoinEvent(), this);
         Bukkit.getPluginManager().registerEvents(new QuitEvent(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryEvents(), this);
+        Bukkit.getPluginManager().registerEvents(new TomeOfErasEvents(), this);
 
         getCommand("itemlist").setExecutor(new ItemList());
         getCommand("getstats").setExecutor(new GetStats());
