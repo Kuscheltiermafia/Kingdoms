@@ -32,7 +32,6 @@ public class LobbyTeleport {
             }
         }.runTaskLater(Kingdoms.getPlugin(), 30);
 
-        //TODO Different lobbies for different ages
     }
 
 }

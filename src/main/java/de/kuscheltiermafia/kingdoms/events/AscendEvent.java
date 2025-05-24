@@ -20,7 +20,9 @@ public class AscendEvent implements Listener {
         //declare variables
         Player p = e.getPlayer();
 
-        if(ItemHandler.checkItemID(p.getItemInUse(), "ascend_item")){
+        if(ItemHandler.checkItemID(p.getItemInHand(), "ascend_item")){
+
+            e.setCancelled(true);
 
             //effects for transition
             PotionEffect fade1 = new PotionEffect(PotionEffectType.BLINDNESS, 60, 255, false, false, false);
