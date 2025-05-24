@@ -4,6 +4,7 @@ import de.kuscheltiermafia.kingdoms.Kingdoms;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -20,6 +21,12 @@ public class ItemHandler {
 
     public static ItemStack ascend_item;
     public static ItemStack descend_item;
+
+    public static ItemStack iron_sword;
+
+    public static ItemStack focken;
+
+    //Debug Items
     public static ItemStack spacer;
     public static ItemStack page_up;
     public static ItemStack page_down;
@@ -32,6 +39,18 @@ public class ItemHandler {
         //lobby items
         ascend_item = createItem(Material.ENDER_EYE, ChatColor.AQUA + "Ascend", "ascend_item", 1, null, true, false, false, true);
         descend_item = createItem(Material.ENDER_PEARL, ChatColor.AQUA + "Descend", "descend_item", 1, null, true, false, false, true);
+
+        //weapons
+        iron_sword = createItem(Material.IRON_SWORD, ChatColor.WHITE + "Iron Sword", "iron_sword", 1, null, true, false, false, true);
+        ItemStats.addItemStats(iron_sword, 0f, 0f, 20000f, 0f, 0f, 0f, 20000f, 20000f, 0f, 0f, 0f, 0f, 0f);
+
+        ArrayList<String> focken_lore = new ArrayList<String>();
+        focken_lore.add("§7- " + ChatColor.LIGHT_PURPLE + "Fantastisches orientiertes cooles kurioses entanguliertes Neutron" + "§7 -");
+        focken_lore.add("§7oder kurz, FOCKEN!");
+        focken_lore.add("§7Keine Ahnung was das ist...");
+
+        focken = createItem(Material.DARK_OAK_BUTTON, ChatColor.LIGHT_PURPLE + "Focken", "focken", 1, focken_lore, true, false, false, true);
+        ItemStats.addItemStats(focken, 0f, 0f, 999999f, 999999f, 0f, 0f, 0f, 0f, 0f, 696969f, 0f, 0f, 999999f);
 
         //debug
         spacer = createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " ", "spacer", 1, null, false, true, false, false);
@@ -87,10 +106,22 @@ public class ItemHandler {
     }
 
     public static boolean checkItemID(ItemStack item, String id) {
-        if(item.getItemMeta().getPersistentDataContainer().get(ItemHandler.ID, PersistentDataType.STRING).equals(id)) {
-            return true;
-        }else{
+        try {
+            if (item.getItemMeta().getPersistentDataContainer().get(ItemHandler.ID, PersistentDataType.STRING).equals(id)) {
+                return true;
+            } else {
+                return false;
+            }
+        }catch (Exception e) {
             return false;
+        }
+    }
+
+    public static String getItemID(ItemStack item) {
+        try {
+            return item.getItemMeta().getPersistentDataContainer().get(ID, PersistentDataType.STRING);
+        }catch (Exception ignored) {
+            return "null";
         }
     }
 
