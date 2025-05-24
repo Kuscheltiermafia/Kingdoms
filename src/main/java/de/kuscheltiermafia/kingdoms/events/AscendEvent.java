@@ -1,6 +1,6 @@
 package de.kuscheltiermafia.kingdoms.events;
 
-import de.kuscheltiermafia.kingdoms.Main;
+import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.inventories.GoldyRealmInv;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import org.bukkit.Location;
@@ -38,10 +38,10 @@ public class AscendEvent implements Listener {
                     p.teleport(GodlyRealmLoc);
 
                     //build inventory
-                    GoldyRealmInv.buildInv(p);
+//                    GoldyRealmInv.buildInv(p);
 
                 }
-            }.runTaskLater(Main.getPlugin(), 30);
+            }.runTaskLater(Kingdoms.getPlugin(), 30);
 
         }
     }

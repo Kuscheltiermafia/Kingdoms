@@ -1,6 +1,6 @@
 package de.kuscheltiermafia.kingdoms.teleports;
 
-import de.kuscheltiermafia.kingdoms.Main;
+import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.inventories.LobbyInv;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -28,9 +28,9 @@ public class LobbyTeleport {
                 p.teleport(PortalLoc);
 
                 //build inventory
-                LobbyInv.buildInv(p);
+//                LobbyInv.buildInv(p);
             }
-        }.runTaskLater(Main.getPlugin(), 30);
+        }.runTaskLater(Kingdoms.getPlugin(), 30);
 
     }
 

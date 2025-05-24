@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import static de.kuscheltiermafia.kingdoms.items.ItemHandler.ascend_item;
 
 public class LobbyInv {
-
+/*
     public static void buildInv(Player p){
 
         //reset inventory
@@ -15,5 +15,5 @@ public class LobbyInv {
         p.getInventory().setItem(2, ascend_item);
 
     }
-
+*/
 }
