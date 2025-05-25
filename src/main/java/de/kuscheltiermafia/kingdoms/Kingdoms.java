@@ -1,6 +1,10 @@
 package de.kuscheltiermafia.kingdoms;
 
+import co.aikar.commands.PaperCommandManager;
+import de.kuscheltiermafia.kingdoms.building.StructureHandler;
+import de.kuscheltiermafia.kingdoms.debug.GetCellCommand;
 import de.kuscheltiermafia.kingdoms.debug.ItemList;
+import de.kuscheltiermafia.kingdoms.debug.StructureCommand;
 import de.kuscheltiermafia.kingdoms.events.AscendEvent;
 import de.kuscheltiermafia.kingdoms.events.DescendEvent;
 import de.kuscheltiermafia.kingdoms.events.InventoryEvents;
@@ -8,7 +12,12 @@ import de.kuscheltiermafia.kingdoms.events.JoinEvent;
 import de.kuscheltiermafia.kingdoms.events.QuitEvent;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.structure.Structure;
+
+import java.io.File;
+import java.io.IOException;
 
 public final class Kingdoms extends JavaPlugin {
 
@@ -29,6 +38,9 @@ public final class Kingdoms extends JavaPlugin {
 
         getCommand("itemlist").setExecutor(new ItemList());
 
+        PaperCommandManager manager = new PaperCommandManager(this);
+        manager.registerCommand(new StructureCommand());
+        manager.registerCommand(new GetCellCommand());
     }
 
     @Override
