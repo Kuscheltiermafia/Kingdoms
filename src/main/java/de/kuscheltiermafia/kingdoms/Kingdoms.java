@@ -1,5 +1,7 @@
 package de.kuscheltiermafia.kingdoms;
 
+import de.kuscheltiermafia.kingdoms.data.PlayerStats;
+import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
 import de.kuscheltiermafia.kingdoms.debug.GetStats;
 import de.kuscheltiermafia.kingdoms.debug.ItemList;
 import de.kuscheltiermafia.kingdoms.events.*;
@@ -10,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.HashMap;
 
 public final class Kingdoms extends JavaPlugin {
@@ -37,6 +40,17 @@ public final class Kingdoms extends JavaPlugin {
         for(Player p : Bukkit.getOnlinePlayers()) {
             playerStatModelIdentifier.put(p, new PlayerStatModel(20f, 0f, 10f, 2f, 0.05f, 1f, 4f, 4f, 0.1f, 0f, 1f, 0f, 0f));
             UpdatePlayerStats.updatePlayerStats(p);
+        }
+
+        for(Player p : Bukkit.getOnlinePlayers()) {
+            PlayerStats image = new PlayerStats();
+            File file = new File(PlayerUtility.getFolderPath(p) + "stats.yml");
+
+            if (file.exists()) {
+                image.loadStats(file);
+            }
+
+            PlayerUtility.setPlayerImage(p, image);
         }
 
     }

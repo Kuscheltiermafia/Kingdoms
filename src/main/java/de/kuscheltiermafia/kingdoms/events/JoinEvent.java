@@ -4,7 +4,7 @@ import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.stats.PlayerStatModel;
 import de.kuscheltiermafia.kingdoms.stats.UpdatePlayerStats;
 import de.kuscheltiermafia.kingdoms.data.PlayerStats;
-import de.kuscheltiermafia.kingdoms.items.PlayerUtility;
+import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
 import de.kuscheltiermafia.kingdoms.teleports.LobbyTeleport;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

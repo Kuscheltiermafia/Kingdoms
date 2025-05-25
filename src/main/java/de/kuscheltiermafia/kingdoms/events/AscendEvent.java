@@ -4,6 +4,7 @@ import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.inventories.GoldyRealmInv;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import de.kuscheltiermafia.kingdoms.menus.TomeOfEras;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -58,7 +59,7 @@ public class AscendEvent implements Listener {
         Player p = (Player) e.getWhoClicked();
 
         try {
-            if (ItemHandler.checkItemID(e.getCurrentItem(), "ascend_item")) {
+            if (ItemHandler.checkItemID(e.getCurrentItem(), "ascend_item") && p.getOpenInventory().getTitle().equals(ChatColor.LIGHT_PURPLE + "Tome of Eras")) {
 
                 e.setCancelled(true);
                 godlyRealm.put(p, true);

@@ -4,6 +4,7 @@ import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import de.kuscheltiermafia.kingdoms.menus.TomeOfEras;
 import de.kuscheltiermafia.kingdoms.teleports.LobbyTeleport;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,7 +39,7 @@ public class DescendEvent implements Listener {
         Player p = (Player) e.getWhoClicked();
 
         try {
-            if (ItemHandler.checkItemID(e.getCurrentItem(), "descend_item")) {
+            if (ItemHandler.checkItemID(e.getCurrentItem(), "descend_item") && p.getOpenInventory().getTitle().equals(ChatColor.LIGHT_PURPLE + "Tome of Eras")) {
                 e.setCancelled(true);
                 AscendEvent.godlyRealm.put(p, false);
                 LobbyTeleport.teleport(p);
