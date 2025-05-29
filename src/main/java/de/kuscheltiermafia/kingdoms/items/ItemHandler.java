@@ -4,6 +4,7 @@ import de.kuscheltiermafia.kingdoms.Kingdoms;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -20,6 +21,13 @@ public class ItemHandler {
 
     public static ItemStack ascend_item;
     public static ItemStack descend_item;
+
+    public static ItemStack iron_sword;
+
+    public static ItemStack focken;
+    public static ItemStack toe;
+
+    //Debug Items
     public static ItemStack spacer;
     public static ItemStack page_up;
     public static ItemStack page_down;
@@ -32,6 +40,22 @@ public class ItemHandler {
         //lobby items
         ascend_item = createItem(Material.ENDER_EYE, ChatColor.AQUA + "Ascend", "ascend_item", 1, null, true, false, false, true);
         descend_item = createItem(Material.ENDER_PEARL, ChatColor.AQUA + "Descend", "descend_item", 1, null, true, false, false, true);
+
+        //weapons
+        iron_sword = createItem(Material.IRON_SWORD, ChatColor.WHITE + "Iron Sword", "iron_sword", 1, null, true, false, false, true);
+        ItemStats.addItemStats(iron_sword, 0f, 0f, 20000f, 0f, 0f, 0f, 20000f, 20000f, 0f, 0f, 0f, 0f, 0f);
+
+        ArrayList<String> focken_lore = new ArrayList<String>();
+        focken_lore.add("§7- " + ChatColor.LIGHT_PURPLE + "Fantastisches orientiertes cooles kurioses entanguliertes Neutron" + "§7 -");
+        focken_lore.add("§7oder kurz, FOCKEN!");
+        focken_lore.add("§7Keine Ahnung was das ist...");
+        focken = createItem(Material.DARK_OAK_BUTTON, ChatColor.LIGHT_PURPLE + "Focken", "focken", 1, focken_lore, true, false, false, true);
+        ItemStats.addItemStats(focken, 0f, 0f, 999999f, 999999f, 0f, 0f, 0f, 0f, 0f, 696969f, 0f, 0f, 999999f);
+
+        ArrayList<String> toe_lore = new ArrayList<String>();
+        toe_lore.add(ChatColor.GRAY + "The key to unlimited power!");
+        toe_lore.add(ChatColor.GRAY + "Cou§kl§r§7d des§kt§r§7roy the k§kno§r§7wn univ§ker§r§7se...");
+        toe = createItem(Material.BOOK, ChatColor.LIGHT_PURPLE + "Tome of Eras", "tome_of_eras", 1, toe_lore, true, false, false, true);
 
         //debug
         spacer = createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " ", "spacer", 1, null, false, true, false, false);
@@ -54,6 +78,7 @@ public class ItemHandler {
         meta.setLore(lore);
         meta.setEnchantmentGlintOverride(glint);
         meta.setHideTooltip(hideTooltip);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
         if (hideAdditionalTooltip) {
             meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
@@ -63,12 +88,6 @@ public class ItemHandler {
 
         if(visible) {
             itemList.add(genItem);
-        }
-
-        for(int i = 0; i < itemList.size(); i++) {
-            if (itemList.get(i).getItemMeta().getPersistentDataContainer().get(ID, PersistentDataType.STRING).equals(id)) {
-                System.out.println("Item with ID " + id + " already exists in itemList. Replacing it with " + id + ".");
-            }
         }
 
         return genItem;
@@ -87,10 +106,22 @@ public class ItemHandler {
     }
 
     public static boolean checkItemID(ItemStack item, String id) {
-        if(item.getItemMeta().getPersistentDataContainer().get(ItemHandler.ID, PersistentDataType.STRING).equals(id)) {
-            return true;
-        }else{
+        try {
+            if (item.getItemMeta().getPersistentDataContainer().get(ItemHandler.ID, PersistentDataType.STRING).equals(id)) {
+                return true;
+            } else {
+                return false;
+            }
+        }catch (Exception e) {
             return false;
+        }
+    }
+
+    public static String getItemID(ItemStack item) {
+        try {
+            return item.getItemMeta().getPersistentDataContainer().get(ID, PersistentDataType.STRING);
+        }catch (Exception ignored) {
+            return "null";
         }
     }
 

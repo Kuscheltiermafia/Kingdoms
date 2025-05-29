@@ -52,7 +52,7 @@ public class ItemList implements CommandExecutor {
             itemList.setItem(2, new ItemStack(ItemHandler.page_up));
         }else{itemList.setItem(2, new ItemStack(ItemHandler.no_page_up));}
 
-        itemList.setItem(1, new ItemStack(ItemHandler.createItem(Material.BOOK, ChatColor.DARK_RED + "Current Page: " + itemListPage.get(user), "current_page_indicator", 1, null, false, false, false, false)));
+        itemList.setItem(1, new ItemStack(ItemHandler.createItem(Material.BOOK, ChatColor.DARK_RED + "Current Page: " + (itemListPage.get(user) + 1), "current_page_indicator", 1, null, false, false, false, false)));
 
         for(int i = 0; i < spacers.length; i++) {
             int slot = spacers[i];

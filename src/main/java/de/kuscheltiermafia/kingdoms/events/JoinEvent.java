@@ -1,5 +1,8 @@
 package de.kuscheltiermafia.kingdoms.events;
 
+import de.kuscheltiermafia.kingdoms.Kingdoms;
+import de.kuscheltiermafia.kingdoms.stats.PlayerStatModel;
+import de.kuscheltiermafia.kingdoms.stats.UpdatePlayerStats;
 import de.kuscheltiermafia.kingdoms.data.PlayerStats;
 import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
 import de.kuscheltiermafia.kingdoms.teleports.LobbyTeleport;
@@ -30,6 +33,14 @@ public class JoinEvent implements Listener {
         }
 
         PlayerUtility.setPlayerImage(player, image);
+
+        //checkStats
+        if(!Kingdoms.playerStatModelIdentifier.containsKey(player)) {
+            Kingdoms.playerStatModelIdentifier.put(player, new PlayerStatModel(20f, 0f, 10f, 2f, 0.05f, 1f, 4f, 4f, 0.1f, 0f, 1f, 0f, 0f));
+            UpdatePlayerStats.updatePlayerStats(player);
+        }else{
+            UpdatePlayerStats.updatePlayerStats(player);
+        }
 
     }
 

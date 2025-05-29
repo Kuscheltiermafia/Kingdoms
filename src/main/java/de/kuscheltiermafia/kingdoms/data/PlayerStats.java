@@ -1,5 +1,6 @@
 package de.kuscheltiermafia.kingdoms.data;
 
+import de.kuscheltiermafia.kingdoms.skills.Skill;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -93,6 +94,163 @@ public class PlayerStats {
         this.setHuntingLevel(config.getInt("Hunting.Level"));
         this.setHuntingXP(config.getDouble("Hunting.XP"));
 
+    }
+
+    public double getValueBySkill(Skill skill, boolean asXP) {
+        switch (skill) {
+            case COMBAT:
+                if (asXP) {
+                    return combatXP;
+                }else{
+                    return combatLevel;
+                }
+            case MINING:
+                if (asXP) {
+                    return miningXP;
+                }else{
+                    return miningLevel;
+                }
+            case FORAGING:
+                if (asXP) {
+                    return foragingXP;
+                }else{
+                    return foragingLevel;
+                }
+            case ENCHANTING:
+                if (asXP) {
+                    return enchantingXP;
+                }else{
+                    return enchantingLevel;
+                }
+            case FARMING:
+                if (asXP) {
+                    return farmingXP;
+                }else{
+                    return farmingLevel;
+                }
+            case FISHING:
+                if (asXP) {
+                    return fishingXP;
+                }else{
+                    return fishingLevel;
+                }
+            case BUILDING:
+                if (asXP) {
+                    return buildingXP;
+                }else{
+                    return buildingLevel;
+                }
+            case ALCHEMY:
+                if (asXP) {
+                    return alchemyXP;
+                }else{
+                    return alchemyLevel;
+                }
+            case WIZARDRY:
+                if (asXP) {
+                    return wizardryXP;
+                }else{
+                    return wizardryLevel;
+                }
+            case TINKERING:
+                if (asXP) {
+                    return tinkeringXP;
+                }else{
+                    return tinkeringLevel;
+                }
+            case HUNTING:
+                if (asXP) {
+                    return huntingXP;
+                }else{
+                    return huntingLevel;
+                }
+            default:
+                throw new IllegalArgumentException("Unknown skill: " + skill);
+        }
+    }
+
+    public void setValueBySkill(Skill skill, double value, boolean asXP) {
+        switch (skill) {
+            case COMBAT:
+                if (asXP) {
+                    this.setCombatXP(value);
+                } else {
+                    this.setCombatLevel((int) value);
+                }
+                break;
+            case MINING:
+                if (asXP) {
+                    this.setMiningXP(value);
+                } else {
+                    this.setMiningLevel((int) value);
+                }
+                break;
+            case FORAGING:
+                if (asXP) {
+                    this.setForagingXP(value);
+                } else {
+                    this.setForagingLevel((int) value);
+                }
+                break;
+            case ENCHANTING:
+                if (asXP) {
+                    this.setEnchantingXP(value);
+                } else {
+                    this.setEnchantingLevel((int) value);
+                }
+                break;
+            case FARMING:
+                if (asXP) {
+                    this.setFarmingXP(value);
+                } else {
+                    this.setFarmingLevel((int) value);
+                }
+                break;
+            case FISHING:
+                if (asXP) {
+                    this.setFishingXP(value);
+                } else {
+                    this.setFishingLevel((int) value);
+                }
+                break;
+            case BUILDING:
+                if (asXP) {
+                    this.setBuildingXP(value);
+                } else {
+                    this.setBuildingLevel((int) value);
+                }
+                break;
+            case ALCHEMY:
+                if (asXP) {
+                    this.setAlchemyXP(value);
+                } else {
+                    this.setAlchemyLevel((int) value);
+                }
+                break;
+            case WIZARDRY:
+                if (asXP) {
+                    this.setWizardryXP(value);
+                } else {
+                    this.setWizardryLevel((int) value);
+                }
+                break;
+            case TINKERING:
+                if (asXP) {
+                    this.setTinkeringXP(value);
+                } else {
+                    this.setTinkeringLevel((int) value);
+                }
+                break;
+            case HUNTING:
+                if (asXP) {
+                    this.setHuntingXP(value);
+                } else {
+                    this.setHuntingLevel((int) value);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown skill: " + skill);
+        }
     }
 
     public double getLevelXP(int level) {
