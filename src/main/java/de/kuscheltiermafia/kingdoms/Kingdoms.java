@@ -1,5 +1,9 @@
 package de.kuscheltiermafia.kingdoms;
 
+import co.aikar.commands.PaperCommandManager;
+import de.kuscheltiermafia.kingdoms.building.StructureHandler;
+import de.kuscheltiermafia.kingdoms.debug.GetCellCommand;
+import de.kuscheltiermafia.kingdoms.debug.StructureCommand;
 import de.kuscheltiermafia.kingdoms.data.PlayerStats;
 import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
 import de.kuscheltiermafia.kingdoms.debug.GetStats;
@@ -9,8 +13,13 @@ import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import de.kuscheltiermafia.kingdoms.stats.PlayerStatModel;
 import de.kuscheltiermafia.kingdoms.stats.UpdatePlayerStats;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.structure.Structure;
+
+import java.io.File;
+import java.io.IOException;
 
 import java.io.File;
 import java.util.HashMap;
@@ -53,6 +62,9 @@ public final class Kingdoms extends JavaPlugin {
             PlayerUtility.setPlayerImage(p, image);
         }
 
+        PaperCommandManager manager = new PaperCommandManager(this);
+        manager.registerCommand(new StructureCommand());
+        manager.registerCommand(new GetCellCommand());
     }
 
     @Override
