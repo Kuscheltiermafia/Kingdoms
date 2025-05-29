@@ -15,15 +15,17 @@ public class Grid {
         double deltaX = x - X_TOWN_HALL;
         double deltaZ = z - Z_TOWN_HALL;
 
-        double adjustedDeltaX = deltaX + deltaX / Math.abs(deltaX) * (Math.round(DIMENSIONS_TOWN_HALL / 2) - DIMENSIONS_BUILDINGS);
-        double adjustedDeltaZ = deltaZ + deltaZ / Math.abs(deltaZ) * (Math.round(DIMENSIONS_TOWN_HALL / 2) - DIMENSIONS_BUILDINGS);
+        double adjustedDeltaX = deltaX - deltaX / Math.abs(deltaX) * (Math.round(DIMENSIONS_TOWN_HALL / 2) - DIMENSIONS_BUILDINGS);
+        double adjustedDeltaZ = deltaZ - deltaZ / Math.abs(deltaZ) * (Math.round(DIMENSIONS_TOWN_HALL / 2) - DIMENSIONS_BUILDINGS);
 
-        double cellX = adjustedDeltaX / (DIMENSIONS_BUILDINGS + WIDTH_PATHS);
-        double cellZ = adjustedDeltaZ / (DIMENSIONS_BUILDINGS + WIDTH_PATHS);
+        double cellX = adjustedDeltaX / (DIMENSIONS_BUILDINGS + WIDTH_PATHS) + 1 * adjustedDeltaX / Math.abs(adjustedDeltaX);
+        double cellZ = adjustedDeltaZ / (DIMENSIONS_BUILDINGS + WIDTH_PATHS) + 1 * adjustedDeltaZ / Math.abs(adjustedDeltaZ);
+
+        if (adjustedDeltaX % (DIMENSIONS_BUILDINGS + WIDTH_PATHS) > DIMENSIONS_BUILDINGS || adjustedDeltaZ % (DIMENSIONS_BUILDINGS + WIDTH_PATHS) > DIMENSIONS_BUILDINGS) {
+            return "PATH";
+        }
 
         return String.format("X%dZ%d", (int) cellX, (int) cellZ);
-
-        //TODO: Implement a path detection
     }
 
 }
