@@ -16,5 +16,6 @@ public class GetCellCommand extends BaseCommand {
         Location location = player.getLocation();
         String cellID = Grid.getCellID(location.getBlockX(), location.getBlockZ());
         player.sendMessage("Cell ID: " + cellID);
+        player.sendMessage("Cell Origin: " + Grid.getCellOrigin(cellID));
     }
 }

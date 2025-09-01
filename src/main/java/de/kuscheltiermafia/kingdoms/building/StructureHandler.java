@@ -15,19 +15,19 @@ public class StructureHandler {
 
     static StructureManager structureManager = Bukkit.getStructureManager();
 
-    public static void placeStructure(Location location, String structureName, int rotation) {
+    public static void placeStructure(Location location, Building building, int level, int rotation) {
 
-        NamespacedKey key = new NamespacedKey("kingdoms", structureName);
+        NamespacedKey key = new NamespacedKey("kingdoms", building.structureName + "/level" + level);
         File file = Bukkit.getStructureManager().getStructureFile(key);
         Structure structure = Bukkit.getStructureManager().loadStructure(key);
 
         StructureRotation structureRotation = StructureRotation.values()[rotation % StructureRotation.values().length];
 
         if (structure == null) {
-            Bukkit.getLogger().warning("Structure " + structureName + " not found.");
+            Bukkit.getLogger().warning("Structure " + building.name() + " not found.");
             return;
         }
-        structure.place(location, true, structureRotation, Mirror.NONE, 0, 1.0f, new Random());
+        structure.place(location.add(0, building.offsetY - 1, 0), true, structureRotation, Mirror.NONE, 0, 1.0f, new Random());
 
     }
 
