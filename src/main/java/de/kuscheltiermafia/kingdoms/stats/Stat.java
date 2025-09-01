@@ -9,16 +9,19 @@ public enum Stat {
     STRENGTH("strength","Strength", "⚒", ChatColor.DARK_RED),
     CRIT_CHANCE("critChance","Crit Chance", "☣", ChatColor.BLUE),
     CRIT_DAMAGE("critDamage","Crit Damage", "☠", ChatColor.DARK_RED),
+    LIFESTEAL("lifesteal","Lifesteal", "ৎ", ChatColor.DARK_RED),
     INTELLIGENCE("intelligence","Intelligence", "✎", ChatColor.AQUA),
     MANA_REGENERATION("manaRegeneration","Mana Regeneration", "ɸ", ChatColor.LIGHT_PURPLE),
-    SPELLBOUND("spellbound","Spellbound", "۞", ChatColor.DARK_PURPLE),
+    SPELLBOUND("spellbound","Spellbound", "ꖦ", ChatColor.DARK_PURPLE),
+    MANA_STEAL("manaSteal","Mana Steal", "ᛃ", ChatColor.DARK_PURPLE),
     SPEED("speed","Speed", "⚡", ChatColor.WHITE),
     LUCK("luck","Luck", "♠", ChatColor.GREEN),
     OVERHEAL("overheal","Overheal", "❣", ChatColor.LIGHT_PURPLE),
     ABSORPTION("absorption","Absorption", "⬡", ChatColor.GOLD),
     VEIL("veil","Veil", "ღ", ChatColor.DARK_GRAY),
     BREAKING_SPEED("breakingSpeed","Breaking Speed", "⛏", ChatColor.YELLOW),
-    FORTUNE("fortune","Fortune", "☘", ChatColor.GOLD),;
+    FORTUNE("fortune","Fortune", "☘", ChatColor.GOLD),
+    SPREAD("spread","Spread", "■", ChatColor.DARK_GREEN),;
 
     final String icon;
     final String displayName;

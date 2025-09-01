@@ -29,7 +29,7 @@ public class JoinEvent implements Listener {
 
         //checkStats
         if(!Kingdoms.playerStatModelIdentifier.containsKey(player)) {
-            Kingdoms.playerStatModelIdentifier.put(player, new PlayerStatModel(20f, 0f, 10f, 2f, 0.05f, 1f, 4f, 4f, 0.1f, 0f, 1f, 0f, 0f));
+            Kingdoms.playerStatModelIdentifier.put(player, new PlayerStatModel());
             UpdatePlayerStats.updatePlayerStats(player);
         }else{
             UpdatePlayerStats.updatePlayerStats(player);

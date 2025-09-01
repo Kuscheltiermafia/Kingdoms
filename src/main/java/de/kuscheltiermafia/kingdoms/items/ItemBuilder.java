@@ -1,7 +1,7 @@
 package de.kuscheltiermafia.kingdoms.items;
 
 import de.kuscheltiermafia.kingdoms.stats.Stat;
-import de.kuscheltiermafia.utils.GsonHandler;
+import de.kuscheltiermafia.kingdoms.utils.GsonHandler;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +25,7 @@ public class ItemBuilder {
     boolean hideTooltip;
     boolean hideAdditionalTooltip;
 
-    HashMap<Stat, Float> stats;
+    HashMap<Stat, Double> stats;
 
     boolean showInList;
 
@@ -86,68 +86,76 @@ public class ItemBuilder {
     }
 
     //Methods to add Stats
-    public ItemBuilder setHealth(float value) {
+    public ItemBuilder setHealth(double value) {
         stats.put(Stat.HEALTH, value);
         return this;
     }
-    public ItemBuilder setDefense(float value) {
+    public ItemBuilder setDefense(double value) {
         stats.put(Stat.DEFENSE, value);
         return this;
     }
-    public ItemBuilder setDamage(float value) {
+    public ItemBuilder setDamage(double value) {
         stats.put(Stat.DAMAGE, value);
         return this;
     }
-    public ItemBuilder setStrength(float value) {
+    public ItemBuilder setStrength(double value) {
         stats.put(Stat.STRENGTH, value);
         return this;
     }
-    public ItemBuilder setCritChance(float value) {
+    public ItemBuilder setCritChance(double value) {
         stats.put(Stat.CRIT_CHANCE, value);
         return this;
     }
-    public ItemBuilder setCritDamage(float value) {
+    public ItemBuilder setCritDamage(double value) {
         stats.put(Stat.CRIT_DAMAGE, value);
         return this;
     }
-    public ItemBuilder setIntelligence(float value) {
+    public ItemBuilder setIntelligence(double value) {
         stats.put(Stat.INTELLIGENCE, value);
         return this;
     }
-    public ItemBuilder setManaRegeneration(float value) {
+    public ItemBuilder setManaRegeneration(double value) {
         stats.put(Stat.MANA_REGENERATION, value);
         return this;
     }
-    public ItemBuilder setSpellbound(float value) {
+    public ItemBuilder setSpellbound(double value) {
         stats.put(Stat.SPELLBOUND, value);
         return this;
     }
-    public ItemBuilder setSpeed(float value) {
+    public ItemBuilder setSpeed(double value) {
         stats.put(Stat.SPEED, value);
         return this;
     }
-    public ItemBuilder setLuck(float value) {
+    public ItemBuilder setLuck(double value) {
         stats.put(Stat.LUCK, value);
         return this;
     }
-    public ItemBuilder setOverheal(float value) {
+    public ItemBuilder setOverheal(double value) {
         stats.put(Stat.OVERHEAL, value);
         return this;
     }
-    public ItemBuilder setAbsorption(float value) {
+    public ItemBuilder setAbsorption(double value) {
         stats.put(Stat.ABSORPTION, value);
         return this;
     }
-    public ItemBuilder setVeil(float value) {
+    public ItemBuilder setVeil(double value) {
         stats.put(Stat.VEIL, value);
         return this;
     }
-    public ItemBuilder setBreakingSpeed(float value) {
+    public ItemBuilder setBreakingSpeed(double value) {
         stats.put(Stat.BREAKING_SPEED, value);
         return this;
     }
-    public ItemBuilder setFortune(float value) {
+    public ItemBuilder setFortune(double value) {
         stats.put(Stat.FORTUNE, value);
+        return this;
+    }
+    public ItemBuilder setSpread(double value) {
+        stats.put(Stat.SPREAD, value);
+        return this;
+    }
+    public ItemBuilder setLifesteal(double value) {
+        stats.put(Stat.LIFESTEAL, value);
         return this;
     }
 
@@ -172,6 +180,8 @@ public class ItemBuilder {
         if(!stats.isEmpty()) {
             meta.getPersistentDataContainer().set(ItemHandler.STATS, PersistentDataType.STRING, GsonHandler.toJson(stats));
         }
+
+        LoreBuilder.updateLore(meta);
 
         genItem.setItemMeta(meta);
 

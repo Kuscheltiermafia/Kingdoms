@@ -12,6 +12,9 @@ public class ItemHandler {
 
     public static NamespacedKey ID = new NamespacedKey(Kingdoms.getPlugin(), "kingdoms");
     public static NamespacedKey STATS = new NamespacedKey(Kingdoms.getPlugin(), "stats");
+    public static NamespacedKey ENCHANTMENTS = new NamespacedKey(Kingdoms.getPlugin(), "enchantments");
+    public static NamespacedKey GEMSTONES = new NamespacedKey(Kingdoms.getPlugin(), "gemstones");
+    public static NamespacedKey TEMP_STORAGE = new NamespacedKey(Kingdoms.getPlugin(), "temporary_storage");
 
     public static ArrayList<ItemStack> itemList = new ArrayList<>();
 

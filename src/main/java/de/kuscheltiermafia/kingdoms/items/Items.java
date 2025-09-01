@@ -19,16 +19,37 @@ public class Items {
     public static ItemStack ascend_item;
     public static ItemStack descend_item;
 
+    //Weapons
+    public static ItemStack iron_sword;
+
+    //Armor
+    public static ItemStack funky_sneaker;
+
     public static void initializeItems() {
 
         //Misc Items
         focken = new ItemBuilder().setMaterial(Material.DARK_OAK_BUTTON).setID("focken").setCustomName("§5Focken")
                 .addLoreLine("§7- §dFantastisches orientiertes cooles kurioses entanguliertes Neutron §7 -")
                 .addLoreLine("§7oder kurz, FOCKEN!")
-                .addLoreLine("§7Keine Ahnung was das ist...").setMaxStackSize(1).build();
-        toe = new ItemBuilder().setMaterial(Material.BOOK).setID("tome_of_eras").setCustomName("§5Tome of Eras").addGlint().setMaxStackSize(1).build();
-        ascend_item = new ItemBuilder().setMaterial(Material.ENDER_EYE).setID("ascend_item").setCustomName("§bAscend").setMaxStackSize(1).build();
-        descend_item = new ItemBuilder().setMaterial(Material.ENDER_PEARL).setID("descend_item").setCustomName("§bDescend").setMaxStackSize(1).build();
+                .addLoreLine("§7Keine Ahnung was das ist...").setMaxStackSize(1).show().build();
+        toe = new ItemBuilder().setMaterial(Material.BOOK).setID("tome_of_eras").setCustomName("§5Tome of Eras").addGlint().setMaxStackSize(1).show().build();
+        ascend_item = new ItemBuilder().setMaterial(Material.ENDER_EYE).setID("ascend_item").setCustomName("§bAscend").setMaxStackSize(1).show().build();
+        descend_item = new ItemBuilder().setMaterial(Material.ENDER_PEARL).setID("descend_item").setCustomName("§bDescend").setMaxStackSize(1).show().build();
+
+        //Weapons
+        iron_sword = new ItemBuilder().setMaterial(Material.IRON_SWORD).setID("iron_sword").setCustomName("§fIron Sword")
+                .setStrength(5)
+                .setCritChance(2)
+                .setCritDamage(5)
+                .setMaxStackSize(1).show().build();
+
+        //Armor
+        funky_sneaker = new ItemBuilder().setMaterial(Material.GOLDEN_BOOTS).setID("funky_sneaker").setCustomName("§6Funky Sneaker")
+                .setHealth(20)
+                .setDefense(10)
+                .setSpeed(5)
+                .setOverheal(2)
+                .setMaxStackSize(1).show().build();
 
         //Debug Items
         spacer = new ItemBuilder().setMaterial(Material.GRAY_STAINED_GLASS_PANE).setID("spacer").setCustomName("Spacer").hideTooltip().setMaxStackSize(1).build();
