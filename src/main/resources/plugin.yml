@@ -1,7 +1,7 @@
 name: Kingdoms
 version: '${project.version}'
 main: de.kuscheltiermafia.kingdoms.Kingdoms
-api-version: '1.21'
+api-version: '1.21.5'
 commands:
   itemlist:
     description: List all items in the Kingdoms plugin
