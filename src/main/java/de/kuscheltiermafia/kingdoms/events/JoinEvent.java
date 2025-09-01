@@ -25,14 +25,7 @@ public class JoinEvent implements Listener {
         LobbyTeleport.teleport(player);
 
         //get player stats
-        PlayerStats image = new PlayerStats();
-        File file = new File(PlayerUtility.getFolderPath(player) + "stats.yml");
-
-        if (file.exists()) {
-            image.loadStats(file);
-        }
-
-        PlayerUtility.setPlayerImage(player, image);
+        if (!PlayerUtility.initPlayer(player)) return;
 
         //checkStats
         if(!Kingdoms.playerStatModelIdentifier.containsKey(player)) {

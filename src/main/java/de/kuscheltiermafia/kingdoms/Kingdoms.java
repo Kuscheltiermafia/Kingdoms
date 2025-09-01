@@ -2,6 +2,7 @@ package de.kuscheltiermafia.kingdoms;
 
 import co.aikar.commands.PaperCommandManager;
 import de.kuscheltiermafia.kingdoms.building.StructureHandler;
+import de.kuscheltiermafia.kingdoms.data.Buildings;
 import de.kuscheltiermafia.kingdoms.debug.GetCellCommand;
 import de.kuscheltiermafia.kingdoms.debug.StructureCommand;
 import de.kuscheltiermafia.kingdoms.data.PlayerStats;
@@ -51,15 +52,22 @@ public final class Kingdoms extends JavaPlugin {
             UpdatePlayerStats.updatePlayerStats(p);
         }
 
-        for(Player p : Bukkit.getOnlinePlayers()) {
-            PlayerStats image = new PlayerStats();
-            File file = new File(PlayerUtility.getFolderPath(p) + "stats.yml");
+        saveDefaultConfig();
 
-            if (file.exists()) {
-                image.loadStats(file);
+        for(Player player : Bukkit.getOnlinePlayers()) {
+            if (!PlayerUtility.initPlayer(player)) return;
+        }
+
+        try {
+            if (Buildings.setupConfig()) {
+                getLogger().info("Created buildings.yml");
+            }else {
+                getLogger().severe("Could not create buildings.yml. Disabling plugin due to unplayability.");
+                this.setEnabled(false);
+                return;
             }
-
-            PlayerUtility.setPlayerImage(p, image);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         PaperCommandManager manager = new PaperCommandManager(this);
