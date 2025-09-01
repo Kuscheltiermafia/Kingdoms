@@ -25,6 +25,15 @@ public class Items {
     //Armor
     public static ItemStack funky_sneaker;
 
+    //Blueprints
+    public static ItemStack blueprint_arch_tower_1;
+    public static ItemStack blueprint_bakery_1;
+    public static ItemStack blueprint_camp_1;
+    public static ItemStack blueprint_farm_1;
+    public static ItemStack blueprint_lumberjack_1;
+    public static ItemStack blueprint_mine_1;
+    public static ItemStack blueprint_quarry_1;
+
     public static void initializeItems() {
 
         //Misc Items
