@@ -4,7 +4,9 @@ import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.data.PlayerStats;
 import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
 import de.kuscheltiermafia.kingdoms.events.AscendEvent;
+import de.kuscheltiermafia.kingdoms.items.ItemBuilder;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
+import de.kuscheltiermafia.kingdoms.items.Items;
 import de.kuscheltiermafia.kingdoms.skills.Skill;
 import de.kuscheltiermafia.kingdoms.stats.Stat;
 import org.bukkit.ChatColor;
@@ -49,39 +51,30 @@ public class TomeOfEras {
             Logger.getLogger("Kingdoms").info("Skill: " + skill.getDisplayName() + " - Level: " + playerSkills.getValueBySkill(skill, false));
             skilllore.add(skill.getColor() + skill.getIcon() + " " + skill.getDisplayName() + ": " + (int) playerSkills.getValueBySkill(skill, false));
         }
-        ItemStack playerSkill = ItemHandler.createItem(Material.EXPERIENCE_BOTTLE, ChatColor.LIGHT_PURPLE + "Your Skill Levels: ", "view_skills_button", 1, skilllore, true, false, false, false);
+        ItemStack playerSkill = new ItemBuilder().setMaterial(Material.EXPERIENCE_BOTTLE).setID("view_skills_button").setCustomName(ChatColor.LIGHT_PURPLE + "Your Skill Levels: ").setLore(skilllore).addGlint().setMaxStackSize(1).build();
         toe.setItem(19, playerSkill);
 
-        List<String> currentEraReqLore = new ArrayList<>();
-        ItemStack currentEraReq = ItemHandler.createItem(Material.WRITABLE_BOOK, ChatColor.AQUA + "Current Era Requirement", "view_era_button", 1, currentEraReqLore, true, false, false, false);
-        toe.setItem(28, currentEraReq);
-
         List<String> guideLore = new ArrayList<>();
-        ItemStack guide = ItemHandler.createItem(Material.BOOKSHELF, ChatColor.AQUA + "Guide", "guide_button", 1, guideLore, true, false, false, false);
+        ItemStack guide = new ItemBuilder().setMaterial(Material.BOOKSHELF).setID("guide_button").setCustomName(ChatColor.AQUA + "Guide").setMaxStackSize(1).build();
         toe.setItem(37, guide);
 
         if (AscendEvent.godlyRealm.containsKey(p) && AscendEvent.godlyRealm.get(p)) {
-            toe.setItem(21, new ItemStack(ItemHandler.descend_item));
+            toe.setItem(21, new ItemStack(Items.descend_item));
         }else{
-            toe.setItem(21, new ItemStack(ItemHandler.ascend_item));
+            toe.setItem(21, new ItemStack(Items.ascend_item));
         }
 
-        ItemStack enderChest = ItemHandler.createItem(Material.ENDER_CHEST, ChatColor.DARK_PURPLE + "Ender Chest", "ender_chest_button", 1, null, true, false, false, false);
-        toe.setItem(39, enderChest);
+        toe.setItem(14, new ItemStack(Items.placeholder));
+        toe.setItem(15, new ItemStack(Items.placeholder));
 
-        toe.setItem(14, new ItemStack(ItemHandler.placeholder));
-        toe.setItem(15, new ItemStack(ItemHandler.placeholder));
+        toe.setItem(16, Items.placeholder);
 
-        ItemStack unlockedSpells = ItemHandler.createItem(Material.WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE, ChatColor.LIGHT_PURPLE + "Unlocked Spells", "unlocked_spells_button", 1, null, true, false, true, false);
-        toe.setItem(16, unlockedSpells);
-
-        ItemStack awaitingNewTasks = ItemHandler.createItem(Material.FILLED_MAP, ChatColor.LIGHT_PURPLE + "Awaiting New Quests...", "spacer", 1, null, false, false, true, false);
         for(int i : new int[]{32, 33, 34, 41, 42, 43}) {
-            toe.setItem(i, awaitingNewTasks);
+            toe.setItem(i, Items.placeholder);
         }
 
         if(p.isOp()) {
-            ItemStack itemList = ItemHandler.createItem(Material.COMMAND_BLOCK, ChatColor.DARK_RED + "Open Item List", "open_item_list", 1, null, true, false, false, false);
+            ItemStack itemList = new ItemBuilder().setMaterial(Material.COMMAND_BLOCK).setID("open_item_list").setCustomName(ChatColor.DARK_RED + "Open Item List").setMaxStackSize(1).build();
             toe.setItem(53, itemList);
         }
 

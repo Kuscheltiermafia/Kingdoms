@@ -20,15 +20,15 @@ public class ItemStats {
         stats.put(Stat.DEFENSE, defense);
         stats.put(Stat.INTELLIGENCE, intelligence);
         stats.put(Stat.MANA_REGENERATION, manaRegeneration);
-        stats.put(Stat.CRIT_CHANCE, critChance);
-        stats.put(Stat.CRIT_DAMAGE, critDamage);
         stats.put(Stat.DAMAGE, damage);
         stats.put(Stat.STRENGTH, strength);
+        stats.put(Stat.SPELLBOUND, spellbound);
+        stats.put(Stat.CRIT_CHANCE, critChance);
+        stats.put(Stat.CRIT_DAMAGE, critDamage);
         stats.put(Stat.SPEED, speed);
         stats.put(Stat.LUCK, luck);
         stats.put(Stat.BREAKING_SPEED, breakingSpeed);
         stats.put(Stat.FORTUNE, fortune);
-        stats.put(Stat.SPELLBOUND, spellbound);
 
         itemStats.put(ItemHandler.getItemID(item), stats);
 

@@ -1,5 +1,4 @@
 package de.kuscheltiermafia.kingdoms.events;
-
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import de.kuscheltiermafia.kingdoms.menus.EnderChest;
 import de.kuscheltiermafia.kingdoms.menus.SkillsPage;
@@ -62,10 +61,6 @@ public class TomeOfErasEvents implements Listener {
             }
 
             if (ItemHandler.checkItemID(clickedItem, "unlocked_spells_button")) {
-                e.setCancelled(true);
-            }
-
-            if (ItemHandler.checkItemID(clickedItem, "view_era_button")) {
                 e.setCancelled(true);
             }
 

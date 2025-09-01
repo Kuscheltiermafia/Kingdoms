@@ -2,6 +2,7 @@ package de.kuscheltiermafia.kingdoms.menus;
 
 import de.kuscheltiermafia.kingdoms.data.PlayerStats;
 import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
+import de.kuscheltiermafia.kingdoms.items.ItemBuilder;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import de.kuscheltiermafia.kingdoms.skills.Skill;
 import org.bukkit.ChatColor;
@@ -43,7 +44,7 @@ public class SkillsPage {
             skillLore.add(ChatColor.GRAY + "Current Level: " + playerStats.getValueBySkill(skill, false));
             skillLore.add(ChatColor.GRAY + "Current Experience: " + playerStats.getValueBySkill(skill, true) + " / " + playerStats.getLevelXP((int) playerStats.getValueBySkill(skill, false)));
 
-            ItemStack skillItem = ItemHandler.createItem(skill.getIconItem(), skill.getColor() + skill.getIcon() + " " + skill.getDisplayName(), "skill_view_item", 1, skillLore, false, false, false, false);
+            ItemStack skillItem = new ItemBuilder().setMaterial(skill.getIconItem()).setID("spacer" /*maybe skill_view_item*/).setCustomName(skill.getColor() + skill.getIcon() + " " + skill.getDisplayName()).setLore(skillLore).setMaxStackSize(1).build();
 
             skillItems.put(slots[index], skillItem);
         }

@@ -1,96 +1,29 @@
 package de.kuscheltiermafia.kingdoms.items;
 
 import de.kuscheltiermafia.kingdoms.Kingdoms;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Item;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ItemHandler {
 
-    public static NamespacedKey ID = new NamespacedKey(Kingdoms.getPlugin(), "ID");
+    public static NamespacedKey ID = new NamespacedKey(Kingdoms.getPlugin(), "kingdoms");
+    public static NamespacedKey STATS = new NamespacedKey(Kingdoms.getPlugin(), "stats");
+
     public static ArrayList<ItemStack> itemList = new ArrayList<>();
 
-    public static ItemStack ascend_item;
-    public static ItemStack descend_item;
-
-    public static ItemStack iron_sword;
-
-    public static ItemStack focken;
-    public static ItemStack toe;
-
-    //Debug Items
-    public static ItemStack spacer;
-    public static ItemStack page_up;
-    public static ItemStack page_down;
-    public static ItemStack no_page_up;
-    public static ItemStack no_page_down;
-    public static ItemStack placeholder;
-
-    //Executing ItemMeta Assignments
-    public static void innitItems(){
-        //lobby items
-        ascend_item = createItem(Material.ENDER_EYE, ChatColor.AQUA + "Ascend", "ascend_item", 1, null, true, false, false, true);
-        descend_item = createItem(Material.ENDER_PEARL, ChatColor.AQUA + "Descend", "descend_item", 1, null, true, false, false, true);
-
-        //weapons
-        iron_sword = createItem(Material.IRON_SWORD, ChatColor.WHITE + "Iron Sword", "iron_sword", 1, null, true, false, false, true);
-        ItemStats.addItemStats(iron_sword, 0f, 0f, 20000f, 0f, 0f, 0f, 20000f, 20000f, 0f, 0f, 0f, 0f, 0f);
-
-        ArrayList<String> focken_lore = new ArrayList<String>();
-        focken_lore.add("§7- " + ChatColor.LIGHT_PURPLE + "Fantastisches orientiertes cooles kurioses entanguliertes Neutron" + "§7 -");
-        focken_lore.add("§7oder kurz, FOCKEN!");
-        focken_lore.add("§7Keine Ahnung was das ist...");
-        focken = createItem(Material.DARK_OAK_BUTTON, ChatColor.LIGHT_PURPLE + "Focken", "focken", 1, focken_lore, true, false, false, true);
-        ItemStats.addItemStats(focken, 0f, 0f, 999999f, 999999f, 0f, 0f, 0f, 0f, 0f, 696969f, 0f, 0f, 999999f);
-
-        ArrayList<String> toe_lore = new ArrayList<String>();
-        toe_lore.add(ChatColor.GRAY + "The key to unlimited power!");
-        toe_lore.add(ChatColor.GRAY + "Cou§kl§r§7d des§kt§r§7roy the k§kno§r§7wn univ§ker§r§7se...");
-        toe = createItem(Material.BOOK, ChatColor.LIGHT_PURPLE + "Tome of Eras", "tome_of_eras", 1, toe_lore, true, false, false, true);
-
-        //debug
-        spacer = createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " ", "spacer", 1, null, false, true, false, false);
-        page_up = createItem(Material.ARROW, "§4Next Page", "page_up_indicator", 1, null, false, false, false, false);
-        page_down = createItem(Material.ARROW, "§4Previous Page", "page_down_indicator", 1, null, false, false, false, false);
-        no_page_down = createItem(Material.BARRIER, "§4No previous Page available", "page_up_indicator", 1, null, false, false, false, false);
-        no_page_up = createItem(Material.BARRIER, "§4No next Page available", "no_page_up_indicator", 1, null, false, false, false, false);
-        placeholder = createItem(Material.STRUCTURE_VOID, "§5§l§kA§r§7 PLACEHOLDER §r§5§l§kA", "placeholder", 1, null, true, false, false, true);
-    }
-
-    //Assigning ItemMeta
-    public static ItemStack createItem(Material material, String name, String id, int stackSize, @Nullable List<String> lore, boolean glint, boolean hideTooltip, boolean hideAdditionalTooltip, boolean visible) {
-
-        ItemStack genItem = new ItemStack(material);
-        ItemMeta meta = genItem.getItemMeta();
-
-        meta.setMaxStackSize(stackSize);
-        meta.getPersistentDataContainer().set(ID, PersistentDataType.STRING, id);
-        meta.setDisplayName(name);
-        meta.setLore(lore);
-        meta.setEnchantmentGlintOverride(glint);
-        meta.setHideTooltip(hideTooltip);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-
-        if (hideAdditionalTooltip) {
-            meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
-        }
-
-        genItem.setItemMeta(meta);
-
-        if(visible) {
-            itemList.add(genItem);
-        }
-
-        return genItem;
+    //Utils
+    public static ItemStack convertToDisplayItem(ItemStack toSpacer, int amount) {
+        ItemStack spacerItem = new ItemStack(toSpacer);
+        ItemMeta meta = spacerItem.getItemMeta();
+        assert meta != null;
+        meta.getPersistentDataContainer().set(ID, PersistentDataType.STRING, "spacer");
+        spacerItem.setItemMeta(meta);
+        spacerItem.setAmount(amount);
+        return spacerItem;
     }
 
     public static ItemStack getItemById(String id) {
@@ -124,5 +57,4 @@ public class ItemHandler {
             return "null";
         }
     }
-
 }

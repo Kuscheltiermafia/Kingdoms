@@ -3,6 +3,7 @@ package de.kuscheltiermafia.kingdoms.stats;
 public class PlayerStatModel {
 
     float health;
+    float actualHealth;
     float defense;
     float intelligence;
     float manaRegeneration;
@@ -30,6 +31,7 @@ public class PlayerStatModel {
         this.breakingSpeed = breakingSpeed;
         this.fortune = fortune;
         this.spellbound = spellbound;
+        this.actualHealth = health;
     }
 
     public void resetStats() {
@@ -46,6 +48,7 @@ public class PlayerStatModel {
         this.breakingSpeed = 1f;
         this.fortune = 0f;
         this.spellbound = 0f;
+        this.actualHealth = health;
     }
 
     public float getStat(Stat stat) {
@@ -87,6 +90,14 @@ public class PlayerStatModel {
 
     public void setHealth(float health) {
         this.health = health;
+    }
+
+    public float getActualHealth() {
+        return actualHealth;
+    }
+
+    public void setActualHealth(float actualHealth) {
+        this.actualHealth = actualHealth;
     }
 
     public float getDefense() {

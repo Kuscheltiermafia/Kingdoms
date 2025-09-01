@@ -7,3 +7,5 @@ commands:
     description: List all items in the Kingdoms plugin
   getstats:
     description: Get the stats of a player
+  enchantments:
+    description: Get the stats of a player

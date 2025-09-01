@@ -1,28 +1,23 @@
 package de.kuscheltiermafia.kingdoms;
 
 import co.aikar.commands.PaperCommandManager;
-import de.kuscheltiermafia.kingdoms.building.StructureHandler;
-import de.kuscheltiermafia.kingdoms.debug.GetCellCommand;
-import de.kuscheltiermafia.kingdoms.debug.StructureCommand;
+import de.kuscheltiermafia.kingdoms.debug.*;
 import de.kuscheltiermafia.kingdoms.data.PlayerStats;
 import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
-import de.kuscheltiermafia.kingdoms.debug.GetStats;
-import de.kuscheltiermafia.kingdoms.debug.ItemList;
 import de.kuscheltiermafia.kingdoms.events.*;
-import de.kuscheltiermafia.kingdoms.items.ItemHandler;
+import de.kuscheltiermafia.kingdoms.items.Items;
+import de.kuscheltiermafia.kingdoms.overlays.HealthBar;
 import de.kuscheltiermafia.kingdoms.stats.PlayerStatModel;
 import de.kuscheltiermafia.kingdoms.stats.UpdatePlayerStats;
 import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.structure.Structure;
-
-import java.io.File;
-import java.io.IOException;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
 import java.util.HashMap;
+
 
 public final class Kingdoms extends JavaPlugin {
 
@@ -34,7 +29,9 @@ public final class Kingdoms extends JavaPlugin {
 
         plugin = this;
 
-        ItemHandler.innitItems();
+        Items.initializeItems();
+
+        HealthBar.startHealthBarUpdater();
 
         Bukkit.getPluginManager().registerEvents(new AscendEvent(), this);
         Bukkit.getPluginManager().registerEvents(new DescendEvent(), this);
@@ -42,6 +39,7 @@ public final class Kingdoms extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new QuitEvent(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryEvents(), this);
         Bukkit.getPluginManager().registerEvents(new TomeOfErasEvents(), this);
+        Bukkit.getPluginManager().registerEvents(new OnDamageEvent(), this);
 
         getCommand("itemlist").setExecutor(new ItemList());
         getCommand("getstats").setExecutor(new GetStats());
@@ -60,6 +58,13 @@ public final class Kingdoms extends JavaPlugin {
             }
 
             PlayerUtility.setPlayerImage(p, image);
+        }
+
+        for(Player p : Bukkit.getOnlinePlayers()) {
+            PotionEffect sat = new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 255, false, false, false);
+            PotionEffect res = new PotionEffect(PotionEffectType.RESISTANCE, Integer.MAX_VALUE, 255, false, false, false);
+            p.addPotionEffect(sat);
+            p.addPotionEffect(res);
         }
 
         PaperCommandManager manager = new PaperCommandManager(this);

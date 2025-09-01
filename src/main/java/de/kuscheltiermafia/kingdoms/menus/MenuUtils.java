@@ -1,6 +1,8 @@
 package de.kuscheltiermafia.kingdoms.menus;
 
+import de.kuscheltiermafia.kingdoms.items.ItemBuilder;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
+import de.kuscheltiermafia.kingdoms.items.Items;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -10,12 +12,19 @@ public class MenuUtils {
     public static void fillWithSpacers(Inventory inv) {
         for(int i = 0; i < inv.getSize(); i++) {
             if(inv.getItem(i) == null || inv.getItem(i).getType() == Material.AIR) {
-                inv.setItem(i, new ItemStack(ItemHandler.spacer));
+                inv.setItem(i, new ItemStack(Items.spacer));
             }
         }
     }
+
     public static void placeReturnButton(Inventory inv) {
         inv.setItem(45, new ItemStack(Material.AIR));
-        inv.setItem(45, ItemHandler.createItem(Material.ARROW, ChatColor.RED + "Go Back", "back_button_toe_main", 1, null, false, false, false, false));
+        inv.setItem(45, new ItemBuilder().setMaterial(Material.ARROW).setID("back_button_toe_main").setCustomName(ChatColor.RED + "Go Back").setMaxStackSize(1).build());
+    }
+
+    public static void clearInventory(Inventory inv) {
+        for(int i = 0; i < inv.getSize(); i++) {
+            inv.setItem(i, null);
+        }
     }
 }
