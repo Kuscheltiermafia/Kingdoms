@@ -1,10 +1,16 @@
 package de.kuscheltiermafia.kingdoms.data;
 
+import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.skills.Skill;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class PlayerStats {
 
@@ -67,10 +73,37 @@ public class PlayerStats {
         this.huntingLevel = 0;
     }
 
+    public static boolean setupConfig(Player player) throws IOException {
+        PlayerStats image = new PlayerStats();
 
-    public void loadStats(File file){
+        File file = new File(PlayerUtility.getFolderPath(player) + "stats.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        boolean newFileCreated = file.createNewFile();
+
+        if (newFileCreated) {
+            Bukkit.getLogger().info("Creating new stats.yml for player " + player.getName());
+            InputStream defaultConfigStream = Kingdoms.getPlugin().getResource("stats.yml");
+            if (defaultConfigStream == null) {
+                Kingdoms.getPlugin().getLogger().warning("Could not find default stats.yml in plugin resources while trying to initiate stats.yml for player " + player.getName() + ". If this error persists, please contact the plugin authors.");
+                return false;
+            }
+            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultConfigStream));
+
+            config.setDefaults(defaultConfig);
+            config.options().copyDefaults(true);
+            config.save(file);
+        }else{
+            Bukkit.getLogger().info("Loading existing stats.yml for player " + player.getName());
+            image.loadStats(config);
+        }
+
+        PlayerUtility.setPlayerImage(player, image);
+        return true;
+    }
+
+    public void loadStats(YamlConfiguration config) {
+
         this.setCombatLevel(config.getInt("Combat.Level"));
         this.setCombatXP(config.getDouble("Combat.XP"));
         this.setMiningLevel(config.getInt("Mining.Level"));
