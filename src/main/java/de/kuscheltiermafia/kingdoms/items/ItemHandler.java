@@ -1,22 +1,60 @@
 package de.kuscheltiermafia.kingdoms.items;
 
 import de.kuscheltiermafia.kingdoms.Kingdoms;
+import de.kuscheltiermafia.kingdoms.utils.GsonHandler;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ItemHandler {
 
     public static NamespacedKey ID = new NamespacedKey(Kingdoms.getPlugin(), "kingdoms");
     public static NamespacedKey STATS = new NamespacedKey(Kingdoms.getPlugin(), "stats");
+    public static NamespacedKey ABILITIES = new NamespacedKey(Kingdoms.getPlugin(), "abilities");
     public static NamespacedKey ENCHANTMENTS = new NamespacedKey(Kingdoms.getPlugin(), "enchantments");
     public static NamespacedKey GEMSTONES = new NamespacedKey(Kingdoms.getPlugin(), "gemstones");
     public static NamespacedKey TEMP_STORAGE = new NamespacedKey(Kingdoms.getPlugin(), "temporary_storage");
 
     public static ArrayList<ItemStack> itemList = new ArrayList<>();
+    public static HashMap<String, ItemStack> itemMap = new HashMap<>();
+
+    public static void registerItems() {
+        HashMap<String, ItemBuilder> storedItems = GsonHandler.returnStoredItems();
+        for(String key : storedItems.keySet()) {
+            ItemBuilder builder = storedItems.get(key);
+            ItemStack item = builder.setID(key).build();
+        }
+        registerDebugItems();
+    }
+
+    private static void registerDebugItems() {
+        new ItemBuilder().setMaterial(Material.BARRIER).setID("no_page_up_indicator").setCustomName("§4No next Page available").setMaxStackSize(1).build();
+        new ItemBuilder().setMaterial(Material.BARRIER).setID("no_page_down_indicator").setCustomName("§4No previous Page available").setMaxStackSize(1).build();
+        new ItemBuilder().setMaterial(Material.ARROW).setID("page_up_indicator").setCustomName("§aNext Page").setMaxStackSize(1).build();
+        new ItemBuilder().setMaterial(Material.ARROW).setID("page_down_indicator").setCustomName("§aPrevious Page").setMaxStackSize(1).build();
+        new ItemBuilder().setMaterial(Material.STRUCTURE_VOID).setID("placeholder").setCustomName("§5§l§kA§r§7 PLACEHOLDER §r§5§l§kA").setMaxStackSize(64).build();
+        new ItemBuilder().setMaterial(Material.GRAY_STAINED_GLASS_PANE).setID("spacer").hideTooltip().setMaxStackSize(1).build();
+    }
+
+    public static ItemStack getItem(String id) {
+        if(!itemMap.containsKey(id)) {
+            System.out.println("Item with id " + id + " not found!");
+            return new ItemStack(Material.BARRIER);
+        }
+        return itemMap.get(id).clone();
+    }
+
+    public static void clearItem(Player p, String id, int amount) {
+        ItemStack item = getItem(id);
+        item.setAmount(item.getAmount() - amount);
+        p.getInventory().removeItem(item);
+    }
 
     //Utils
     public static ItemStack convertToDisplayItem(ItemStack toSpacer, int amount) {

@@ -1,0 +1,8 @@
+{"customName":"§fIron Sword",
+  "material":"IRON_SWORD",
+  "maxStackSize":1,
+  "lore":["§7A basic iron sword.","Nothing to see here"],
+  "glint":false,"hideTooltip":false,
+  "hideAdditionalTooltip":false,
+  "stats":{"STRENGTH":5.0,"CRIT_CHANCE":2.0,"CRIT_DAMAGE":5.0},
+  "showInList":true}

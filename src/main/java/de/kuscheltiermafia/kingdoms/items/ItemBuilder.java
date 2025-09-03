@@ -19,7 +19,7 @@ public class ItemBuilder {
     String customName;
     String id;
     Material material;
-    int maxStackSize;
+    int maxStackSize = 64;
     List<String> lore;
     boolean glint;
     boolean hideTooltip;
@@ -28,11 +28,11 @@ public class ItemBuilder {
     HashMap<Stat, Double> stats;
 
     boolean showInList;
+    boolean tempItem;
 
     public ItemBuilder() {
-        this.stats = new HashMap<>();
         this.lore = new ArrayList<>();
-        this.maxStackSize = 64;
+        this.stats = new HashMap<>();
     }
 
     public ItemBuilder setID(String id) {
@@ -159,9 +159,22 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder temporary() {
+        this.tempItem = true;
+        return this;
+    }
+
     public ItemStack build() {
         ItemStack genItem = new ItemStack(material);
         ItemMeta meta = genItem.getItemMeta();
+
+        if(this.lore == null) {
+            this.lore = new ArrayList<>();
+        }
+
+        if (this.maxStackSize <= 0) {
+            this.maxStackSize = 1;
+        }
 
         meta.setMaxStackSize(maxStackSize);
         meta.getPersistentDataContainer().set(ItemHandler.ID, PersistentDataType.STRING, id);
@@ -189,6 +202,9 @@ public class ItemBuilder {
             itemList.add(genItem);
         }
 
+        if(!tempItem) {
+            ItemHandler.itemMap.put(id, genItem);
+        }
         return genItem;
     }
 }

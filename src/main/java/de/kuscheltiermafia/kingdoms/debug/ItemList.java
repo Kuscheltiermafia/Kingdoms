@@ -2,7 +2,6 @@ package de.kuscheltiermafia.kingdoms.debug;
 
 import de.kuscheltiermafia.kingdoms.items.ItemBuilder;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
-import de.kuscheltiermafia.kingdoms.items.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -47,18 +46,18 @@ public class ItemList implements CommandExecutor {
         }
 
         if(itemListPage.get(user) == 0) {
-            itemList.setItem(0, new ItemStack(Items.no_page_down));
-        }else{itemList.setItem(0, new ItemStack(Items.page_down));}
+            itemList.setItem(0, ItemHandler.getItem("no_page_down_indicator"));
+        }else{itemList.setItem(0, ItemHandler.getItem("page_down_indicator"));}
 
         if((itemListPage.get(user) + 1) * 28 <= ItemHandler.itemList.size()) {
-            itemList.setItem(2, new ItemStack(Items.page_up));
-        }else{itemList.setItem(2, new ItemStack(Items.no_page_up));}
+            itemList.setItem(2, ItemHandler.getItem("page_up_indicator"));
+        }else{itemList.setItem(2, ItemHandler.getItem("no_page_up_indicator"));}
 
-        itemList.setItem(1, new ItemBuilder().setCustomName(ChatColor.DARK_RED + "Current Page: " + (itemListPage.get(user) + 1)).setID("spacer").setMaterial(Material.BOOK).setMaxStackSize(1).build());
+        itemList.setItem(1, new ItemBuilder().setCustomName(ChatColor.DARK_RED + "Current Page: " + (itemListPage.get(user) + 1)).setID("spacer").setMaterial(Material.BOOK).setMaxStackSize(1).temporary().build());
 
         for(int i = 0; i < spacers.length; i++) {
             int slot = spacers[i];
-            itemList.setItem(slot, new ItemStack(Items.spacer));
+            itemList.setItem(slot, ItemHandler.getItem("spacer"));
         }
 
         for (int i = 0; i < 28; i++) {

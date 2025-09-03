@@ -1,0 +1,15 @@
+{"customName":"§6Funky Sneaker",
+  "material":"GOLDEN_BOOTS",
+  "maxStackSize":1,
+  "lore":[],
+  "glint":false,
+  "hideTooltip":false,
+  "hideAdditionalTooltip":false,
+  "stats":
+  {
+    "DEFENSE":10.0,
+    "OVERHEAL":2.0,
+    "HEALTH":20.0,
+    "SPEED":5.0
+  },
+  "showInList":true}

@@ -6,7 +6,6 @@ import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
 import de.kuscheltiermafia.kingdoms.events.AscendEvent;
 import de.kuscheltiermafia.kingdoms.items.ItemBuilder;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
-import de.kuscheltiermafia.kingdoms.items.Items;
 import de.kuscheltiermafia.kingdoms.skills.Skill;
 import de.kuscheltiermafia.kingdoms.stats.Stat;
 import org.bukkit.ChatColor;
@@ -48,7 +47,6 @@ public class TomeOfEras {
         List<String> skilllore = new ArrayList<>();
         PlayerStats playerSkills = PlayerUtility.getPlayerImage(p);
         for(Skill skill : Skill.values()) {
-            Logger.getLogger("Kingdoms").info("Skill: " + skill.getDisplayName() + " - Level: " + playerSkills.getValueBySkill(skill, false));
             skilllore.add(skill.getColor() + skill.getIcon() + " " + skill.getDisplayName() + ": " + (int) playerSkills.getValueBySkill(skill, false));
         }
         ItemStack playerSkill = new ItemBuilder().setMaterial(Material.EXPERIENCE_BOTTLE).setID("view_skills_button").setCustomName(ChatColor.LIGHT_PURPLE + "Your Skill Levels: ").setLore(skilllore).addGlint().setMaxStackSize(1).build();
@@ -59,18 +57,18 @@ public class TomeOfEras {
         toe.setItem(37, guide);
 
         if (AscendEvent.godlyRealm.containsKey(p) && AscendEvent.godlyRealm.get(p)) {
-            toe.setItem(21, new ItemStack(Items.descend_item));
+            toe.setItem(21, ItemHandler.getItem("descend_item"));
         }else{
-            toe.setItem(21, new ItemStack(Items.ascend_item));
+            toe.setItem(21, ItemHandler.getItem("ascend_item"));
         }
 
-        toe.setItem(14, new ItemStack(Items.placeholder));
-        toe.setItem(15, new ItemStack(Items.placeholder));
+        toe.setItem(14, ItemHandler.getItem("placeholder"));
+        toe.setItem(15, ItemHandler.getItem("placeholder"));
 
-        toe.setItem(16, Items.placeholder);
+        toe.setItem(16, ItemHandler.getItem("placeholder"));
 
         for(int i : new int[]{32, 33, 34, 41, 42, 43}) {
-            toe.setItem(i, Items.placeholder);
+            toe.setItem(i, ItemHandler.getItem("placeholder"));
         }
 
         if(p.isOp()) {

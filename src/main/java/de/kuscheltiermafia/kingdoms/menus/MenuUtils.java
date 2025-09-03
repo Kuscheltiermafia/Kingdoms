@@ -2,7 +2,6 @@ package de.kuscheltiermafia.kingdoms.menus;
 
 import de.kuscheltiermafia.kingdoms.items.ItemBuilder;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
-import de.kuscheltiermafia.kingdoms.items.Items;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -12,7 +11,7 @@ public class MenuUtils {
     public static void fillWithSpacers(Inventory inv) {
         for(int i = 0; i < inv.getSize(); i++) {
             if(inv.getItem(i) == null || inv.getItem(i).getType() == Material.AIR) {
-                inv.setItem(i, new ItemStack(Items.spacer));
+                inv.setItem(i, ItemHandler.getItem("spacer"));
             }
         }
     }

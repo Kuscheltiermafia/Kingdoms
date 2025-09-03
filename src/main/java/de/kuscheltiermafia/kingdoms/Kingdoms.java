@@ -8,7 +8,7 @@ import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
 import de.kuscheltiermafia.kingdoms.debug.GetStats;
 import de.kuscheltiermafia.kingdoms.debug.ItemList;
 import de.kuscheltiermafia.kingdoms.events.*;
-import de.kuscheltiermafia.kingdoms.items.Items;
+import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import de.kuscheltiermafia.kingdoms.overlays.ActionBarHandler;
 import de.kuscheltiermafia.kingdoms.stats.PlayerStatModel;
 import de.kuscheltiermafia.kingdoms.stats.UpdatePlayerStats;
@@ -30,7 +30,7 @@ public final class Kingdoms extends JavaPlugin {
 
         plugin = this;
 
-        Items.initializeItems();
+        ItemHandler.registerItems();
 
         Bukkit.getPluginManager().registerEvents(new AscendEvent(), this);
         Bukkit.getPluginManager().registerEvents(new DescendEvent(), this);
@@ -38,6 +38,7 @@ public final class Kingdoms extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new QuitEvent(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryEvents(), this);
         Bukkit.getPluginManager().registerEvents(new TomeOfErasEvents(), this);
+        //Bukkit.getPluginManager().registerEvents(new OnDamageEvent(), this);
 
         getCommand("itemlist").setExecutor(new ItemList());
         getCommand("getstats").setExecutor(new GetStats());

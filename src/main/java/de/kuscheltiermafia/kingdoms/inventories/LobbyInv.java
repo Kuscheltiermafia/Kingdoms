@@ -2,7 +2,6 @@ package de.kuscheltiermafia.kingdoms.inventories;
 
 import org.bukkit.entity.Player;
 
-import static de.kuscheltiermafia.kingdoms.items.Items.ascend_item;
 
 public class LobbyInv {
 /*
