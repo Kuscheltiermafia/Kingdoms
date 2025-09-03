@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 
 public class Grid {
 
+    static final int Y_LEVEL = 45;
+
     static final double DIMENSIONS_BUILDINGS = 8;
     static final double WIDTH_PATHS = 3;
 
@@ -51,7 +53,7 @@ public class Grid {
 
         double xCoordinate = (xIndex - 1 * Math.signum(xIndex)) * (int)(DIMENSIONS_BUILDINGS + WIDTH_PATHS) + Math.signum(xIndex) * Math.round(WIDTH_PATHS / 2) + (int)X_TOWN_HALL;
         double zCoordinate = (zIndex - 1 * Math.signum(zIndex)) * (int)(DIMENSIONS_BUILDINGS + WIDTH_PATHS) + Math.signum(zIndex) * Math.round(WIDTH_PATHS / 2) + (int)Z_TOWN_HALL;
-        return String.format("x%fz%f", xCoordinate, zCoordinate);
+        return String.format("%d;%d;%d", (int) xCoordinate, Y_LEVEL, (int) zCoordinate);
 
     }
 

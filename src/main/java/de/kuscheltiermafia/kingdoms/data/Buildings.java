@@ -1,6 +1,7 @@
 package de.kuscheltiermafia.kingdoms.data;
 
 import de.kuscheltiermafia.kingdoms.Kingdoms;
+import de.kuscheltiermafia.kingdoms.building.Building;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -22,16 +23,18 @@ public class Buildings {
         return false;
     }
 
-    public String getBuilding(String position) {
-        return config.getString(position, "none");
+    public Building getBuilding(String cell) {
+        String structureName = config.getString(cell, "none");
+        if (structureName.equals("none")) return null;
+        return Building.fromString(structureName);
     }
 
-    public void setBuilding(String position, String building) {
-        config.set(position, building);
+    public void setBuilding(String cell, Building building) {
+        config.set(cell, building.getStructureName());
         try {
             config.save(file);
         } catch (Exception e) {
-            Kingdoms.getPlugin().getLogger().warning("Could not save building data for position " + position);
+            Kingdoms.getPlugin().getLogger().warning("Could not save building data for position " + cell);
         }
     }
 
