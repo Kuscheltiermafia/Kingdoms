@@ -2,11 +2,8 @@ package de.kuscheltiermafia.kingdoms;
 
 import co.aikar.commands.PaperCommandManager;
 import de.kuscheltiermafia.kingdoms.data.Buildings;
-import de.kuscheltiermafia.kingdoms.debug.GetCellCommand;
-import de.kuscheltiermafia.kingdoms.debug.StructureCommand;
+import de.kuscheltiermafia.kingdoms.debug.*;
 import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
-import de.kuscheltiermafia.kingdoms.debug.GetStats;
-import de.kuscheltiermafia.kingdoms.debug.ItemList;
 import de.kuscheltiermafia.kingdoms.events.*;
 import de.kuscheltiermafia.kingdoms.items.Items;
 import de.kuscheltiermafia.kingdoms.overlays.ActionBarHandler;
@@ -71,6 +68,7 @@ public final class Kingdoms extends JavaPlugin {
         PaperCommandManager manager = new PaperCommandManager(this);
         manager.registerCommand(new StructureCommand());
         manager.registerCommand(new GetCellCommand());
+        manager.registerCommand(new BuildCommand());
     }
 
     @Override

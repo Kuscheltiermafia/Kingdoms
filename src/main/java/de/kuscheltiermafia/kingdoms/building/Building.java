@@ -14,7 +14,7 @@ public enum Building {
 
     ARCH_TOWER("arch_tower", 1 , -1),
     BAKERY("bakery", 1 , -1),
-    CAMP("camp", 1 , 0),
+    CAMP("camp", 1 , -1),
     FARM("farm", 1 , 0),
     LUMBERJACK("lumberjack", 1, 0),
     MINE("mine", 1, -5),
@@ -78,6 +78,6 @@ public enum Building {
 
         StructureRotation structureRotation = StructureRotation.values()[rotation % StructureRotation.values().length];
 
-        structure.place(location.add(0, building.offsetY - 1, 0), true, structureRotation, Mirror.NONE, 0, 1.0f, new Random());
+        structure.place(location.add(0, building.offsetY, 0), true, structureRotation, Mirror.NONE, 0, 1.0f, new Random());
     }
 }
