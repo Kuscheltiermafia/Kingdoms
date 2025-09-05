@@ -32,10 +32,15 @@ public class UpdatePlayerStats {
 
         for (EquipmentSlot slot : playerStatSlots) {
             if(p.getInventory().getItem(slot) != null && p.getInventory().getItem(slot).hasItemMeta() && p.getInventory().getItem(slot).getItemMeta().getPersistentDataContainer().has(ItemHandler.STATS)) {
+                if(!p.getInventory().getItem(slot).getItemMeta().getPersistentDataContainer().has(ItemHandler.FINAL_STATS)) {
+                    ItemHandler.updateItem(p.getInventory().getItem(slot));
+                }
                 ItemStack currentItem = p.getInventory().getItem(slot);
-                HashMap<Stat, Double> itemStatSet = GsonHandler.returnItemStatMap(currentItem.getItemMeta().getPersistentDataContainer().get(ItemHandler.STATS, PersistentDataType.STRING));
+                HashMap<Stat, Double> itemStatSet = GsonHandler.fromJson(currentItem.getItemMeta().getPersistentDataContainer().get(ItemHandler.FINAL_STATS, PersistentDataType.STRING), GsonHandler.STAT_MAP_TYPE);
                 for(Stat stat : itemStatSet.keySet()) {
-                    playerStatModel.setStat(stat, playerStatModel.getStat(stat) + itemStatSet.get(stat));
+                    if(itemStatSet.get(stat) != null) {
+                        playerStatModel.setStat(stat, playerStatModel.getStat(stat) + itemStatSet.get(stat));
+                    }
                 }
             }
         }

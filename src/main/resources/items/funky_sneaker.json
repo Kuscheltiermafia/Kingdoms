@@ -1,10 +1,19 @@
 {"customName":"§6Funky Sneaker",
   "material":"GOLDEN_BOOTS",
+  "level": "FORGED",
+  "type": "BOOTS",
   "maxStackSize":1,
   "lore":[],
   "glint":false,
   "hideTooltip":false,
   "hideAdditionalTooltip":false,
+  "rarity":"DIVINE",
+  "gemstones": {
+    "SAPPHIRE": 0,
+    "AMETHYST": 0,
+    "SMOKEY_QUARTZ": 80,
+    "FIRE_OPAL": 100
+  },
   "stats":
   {
     "DEFENSE":10.0,

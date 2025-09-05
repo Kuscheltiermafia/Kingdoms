@@ -1,6 +1,6 @@
 package de.kuscheltiermafia.kingdoms.events;
 
-import de.kuscheltiermafia.kingdoms.stats.Calculator;
+import de.kuscheltiermafia.kingdoms.stats.DamageCalculator;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.craftbukkit.v1_21_R4.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
@@ -21,7 +21,7 @@ public class OnDamageEvent implements Listener {
 
             ServerPlayer nmsDamager = ((CraftPlayer) damager).getHandle();
 
-            Calculator.damagePlayer(Calculator.calculateFinalDamage(damager), target);
+            DamageCalculator.damagePlayer(DamageCalculator.calculateFinalDamage(damager), target);
         }
     }
 

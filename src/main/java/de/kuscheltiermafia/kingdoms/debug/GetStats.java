@@ -1,7 +1,7 @@
 package de.kuscheltiermafia.kingdoms.debug;
 
 import de.kuscheltiermafia.kingdoms.Kingdoms;
-import de.kuscheltiermafia.kingdoms.stats.Calculator;
+import de.kuscheltiermafia.kingdoms.stats.DamageCalculator;
 import de.kuscheltiermafia.kingdoms.stats.Stat;
 import de.kuscheltiermafia.kingdoms.stats.UpdatePlayerStats;
 import org.bukkit.command.Command;
@@ -20,7 +20,7 @@ public class GetStats implements CommandExecutor {
 
             switch (args[0]) {
                 case "finaldmg":
-                    p.sendMessage("Final Damage: " + Calculator.calculateFinalDamage(p));
+                    p.sendMessage("Final Damage: " + DamageCalculator.calculateFinalDamage(p));
                     break;
                 case "all":
                     for(Stat stat : Stat.values()) {

@@ -1,0 +1,19 @@
+{
+  "customName": "§bMagic Diamond",
+  "material": "DIAMOND",
+  "maxStackSize": 1,
+  "lore": [
+    "§7A diamond infused with magical energy.",
+    "§7It glows with a mysterious light."
+  ],
+  "glint": true,
+  "showInList": true,
+  "abilityKeys":[
+    "test_ability"
+  ],
+  "stats": {
+    "INTELLIGENCE": 10.0,
+    "MANA_REGENERATION": 999,
+    "DAMAGE": 20
+  }
+}

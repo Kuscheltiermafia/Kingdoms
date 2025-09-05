@@ -1,5 +1,7 @@
 package de.kuscheltiermafia.kingdoms.stats;
 
+import static java.lang.Math.ceil;
+
 public class PlayerStatModel {
 
     double health;
@@ -24,13 +26,15 @@ public class PlayerStatModel {
     double absorption;
     double spread;
     double manaSteal;
+    double vitality;
+    double ferocity;
 
     public void resetStats() {
         this.health = 20;
         this.defense = 0;
         this.intelligence = 10;
         this.manaRegeneration = 2;
-        this.critChance = 0.05;
+        this.critChance = 5;
         this.critDamage = 1;
         this.damage = 4;
         this.strength = 4;
@@ -45,6 +49,11 @@ public class PlayerStatModel {
         this.absorption = 0;
         this.spread = 0;
         this.manaSteal = 0;
+        this.vitality = 0;
+        this.ferocity = 0;
+    }
+
+    public void initializeIndirectStats() {
         this.actualHealth = this.health;
         this.maxMana = this.intelligence * (1 + (this.spellbound / 100));
         this.actualMana = this.maxMana;
@@ -90,6 +99,10 @@ public class PlayerStatModel {
                 return spread;
             case MANA_STEAL:
                 return manaSteal;
+            case VITALITY:
+                return vitality;
+            case FEROCITY:
+                return ferocity;
             default:
                 throw new IllegalArgumentException("Unknown stat: " + stat);
         }
@@ -154,6 +167,12 @@ public class PlayerStatModel {
             case MANA_STEAL:
                 this.manaSteal = value;
                 break;
+            case VITALITY:
+                this.vitality = value;
+                break;
+            case FEROCITY:
+                this.ferocity = value;
+                break;
             default:
                 throw new IllegalArgumentException("Unknown stat: " + stat);
         }
@@ -162,8 +181,8 @@ public class PlayerStatModel {
     public double getActiveHealth() {
         return actualHealth;
     }
-    public void setActiveHealth(double activeMana) {
-        this.actualHealth = actualHealth;
+    public void setActiveHealth(double activeHealth) {
+        this.actualHealth = Math.round(activeHealth);
     }
 
     public double getActiveMana() {
@@ -171,7 +190,7 @@ public class PlayerStatModel {
     }
 
     public void setActiveMana(double activeMana) {
-        this.actualMana = actualMana;
+        this.actualMana = Math.round(activeMana);
     }
 
     public double getMaxMana() {

@@ -8,9 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static de.kuscheltiermafia.kingdoms.items.ItemHandler.itemList;
 
@@ -18,6 +16,10 @@ public class ItemBuilder {
 
     String customName;
     String id;
+    ItemRarity rarity;
+    ItemType type;
+    ItemLevel level;
+    int currentLevelProgress;
     Material material;
     int maxStackSize = 64;
     List<String> lore;
@@ -26,6 +28,8 @@ public class ItemBuilder {
     boolean hideAdditionalTooltip;
 
     HashMap<Stat, Double> stats;
+    HashMap<Gemstone, Integer> gemstones;
+    Set<String> abilityKeys;
 
     boolean showInList;
     boolean tempItem;
@@ -33,6 +37,8 @@ public class ItemBuilder {
     public ItemBuilder() {
         this.lore = new ArrayList<>();
         this.stats = new HashMap<>();
+        this.abilityKeys = new HashSet<>();
+        this.gemstones = new HashMap<>();
     }
 
     public ItemBuilder setID(String id) {
@@ -159,6 +165,36 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder addAbilityKey(String abilityKey) {
+        this.abilityKeys.add(abilityKey);
+        return this;
+    }
+
+    public ItemBuilder setRarity(ItemRarity rarity) {
+        this.rarity = rarity;
+        return this;
+    }
+
+    public ItemBuilder setType(ItemType type) {
+        this.type = type;
+        return this;
+    }
+
+    public ItemBuilder setLevel(ItemLevel level) {
+        this.level = level;
+        return this;
+    }
+
+    public ItemBuilder setGemstone(Gemstone gemstone, int grade) {
+        this.gemstones.put(gemstone, grade);
+        return this;
+    }
+
+    public ItemBuilder setCurrentLevelProgress(int progress) {
+        this.currentLevelProgress = progress;
+        return this;
+    }
+
     public ItemBuilder temporary() {
         this.tempItem = true;
         return this;
@@ -190,13 +226,37 @@ public class ItemBuilder {
             meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
         }
 
+        if(ItemLevel.canLevel(type)) {
+            meta.getPersistentDataContainer().set(ItemHandler.LEVEL, PersistentDataType.STRING, level != null ? level.levelID : ItemLevel.BASIC.levelID);
+            meta.getPersistentDataContainer().set(ItemHandler.CURRENT_LEVEL_PROGRESS, PersistentDataType.INTEGER, currentLevelProgress != 0 ? currentLevelProgress : 0);
+
+            meta.getPersistentDataContainer().set(ItemHandler.GEMSTONES, PersistentDataType.STRING, gemstones != null || !gemstones.isEmpty() ? GsonHandler.toJson(gemstones) : GsonHandler.toJson(new HashMap<Gemstone, Integer>()));
+        }
+
         if(!stats.isEmpty()) {
             meta.getPersistentDataContainer().set(ItemHandler.STATS, PersistentDataType.STRING, GsonHandler.toJson(stats));
         }
 
-        LoreBuilder.updateLore(meta);
+        if(!abilityKeys.isEmpty()) {
+            meta.getPersistentDataContainer().set(ItemHandler.ABILITIES, PersistentDataType.STRING, GsonHandler.toJson(abilityKeys));
+        }
+
+        if(rarity != null) {
+            meta.getPersistentDataContainer().set(ItemHandler.RARITY, PersistentDataType.STRING, rarity.getId());
+            meta.setDisplayName(rarity.color + customName);
+        } else {
+            meta.getPersistentDataContainer().set(ItemHandler.RARITY, PersistentDataType.STRING, ItemRarity.COMMON.getId());
+            meta.setDisplayName(ItemRarity.COMMON.color + customName);
+        }
+
+        if(type != null) {
+            meta.getPersistentDataContainer().set(ItemHandler.TYPE, PersistentDataType.STRING, type.getId());
+        } else {
+            meta.getPersistentDataContainer().set(ItemHandler.TYPE, PersistentDataType.STRING, ItemType.MISC.getId());
+        }
 
         genItem.setItemMeta(meta);
+        ItemHandler.updateItem(genItem);
 
         if(showInList) {
             itemList.add(genItem);

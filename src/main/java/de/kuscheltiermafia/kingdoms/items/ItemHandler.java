@@ -1,6 +1,7 @@
 package de.kuscheltiermafia.kingdoms.items;
 
 import de.kuscheltiermafia.kingdoms.Kingdoms;
+import de.kuscheltiermafia.kingdoms.stats.Stat;
 import de.kuscheltiermafia.kingdoms.utils.GsonHandler;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -12,14 +13,26 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static de.kuscheltiermafia.kingdoms.items.ItemTextBuilder.updateTextMeta;
+import static de.kuscheltiermafia.kingdoms.stats.ItemStatCalculator.returnFinalStatMap;
+
 public class ItemHandler {
 
     public static NamespacedKey ID = new NamespacedKey(Kingdoms.getPlugin(), "kingdoms");
+    public static NamespacedKey RARITY = new NamespacedKey(Kingdoms.getPlugin(), "rarity");
+    public static NamespacedKey TYPE = new NamespacedKey(Kingdoms.getPlugin(), "type");
+    public static NamespacedKey LEVEL = new NamespacedKey(Kingdoms.getPlugin(), "level");
+    public static NamespacedKey CURRENT_LEVEL_PROGRESS = new NamespacedKey(Kingdoms.getPlugin(), "current_level_progress");
+
     public static NamespacedKey STATS = new NamespacedKey(Kingdoms.getPlugin(), "stats");
+    public static NamespacedKey FINAL_STATS = new NamespacedKey(Kingdoms.getPlugin(), "final_stats");
+    public static NamespacedKey STAT_MULTIPLICATIVE = new NamespacedKey(Kingdoms.getPlugin(), "stat_multiplier");
+    public static NamespacedKey STAT_ADDITITVE = new NamespacedKey(Kingdoms.getPlugin(), "stat_addition");
+
     public static NamespacedKey ABILITIES = new NamespacedKey(Kingdoms.getPlugin(), "abilities");
     public static NamespacedKey ENCHANTMENTS = new NamespacedKey(Kingdoms.getPlugin(), "enchantments");
     public static NamespacedKey GEMSTONES = new NamespacedKey(Kingdoms.getPlugin(), "gemstones");
-    public static NamespacedKey TEMP_STORAGE = new NamespacedKey(Kingdoms.getPlugin(), "temporary_storage");
+    public static NamespacedKey STORAGE = new NamespacedKey(Kingdoms.getPlugin(), "data_storage");
 
     public static ArrayList<ItemStack> itemList = new ArrayList<>();
     public static HashMap<String, ItemStack> itemMap = new HashMap<>();
@@ -40,6 +53,7 @@ public class ItemHandler {
         new ItemBuilder().setMaterial(Material.ARROW).setID("page_down_indicator").setCustomName("§aPrevious Page").setMaxStackSize(1).build();
         new ItemBuilder().setMaterial(Material.STRUCTURE_VOID).setID("placeholder").setCustomName("§5§l§kA§r§7 PLACEHOLDER §r§5§l§kA").setMaxStackSize(64).build();
         new ItemBuilder().setMaterial(Material.GRAY_STAINED_GLASS_PANE).setID("spacer").hideTooltip().setMaxStackSize(1).build();
+        System.out.println(GsonHandler.toJson(new ItemBuilder().setCurrentLevelProgress(7)));
     }
 
     public static ItemStack getItem(String id) {
@@ -56,6 +70,36 @@ public class ItemHandler {
         p.getInventory().removeItem(item);
     }
 
+    public static void updateItem(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        assert meta != null;
+        ItemLevel.updateItemLevelBoosts(item);
+        Gemstone.updateGemGradeStatBoosts(item);
+
+        HashMap<Stat, Double> statMap = returnFinalStatMap(item);
+        meta.getPersistentDataContainer().set(FINAL_STATS, PersistentDataType.STRING, GsonHandler.toJson(statMap));
+
+        HashMap<String, Integer> enchantments = GsonHandler.fromJson(meta.getPersistentDataContainer().get(ENCHANTMENTS, PersistentDataType.STRING), GsonHandler.ENCHANT_MAP_TYPE);
+        if(enchantments == null || enchantments.isEmpty()) {
+            meta.getPersistentDataContainer().remove(ENCHANTMENTS);
+        }
+
+        ArrayList<String> newLore = new ArrayList<>();
+
+        HashMap<String, ItemBuilder> storedItems = GsonHandler.returnStoredItems();
+        for(String key : storedItems.keySet()) {
+            ItemBuilder builder = storedItems.get(key);
+            if(meta.getPersistentDataContainer().get(ID, PersistentDataType.STRING).equals(key)) {
+                newLore.addAll(builder.lore);
+                break;
+            }
+        }
+        meta.setLore(newLore);
+        updateTextMeta(meta);
+
+        item.setItemMeta(meta);
+    }
+
     //Utils
     public static ItemStack convertToDisplayItem(ItemStack toSpacer, int amount) {
         ItemStack spacerItem = new ItemStack(toSpacer);
@@ -67,18 +111,6 @@ public class ItemHandler {
         return spacerItem;
     }
 
-    public static ItemStack getItemById(String id) {
-        for (ItemStack item : itemList) {
-            try {
-                if (item.getItemMeta().getPersistentDataContainer().get(ID, PersistentDataType.STRING).equals(id)) {
-                    return item;
-                }
-            }catch (Exception ignored) {
-            }
-        }
-        return null;
-    }
-
     public static boolean checkItemID(ItemStack item, String id) {
         try {
             if (item.getItemMeta().getPersistentDataContainer().get(ItemHandler.ID, PersistentDataType.STRING).equals(id)) {
@@ -88,14 +120,6 @@ public class ItemHandler {
             }
         }catch (Exception e) {
             return false;
-        }
-    }
-
-    public static String getItemID(ItemStack item) {
-        try {
-            return item.getItemMeta().getPersistentDataContainer().get(ID, PersistentDataType.STRING);
-        }catch (Exception ignored) {
-            return "null";
         }
     }
 }

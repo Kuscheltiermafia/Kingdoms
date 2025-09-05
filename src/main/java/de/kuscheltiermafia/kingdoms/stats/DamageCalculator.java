@@ -4,7 +4,7 @@ import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.teleports.LobbyTeleport;
 import org.bukkit.entity.Player;
 
-public class Calculator {
+public class DamageCalculator {
 
     public static double calculateFinalDamage(Player p) {
         PlayerStatModel stats = Kingdoms.playerStatModelIdentifier.get(p);

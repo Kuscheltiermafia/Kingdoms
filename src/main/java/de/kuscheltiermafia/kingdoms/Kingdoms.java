@@ -6,7 +6,8 @@ import de.kuscheltiermafia.kingdoms.debug.*;
 import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
 import de.kuscheltiermafia.kingdoms.events.*;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
-import de.kuscheltiermafia.kingdoms.overlays.ActionBarHandler;
+import de.kuscheltiermafia.kingdoms.items.itemAbilities.AbilityHandler;
+import de.kuscheltiermafia.kingdoms.items.itemEnchants.EnchantmentHandler;
 import de.kuscheltiermafia.kingdoms.stats.PlayerStatModel;
 import de.kuscheltiermafia.kingdoms.stats.UpdatePlayerStats;
 import org.bukkit.Bukkit;
@@ -27,7 +28,12 @@ public final class Kingdoms extends JavaPlugin {
 
         plugin = this;
 
+        AbilityHandler.registerAbility();
+        EnchantmentHandler.registerEnchantments();
         ItemHandler.registerItems();
+
+        RepeatingTasks.updateEachTick();
+        RepeatingTasks.updateEachSecond();
 
         Bukkit.getPluginManager().registerEvents(new AscendEvent(), this);
         Bukkit.getPluginManager().registerEvents(new DescendEvent(), this);
@@ -35,16 +41,16 @@ public final class Kingdoms extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new QuitEvent(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryEvents(), this);
         Bukkit.getPluginManager().registerEvents(new TomeOfErasEvents(), this);
+        Bukkit.getPluginManager().registerEvents(new AbilityHandler(), this);
         //Bukkit.getPluginManager().registerEvents(new OnDamageEvent(), this);
 
         getCommand("itemlist").setExecutor(new ItemList());
         getCommand("getstats").setExecutor(new GetStats());
 
-        ActionBarHandler.startActionBarUpdater();
-
         for(Player p : Bukkit.getOnlinePlayers()) {
             playerStatModelIdentifier.put(p, new PlayerStatModel());
             playerStatModelIdentifier.get(p).resetStats();
+            playerStatModelIdentifier.get(p).initializeIndirectStats();
             UpdatePlayerStats.updatePlayerStats(p);
         }
 
@@ -70,6 +76,7 @@ public final class Kingdoms extends JavaPlugin {
         manager.registerCommand(new StructureCommand());
         manager.registerCommand(new GetCellCommand());
         manager.registerCommand(new BuildCommand());
+        manager.registerCommand(new ItemupgradesCommand());
     }
 
     @Override

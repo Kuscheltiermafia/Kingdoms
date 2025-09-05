@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.items.ItemBuilder;
+import de.kuscheltiermafia.kingdoms.items.itemEnchants.ItemEnchant;
 import de.kuscheltiermafia.kingdoms.stats.Stat;
 
 import java.io.IOException;
@@ -20,17 +21,16 @@ import java.util.jar.JarFile;
 public class GsonHandler {
     public static final Gson GSON = new Gson();
 
+    public static final Type STAT_MAP_TYPE = new TypeToken<HashMap<Stat, Double>>() {}.getType();
+    public static final Type ENCHANT_MAP_TYPE = new TypeToken<HashMap<String, Integer>>() {}.getType();
+    public static final Type ITEM_STAT_MODIFIER_TYPE = new TypeToken<HashMap<Stat, HashMap<String, Double>>>() {}.getType();
+
     public static String toJson(Object obj) {
         return GSON.toJson(obj);
     }
 
-    public static <T> T fromJson(String json, Class<T> classOfT) {
-        return GSON.fromJson(json, classOfT);
-    }
-
-    public static HashMap<Stat, Double> returnItemStatMap(String json) {
-        Type type = new TypeToken<HashMap<Stat, Double>>() {}.getType();
-        return GSON.fromJson(json, type);
+    public static <T> T fromJson(String json, Type ofT) {
+        return GSON.fromJson(json, ofT);
     }
 
     public static HashMap<String, ItemBuilder> returnStoredItems() {

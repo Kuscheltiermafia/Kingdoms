@@ -1,0 +1,10 @@
+{"customName":"§fGolden Waraxe",
+  "material":"GOLDEN_AXE",
+  "type": "AXE",
+  "rarity":"LEGENDARY",
+  "maxStackSize":1,
+  "lore":["§7Weapon of mass destruction"],
+  "glint":false,"hideTooltip":false,
+  "hideAdditionalTooltip":false,
+  "stats":{"STRENGTH":20.0,"CRIT_CHANCE":10.0,"CRIT_DAMAGE":50.0,"DAMAGE": 80},
+  "showInList":true}

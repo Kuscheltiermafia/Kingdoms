@@ -44,7 +44,7 @@ public class SkillsPage {
             skillLore.add(ChatColor.GRAY + "Current Level: " + playerStats.getValueBySkill(skill, false));
             skillLore.add(ChatColor.GRAY + "Current Experience: " + playerStats.getValueBySkill(skill, true) + " / " + playerStats.getLevelXP((int) playerStats.getValueBySkill(skill, false)));
 
-            ItemStack skillItem = new ItemBuilder().setMaterial(skill.getIconItem()).setID("spacer" /*maybe skill_view_item*/).setCustomName(skill.getColor() + skill.getIcon() + " " + skill.getDisplayName()).setLore(skillLore).setMaxStackSize(1).build();
+            ItemStack skillItem = new ItemBuilder().setMaterial(skill.getIconItem()).setID("spacer" /*maybe skill_view_item*/).setCustomName(skill.getColor() + skill.getIcon() + " " + skill.getDisplayName()).setLore(skillLore).setMaxStackSize(1).temporary().build();
 
             skillItems.put(slots[index], skillItem);
         }
