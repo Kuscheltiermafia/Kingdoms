@@ -1,21 +1,22 @@
 package de.kuscheltiermafia.kingdoms.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.items.ItemBuilder;
+import de.kuscheltiermafia.kingdoms.items.crafting.BaseRecipe;
+import de.kuscheltiermafia.kingdoms.items.crafting.RecipeTranslator;
 import de.kuscheltiermafia.kingdoms.items.itemEnchants.ItemEnchant;
 import de.kuscheltiermafia.kingdoms.stats.Stat;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.*;
 import java.util.jar.JarFile;
 
 public class GsonHandler {
@@ -68,5 +69,41 @@ public class GsonHandler {
             e.printStackTrace();
         }
         return items;
+    }
+
+    public static List<BaseRecipe> returnCraftingTableRecipes() {
+        List<BaseRecipe> recipes = new ArrayList<>();
+        try {
+            Enumeration<URL> resources = Kingdoms.getPlugin().getClass().getClassLoader().getResources("recipes/crafting_table");
+
+            while (resources.hasMoreElements()) {
+                URL url = resources.nextElement();
+
+                if (url.getProtocol().equals("jar")) {
+                    String path = url.getPath();
+                    String jarPath = path.substring(5, path.indexOf("!"));
+                    try (JarFile jar = new JarFile(URLDecoder.decode(jarPath, StandardCharsets.UTF_8))) {
+                        jar.stream()
+                                .filter(entry -> entry.getName().startsWith("recipes/crafting_table") && entry.getName().endsWith(".json"))
+                                .forEach(entry -> {
+                                    String itemId = entry.getName().substring("recipes/crafting_table".length(), entry.getName().length() - 5);
+                                    try (InputStream in = Kingdoms.getPlugin().getResource(entry.getName())) {
+                                        if (in != null) {
+                                            JsonObject jsonObject = JsonParser.parseReader(new InputStreamReader(in)).getAsJsonObject();
+                                            recipes.add(RecipeTranslator.parse(jsonObject));
+                                        }
+                                    } catch (Exception e) {
+                                        Kingdoms.getPlugin().getLogger().warning("Failed to load recipe: " + entry.getName());
+                                        e.printStackTrace();
+                                    }
+                                });
+                    }
+                }
+            }
+        } catch (IOException e) {
+            Kingdoms.getPlugin().getLogger().severe("Error loading custom items: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return recipes;
     }
 }

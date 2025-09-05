@@ -1,0 +1,12 @@
+{ "type": "shaped",
+  "gridSize": [3, 3],
+  "pattern":
+  [ ["ascend_item:1", "focken:1", null],
+    [null, "focken:1", null],
+    ["iron_sword:1", null, "iron_sword:1"]
+  ],
+  "result": {
+    "item": "golden_waraxe",
+    "amount": 2
+  }
+}

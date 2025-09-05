@@ -1,0 +1,11 @@
+{
+  "type": "shapeless",
+  "ingredients": [
+    "magic_diamond:1",
+    "iron_sword:1"
+  ],
+  "result": {
+    "item": "iron_sword",
+    "amount": 1
+  }
+}
