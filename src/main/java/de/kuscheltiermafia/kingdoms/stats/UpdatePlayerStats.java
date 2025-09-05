@@ -3,7 +3,14 @@ package de.kuscheltiermafia.kingdoms.stats;
 import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import de.kuscheltiermafia.kingdoms.utils.GsonHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
@@ -11,7 +18,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UpdatePlayerStats {
+public class UpdatePlayerStats implements Listener {
 
     public static ArrayList<EquipmentSlot> playerStatSlots = new ArrayList<>();
 
@@ -46,4 +53,38 @@ public class UpdatePlayerStats {
         }
     }
 
+    @EventHandler
+    public void onHotbarSwap(PlayerSwapHandItemsEvent e) {
+        Bukkit.getScheduler().runTaskLater(Kingdoms.getPlugin(), () -> {
+            updatePlayerStats(e.getPlayer());
+        }, 2L);
+    }
+
+    @EventHandler
+    public void swapHotbar(PlayerItemHeldEvent e) {
+        Bukkit.getScheduler().runTaskLater(Kingdoms.getPlugin(), () -> {
+            Player p = e.getPlayer();
+            updatePlayerStats(p);
+        }, 2L);
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e) {
+        if(e.getWhoClicked() instanceof Player && e.getCurrentItem() != null) {
+            Bukkit.getScheduler().runTaskLater(Kingdoms.getPlugin(), () -> {
+                Player p = (Player) e.getWhoClicked();
+                updatePlayerStats(p);
+            }, 2L);
+        }
+    }
+
+    @EventHandler
+    public void onArmorChange(PlayerInteractEvent e) {
+        if(e.getPlayer() instanceof Player && e.getItem() != null) {
+                Bukkit.getScheduler().runTaskLater(Kingdoms.getPlugin(), () -> {
+                Player p = (Player) e.getPlayer();
+                updatePlayerStats(p);
+            }, 2L);
+        }
+    }
 }

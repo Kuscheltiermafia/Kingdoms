@@ -1,4 +1,5 @@
-{"customName":"§6Funky Sneaker",
+{
+  "customName":"§6Funky Sneaker",
   "material":"GOLDEN_BOOTS",
   "level": "FORGED",
   "type": "BOOTS",
@@ -8,7 +9,8 @@
   "hideTooltip":false,
   "hideAdditionalTooltip":false,
   "rarity":"DIVINE",
-  "gemstones": {
+  "gemstones":
+  {
     "SAPPHIRE": 0,
     "AMETHYST": 0,
     "SMOKEY_QUARTZ": 80,
@@ -21,4 +23,5 @@
     "HEALTH":20.0,
     "SPEED":5.0
   },
-  "showInList":true}
+  "showInList":true
+}

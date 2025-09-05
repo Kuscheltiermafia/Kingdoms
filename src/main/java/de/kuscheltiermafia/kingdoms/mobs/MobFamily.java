@@ -46,4 +46,20 @@ public enum MobFamily {
         this.icon = icon;
         this.color = color;
     }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getCodeID() {
+        return codeID;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public ChatColor getColor() {
+        return color;
+    }
 }

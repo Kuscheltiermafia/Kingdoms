@@ -46,7 +46,8 @@ public final class Kingdoms extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new TomeOfErasEvents(), this);
         Bukkit.getPluginManager().registerEvents(new AbilityHandler(), this);
         Bukkit.getPluginManager().registerEvents(new CraftingEvents(), this);
-        //Bukkit.getPluginManager().registerEvents(new OnDamageEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new OnDamageEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new UpdatePlayerStats(), this);
 
         getCommand("itemlist").setExecutor(new ItemList());
         getCommand("getstats").setExecutor(new GetStats());
@@ -81,6 +82,7 @@ public final class Kingdoms extends JavaPlugin {
         manager.registerCommand(new GetCellCommand());
         manager.registerCommand(new BuildCommand());
         manager.registerCommand(new ItemupgradesCommand());
+        manager.registerCommand(new EntityCommand());
     }
 
     @Override

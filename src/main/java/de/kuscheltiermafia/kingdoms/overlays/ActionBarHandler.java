@@ -18,8 +18,8 @@ public class ActionBarHandler {
             if(player.getGameMode().equals(GameMode.ADVENTURE) || player.getGameMode().equals(GameMode.SURVIVAL)) {
                 PlayerStatModel stats = Kingdoms.playerStatModelIdentifier.get(player);
                 if (stats != null) {
-                    String message = ChatColor.RED + "" + stats.getActiveHealth() + " / " +
-                            stats.getStat(Stat.HEALTH) + "❤" + "  " +
+                    String message = ChatColor.RED + "" + Math.round(stats.getActiveHealth()) + " / " +
+                            Math.round(stats.getStat(Stat.HEALTH)) + "❤" + "  " +
                             ChatColor.BLUE + (int) Math.round(stats.getActiveMana()) + " / " +
                             (int) Math.round(stats.getMaxMana()) + "✎";
 

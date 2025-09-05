@@ -1,7 +1,5 @@
 package de.kuscheltiermafia.kingdoms.stats;
 
-import static java.lang.Math.ceil;
-
 public class PlayerStatModel {
 
     double health;
