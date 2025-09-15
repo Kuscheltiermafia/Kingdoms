@@ -52,4 +52,13 @@ public enum Stat {
     public ChatColor getColor() {
         return color;
     }
+
+    public static Stat getStatByID(String id) {
+        for(Stat stat : Stat.values()) {
+            if(stat.getCodeID().equalsIgnoreCase(id)) {
+                return stat;
+            }
+        }
+        return null;
+    }
 }

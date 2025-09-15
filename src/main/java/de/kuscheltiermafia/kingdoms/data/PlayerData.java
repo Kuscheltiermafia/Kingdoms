@@ -2,8 +2,9 @@ package de.kuscheltiermafia.kingdoms.data;
 
 import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.skills.Skill;
+import de.kuscheltiermafia.kingdoms.stats.Stat;
+import de.kuscheltiermafia.kingdoms.stats.models.PlayerStatModel;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class PlayerStats {
+public class PlayerData {
 
     double combatXP;
     int combatLevel;
@@ -47,7 +48,9 @@ public class PlayerStats {
     double huntingXP;
     int huntingLevel;
 
-    public PlayerStats() {
+    PlayerStatModel correspondingStatModel;
+
+    public PlayerData() {
         // Initialize all stats to 0
         this.combatXP = 0;
         this.combatLevel = 0;
@@ -74,7 +77,7 @@ public class PlayerStats {
     }
 
     public static boolean setupConfig(Player player) throws IOException {
-        PlayerStats image = new PlayerStats();
+        PlayerData image = new PlayerData();
 
         File file = new File(PlayerUtility.getFolderPath(player) + "stats.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
@@ -95,6 +98,10 @@ public class PlayerStats {
             config.save(file);
         }else{
             Bukkit.getLogger().info("Loading existing stats.yml for player " + player.getName());
+
+            PlayerStatModel imageStatModel = new PlayerStatModel();
+            image.setCorrespondingStatModel(imageStatModel);
+            Kingdoms.playerStatModelIdentifier.put(player, imageStatModel);
             image.loadStats(config);
         }
 
@@ -127,6 +134,93 @@ public class PlayerStats {
         this.setHuntingLevel(config.getInt("Hunting.Level"));
         this.setHuntingXP(config.getDouble("Hunting.XP"));
 
+        if(this.correspondingStatModel.getStat(Stat.HEALTH, false) == 0) {
+            this.correspondingStatModel.resetStats();
+        }else {
+            this.correspondingStatModel.setStat(Stat.HEALTH, config.getDouble("Stats.Health"), false);
+            this.correspondingStatModel.setStat(Stat.DEFENSE, config.getDouble("Stats.Defense"), false);
+            this.correspondingStatModel.setStat(Stat.INTELLIGENCE, config.getDouble("Stats.Intelligence"), false);
+            this.correspondingStatModel.setStat(Stat.MANA_REGENERATION, config.getDouble("Stats.ManaRegeneration"), false);
+            this.correspondingStatModel.setStat(Stat.CRIT_CHANCE, config.getDouble("Stats.CritChance"), false);
+            this.correspondingStatModel.setStat(Stat.CRIT_DAMAGE, config.getDouble("Stats.CritDamage"), false);
+            this.correspondingStatModel.setStat(Stat.DAMAGE, config.getDouble("Stats.Damage"), false);
+            this.correspondingStatModel.setStat(Stat.STRENGTH, config.getDouble("Stats.Strength"), false);
+            this.correspondingStatModel.setStat(Stat.SPEED, config.getDouble("Stats.Speed"), false);
+            this.correspondingStatModel.setStat(Stat.LUCK, config.getDouble("Stats.Luck"), false);
+            this.correspondingStatModel.setStat(Stat.BREAKING_SPEED, config.getDouble("Stats.BreakingSpeed"), false);
+            this.correspondingStatModel.setStat(Stat.FORTUNE, config.getDouble("Stats.Fortune"), false);
+            this.correspondingStatModel.setStat(Stat.SPELLBOUND, config.getDouble("Stats.Spellbound"), false);
+            this.correspondingStatModel.setStat(Stat.OVERHEAL, config.getDouble("Stats.Overheal"), false);
+            this.correspondingStatModel.setStat(Stat.VEIL, config.getDouble("Stats.Veil"), false);
+            this.correspondingStatModel.setStat(Stat.LIFESTEAL, config.getDouble("Stats.Lifesteal"), false);
+            this.correspondingStatModel.setStat(Stat.ABSORPTION, config.getDouble("Stats.Absorption"), false);
+            this.correspondingStatModel.setStat(Stat.SPREAD, config.getDouble("Stats.Spread"), false);
+            this.correspondingStatModel.setStat(Stat.MANA_STEAL, config.getDouble("Stats.ManaSteal"), false);
+            this.correspondingStatModel.setStat(Stat.FEROCITY, config.getDouble("Stats.Ferocity"), false);
+            this.correspondingStatModel.setStat(Stat.VITALITY, config.getDouble("Stats.Vitality"), false);
+        }
+        this.correspondingStatModel.initializeIndirectStats(true);
+    }
+
+    public void storeData(Player player) {
+        File file = new File(PlayerUtility.getFolderPath(player) + "stats.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+
+        // Save skill levels and XP
+        config.set("Combat.Level", this.getCombatLevel());
+        config.set("Combat.XP", this.getCombatXP());
+        config.set("Mining.Level", this.getMiningLevel());
+        config.set("Mining.XP", this.getMiningXP());
+        config.set("Foraging.Level", this.getForagingLevel());
+        config.set("Foraging.XP", this.getForagingXP());
+        config.set("Enchanting.Level", this.getEnchantingLevel());
+        config.set("Enchanting.XP", this.getEnchantingXP());
+        config.set("Farming.Level", this.getFarmingLevel());
+        config.set("Farming.XP", this.getFarmingXP());
+        config.set("Fishing.Level", this.getFishingLevel());
+        config.set("Fishing.XP", this.getFishingXP());
+        config.set("Building.Level", this.getBuildingLevel());
+        config.set("Building.XP", this.getBuildingXP());
+        config.set("Alchemy.Level", this.getAlchemyLevel());
+        config.set("Alchemy.XP", this.getAlchemyXP());
+        config.set("Wizardry.Level", this.getWizardryLevel());
+        config.set("Wizardry.XP", this.getWizardryXP());
+        config.set("Tinkering.Level", this.getTinkeringLevel());
+        config.set("Tinkering.XP", this.getTinkeringXP());
+        config.set("Hunting.Level", this.getHuntingLevel());
+        config.set("Hunting.XP", this.getHuntingXP());
+
+        // Save stats from the correspondingStatModel
+        if (this.correspondingStatModel != null) {
+            config.set("Stats.Health", this.correspondingStatModel.getStat(Stat.HEALTH, false));
+            config.set("Stats.Defense", this.correspondingStatModel.getStat(Stat.DEFENSE, false));
+            config.set("Stats.Intelligence", this.correspondingStatModel.getStat(Stat.INTELLIGENCE, false));
+            config.set("Stats.ManaRegeneration", this.correspondingStatModel.getStat(Stat.MANA_REGENERATION, false));
+            config.set("Stats.CritChance", this.correspondingStatModel.getStat(Stat.CRIT_CHANCE, false));
+            config.set("Stats.CritDamage", this.correspondingStatModel.getStat(Stat.CRIT_DAMAGE, false));
+            config.set("Stats.Damage", this.correspondingStatModel.getStat(Stat.DAMAGE, false));
+            config.set("Stats.Strength", this.correspondingStatModel.getStat(Stat.STRENGTH, false));
+            config.set("Stats.Speed", this.correspondingStatModel.getStat(Stat.SPEED, false));
+            config.set("Stats.Luck", this.correspondingStatModel.getStat(Stat.LUCK, false));
+            config.set("Stats.BreakingSpeed", this.correspondingStatModel.getStat(Stat.BREAKING_SPEED, false));
+            config.set("Stats.Fortune", this.correspondingStatModel.getStat(Stat.FORTUNE, false));
+            config.set("Stats.Spellbound", this.correspondingStatModel.getStat(Stat.SPELLBOUND, false));
+            config.set("Stats.Overheal", this.correspondingStatModel.getStat(Stat.OVERHEAL, false));
+            config.set("Stats.Veil", this.correspondingStatModel.getStat(Stat.VEIL, false));
+            config.set("Stats.Lifesteal", this.correspondingStatModel.getStat(Stat.LIFESTEAL, false));
+            config.set("Stats.Absorption", this.correspondingStatModel.getStat(Stat.ABSORPTION, false));
+            config.set("Stats.Spread", this.correspondingStatModel.getStat(Stat.SPREAD, false));
+            config.set("Stats.ManaSteal", this.correspondingStatModel.getStat(Stat.MANA_STEAL, false));
+            config.set("Stats.Ferocity", this.correspondingStatModel.getStat(Stat.FEROCITY, false));
+            config.set("Stats.Vitality", this.correspondingStatModel.getStat(Stat.VITALITY, false));
+        }
+
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Bukkit.getLogger().warning("Failed to save stats.yml for player " + player.getName());
+        }
     }
 
     public double getValueBySkill(Skill skill, boolean asXP) {
@@ -552,5 +646,13 @@ public class PlayerStats {
             this.huntingXP -= getLevelXP(this.huntingLevel + 1);
             this.huntingLevel++;
         }
+    }
+
+    public PlayerStatModel getCorrespondingStatModel() {
+        return correspondingStatModel;
+    }
+
+    public void setCorrespondingStatModel(PlayerStatModel correspondingStatModel) {
+        this.correspondingStatModel = correspondingStatModel;
     }
 }

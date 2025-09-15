@@ -1,7 +1,7 @@
 package de.kuscheltiermafia.kingdoms.menus;
 
 import de.kuscheltiermafia.kingdoms.Kingdoms;
-import de.kuscheltiermafia.kingdoms.data.PlayerStats;
+import de.kuscheltiermafia.kingdoms.data.PlayerData;
 import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
 import de.kuscheltiermafia.kingdoms.events.AscendEvent;
 import de.kuscheltiermafia.kingdoms.items.ItemBuilder;
@@ -18,7 +18,6 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class TomeOfEras {
 
@@ -38,16 +37,16 @@ public class TomeOfEras {
         statmeta.getPersistentDataContainer().set(ItemHandler.ID, PersistentDataType.STRING, "spacer");
         List<String> statlore = new ArrayList<>();
         for(Stat stat : Stat.values()) {
-            statlore.add(stat.getColor() + stat.getIcon() + " " + stat.getDisplayName() + ": " + Kingdoms.playerStatModelIdentifier.get(p).getStat(stat));
+            statlore.add(stat.getColor() + stat.getIcon() + " " + stat.getDisplayName() + ": " + Kingdoms.playerStatModelIdentifier.get(p).getStat(stat, true));
         }
         statmeta.setLore(statlore);
         playerStats.setItemMeta(statmeta);
         toe.setItem(10, playerStats);
 
         List<String> skilllore = new ArrayList<>();
-        PlayerStats playerSkills = PlayerUtility.getPlayerImage(p);
+        PlayerData playerData = PlayerUtility.getPlayerImage(p);
         for(Skill skill : Skill.values()) {
-            skilllore.add(skill.getColor() + skill.getIcon() + " " + skill.getDisplayName() + ": " + (int) playerSkills.getValueBySkill(skill, false));
+            skilllore.add(skill.getColor() + skill.getIcon() + " " + skill.getDisplayName() + ": " + (int) playerData.getValueBySkill(skill, false));
         }
         ItemStack playerSkill = new ItemBuilder().setMaterial(Material.EXPERIENCE_BOTTLE).setID("view_skills_button").setCustomName(ChatColor.LIGHT_PURPLE + "Your Skill Levels: ").setLore(skilllore).addGlint().setMaxStackSize(1).build();
         toe.setItem(19, playerSkill);

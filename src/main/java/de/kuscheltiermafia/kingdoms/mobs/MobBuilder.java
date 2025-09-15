@@ -1,5 +1,6 @@
 package de.kuscheltiermafia.kingdoms.mobs;
 
+import de.kuscheltiermafia.kingdoms.stats.models.MobStatModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import org.bukkit.ChatColor;

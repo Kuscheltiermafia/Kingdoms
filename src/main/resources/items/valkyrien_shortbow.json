@@ -1,0 +1,19 @@
+{
+  "customName": "Valkyrien Shortbow",
+  "material": "BOW",
+  "type": "BOW",
+  "rarity": "GODLY",
+  "maxStackSize": 1,
+  "abilityKeys":[
+    "tri_shortbow"
+  ],
+  "stats":
+  {
+    "STRENGTH":160.0,
+    "DAMAGE":100.0,
+    "CRIT_CHANCE":10.0,
+    "CRIT_DAMAGE":180.0,
+    "FEROCITY":150.0
+  },
+  "showInList": true
+}

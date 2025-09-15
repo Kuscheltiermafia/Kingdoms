@@ -1,6 +1,7 @@
 package de.kuscheltiermafia.kingdoms.mobs;
 
 import de.kuscheltiermafia.kingdoms.stats.Stat;
+import de.kuscheltiermafia.kingdoms.stats.models.MobStatModel;
 import net.minecraft.world.entity.Entity;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -25,7 +26,7 @@ public class MobHandler {
         mobBuilder.setMobType(EntityType.ZOMBIE)
                 .setDisplayName(ChatColor.RED + "Test Zombie")
                 .setFamilies(new MobFamily[]{MobFamily.UNDEAD})
-                .setHealth(100)
+                .setHealth(100000)
                 .setDefense(20)
                 .setDamage(15)
                 .setStrength(10)
@@ -37,18 +38,24 @@ public class MobHandler {
     public static String returnHealthIndicator(LivingEntity entity, boolean ignoreMap, Double health) {
         if (!isCustomMob(entity) || entity == null) return "";
         if (!mobStatModelIndentifier.containsKey(entity.getUniqueId())) return "";
+
         double activeHealth;
-        if(ignoreMap) {
-            activeHealth = health;
-        }else{
-            MobStatModel stats = mobStatModelIndentifier.get(entity.getUniqueId());
-            activeHealth = stats.getActiveHealth();
-            health = stats.getStat(Stat.HEALTH);
-        }
         StringBuilder healthIndicator = new StringBuilder();
-        healthIndicator.append(ChatColor.RED).append(Math.round(activeHealth));
-        healthIndicator.append(ChatColor.GRAY).append("/");
-        healthIndicator.append(ChatColor.RED).append(health);
+
+        try {
+            if (ignoreMap) {
+                activeHealth = health;
+            } else {
+                MobStatModel stats = mobStatModelIndentifier.get(entity.getUniqueId());
+                activeHealth = stats.getActiveHealth();
+                health = stats.getStat(Stat.HEALTH, false);
+            }
+            healthIndicator.append(ChatColor.RED).append(Math.round(activeHealth));
+            healthIndicator.append(ChatColor.GRAY).append("/");
+            healthIndicator.append(ChatColor.RED).append(health);
+        }catch (Exception e) {
+            return "";
+        }
 
         return healthIndicator.toString();
     }

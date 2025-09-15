@@ -2,6 +2,8 @@ package de.kuscheltiermafia.kingdoms.stats;
 
 import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
+import de.kuscheltiermafia.kingdoms.items.ItemType;
+import de.kuscheltiermafia.kingdoms.stats.models.PlayerStatModel;
 import de.kuscheltiermafia.kingdoms.utils.GsonHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -33,9 +35,9 @@ public class UpdatePlayerStats implements Listener {
     }
 
     public static void updatePlayerStats(Player p) {
-        PlayerStatModel playerStatModel = Kingdoms.playerStatModelIdentifier.get(p);
         initPlayerStatSlots(p);
-        playerStatModel.resetStats();
+        PlayerStatModel playerStatModel = Kingdoms.playerStatModelIdentifier.get(p);
+        playerStatModel.initFinalStats();
 
         for (EquipmentSlot slot : playerStatSlots) {
             if(p.getInventory().getItem(slot) != null && p.getInventory().getItem(slot).hasItemMeta() && p.getInventory().getItem(slot).getItemMeta().getPersistentDataContainer().has(ItemHandler.STATS)) {
@@ -45,12 +47,15 @@ public class UpdatePlayerStats implements Listener {
                 ItemStack currentItem = p.getInventory().getItem(slot);
                 HashMap<Stat, Double> itemStatSet = GsonHandler.fromJson(currentItem.getItemMeta().getPersistentDataContainer().get(ItemHandler.FINAL_STATS, PersistentDataType.STRING), GsonHandler.STAT_MAP_TYPE);
                 for(Stat stat : itemStatSet.keySet()) {
-                    if(itemStatSet.get(stat) != null) {
-                        playerStatModel.setStat(stat, playerStatModel.getStat(stat) + itemStatSet.get(stat));
+                    if(ItemType.getById(currentItem.getItemMeta().getPersistentDataContainer().get(ItemHandler.TYPE, PersistentDataType.STRING)).isValidSlot(slot)) {
+                        playerStatModel.setStat(stat, playerStatModel.getStat(stat, true) + itemStatSet.get(stat), true);
                     }
+
                 }
             }
         }
+
+        playerStatModel.initializeIndirectStats(false);
     }
 
     @EventHandler
@@ -81,10 +86,20 @@ public class UpdatePlayerStats implements Listener {
     @EventHandler
     public void onArmorChange(PlayerInteractEvent e) {
         if(e.getPlayer() instanceof Player && e.getItem() != null) {
-                Bukkit.getScheduler().runTaskLater(Kingdoms.getPlugin(), () -> {
-                Player p = (Player) e.getPlayer();
-                updatePlayerStats(p);
-            }, 2L);
+            if(e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(ItemHandler.TYPE, PersistentDataType.STRING) != null) {
+                if(e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(ItemHandler.TYPE, PersistentDataType.STRING).equals("helmet")) {
+                    Player p = e.getPlayer();
+                    e.setCancelled(true);
+                    ItemStack oldHelmet = p.getInventory().getHelmet();
+                    ItemStack newHelmet = p.getInventory().getItemInMainHand();
+                    p.getInventory().setHelmet(newHelmet);
+                    p.getInventory().setItemInMainHand(oldHelmet);
+
+                    Bukkit.getScheduler().runTaskLater(Kingdoms.getPlugin(), () -> {
+                        updatePlayerStats(p);
+                    }, 2L);
+                }
+            }
         }
     }
 }

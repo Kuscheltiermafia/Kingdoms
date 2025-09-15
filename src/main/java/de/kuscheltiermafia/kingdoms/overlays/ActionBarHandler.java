@@ -1,7 +1,7 @@
 package de.kuscheltiermafia.kingdoms.overlays;
 
 import de.kuscheltiermafia.kingdoms.Kingdoms;
-import de.kuscheltiermafia.kingdoms.stats.PlayerStatModel;
+import de.kuscheltiermafia.kingdoms.stats.models.PlayerStatModel;
 import de.kuscheltiermafia.kingdoms.stats.Stat;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
@@ -18,16 +18,21 @@ public class ActionBarHandler {
             if(player.getGameMode().equals(GameMode.ADVENTURE) || player.getGameMode().equals(GameMode.SURVIVAL)) {
                 PlayerStatModel stats = Kingdoms.playerStatModelIdentifier.get(player);
                 if (stats != null) {
-                    String message = ChatColor.RED + "" + Math.round(stats.getActiveHealth()) + " / " +
-                            Math.round(stats.getStat(Stat.HEALTH)) + "❤" + "  " +
-                            ChatColor.BLUE + (int) Math.round(stats.getActiveMana()) + " / " +
-                            (int) Math.round(stats.getMaxMana()) + "✎";
-
-                    Component comp = Component.literal(message);
-                    ClientboundSetActionBarTextPacket packet = new ClientboundSetActionBarTextPacket(comp);
+                    ClientboundSetActionBarTextPacket packet = getClientboundSetActionBarTextPacket(stats);
                     ((CraftPlayer) player).getHandle().connection.send(packet);
                 }
             }
         }
+    }
+
+    private static ClientboundSetActionBarTextPacket getClientboundSetActionBarTextPacket(PlayerStatModel stats) {
+        String message = ChatColor.RED + "" + Math.round(stats.getActiveHealth()) + " / " +
+                Math.round(stats.getMaxHealth()) + "❤" + "  " +
+                ChatColor.BLUE + (int) Math.round(stats.getActiveMana()) + " / " +
+                (int) Math.round(stats.getMaxMana()) + "✎";
+
+        Component comp = Component.literal(message);
+        ClientboundSetActionBarTextPacket packet = new ClientboundSetActionBarTextPacket(comp);
+        return packet;
     }
 }

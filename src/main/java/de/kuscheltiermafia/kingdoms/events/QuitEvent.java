@@ -1,6 +1,6 @@
 package de.kuscheltiermafia.kingdoms.events;
 
-import de.kuscheltiermafia.kingdoms.data.PlayerStats;
+import de.kuscheltiermafia.kingdoms.data.PlayerData;
 import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,7 +17,7 @@ public class QuitEvent implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         Player player = e.getPlayer();
-        PlayerStats image = PlayerUtility.getPlayerImage(player);
+        PlayerData image = PlayerUtility.getPlayerImage(player);
         File file = new File(PlayerUtility.getFolderPath(player) + "stats.yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 

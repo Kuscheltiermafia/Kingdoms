@@ -10,7 +10,7 @@ import de.kuscheltiermafia.kingdoms.items.crafting.CraftingEvents;
 import de.kuscheltiermafia.kingdoms.items.crafting.CraftingHandler;
 import de.kuscheltiermafia.kingdoms.items.itemAbilities.AbilityHandler;
 import de.kuscheltiermafia.kingdoms.items.itemEnchants.EnchantmentHandler;
-import de.kuscheltiermafia.kingdoms.stats.PlayerStatModel;
+import de.kuscheltiermafia.kingdoms.stats.models.PlayerStatModel;
 import de.kuscheltiermafia.kingdoms.stats.UpdatePlayerStats;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -50,14 +50,6 @@ public final class Kingdoms extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new UpdatePlayerStats(), this);
 
         getCommand("itemlist").setExecutor(new ItemList());
-        getCommand("getstats").setExecutor(new GetStats());
-
-        for(Player p : Bukkit.getOnlinePlayers()) {
-            playerStatModelIdentifier.put(p, new PlayerStatModel());
-            playerStatModelIdentifier.get(p).resetStats();
-            playerStatModelIdentifier.get(p).initializeIndirectStats();
-            UpdatePlayerStats.updatePlayerStats(p);
-        }
 
         saveDefaultConfig();
 
@@ -83,11 +75,15 @@ public final class Kingdoms extends JavaPlugin {
         manager.registerCommand(new BuildCommand());
         manager.registerCommand(new ItemupgradesCommand());
         manager.registerCommand(new EntityCommand());
+        manager.registerCommand(new modPlayer());
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+
+        for(Player player : Bukkit.getOnlinePlayers()) {
+            PlayerUtility.getPlayerImage(player).storeData(player);
+        }
     }
 
     public static Kingdoms getPlugin() {

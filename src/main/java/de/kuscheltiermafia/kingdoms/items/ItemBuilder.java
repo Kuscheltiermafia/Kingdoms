@@ -1,13 +1,24 @@
 package de.kuscheltiermafia.kingdoms.items;
 
+import com.google.gson.JsonObject;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import de.kuscheltiermafia.kingdoms.stats.Stat;
 import de.kuscheltiermafia.kingdoms.utils.GsonHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.profile.PlayerProfile;
+import org.bukkit.profile.PlayerTextures;
+import org.json.simple.JSONObject;
 
+import java.lang.reflect.Field;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 import static de.kuscheltiermafia.kingdoms.items.ItemHandler.itemList;
@@ -21,6 +32,7 @@ public class ItemBuilder {
     ItemLevel level;
     int currentLevelProgress;
     Material material;
+    String skullTexture;
     int maxStackSize = 64;
     List<String> lore;
     boolean glint;
@@ -53,6 +65,11 @@ public class ItemBuilder {
 
     public ItemBuilder setMaterial(Material material) {
         this.material = material;
+        return this;
+    }
+
+    public ItemBuilder setSkullTexture(String texture) {
+        this.skullTexture = texture;
         return this;
     }
 
@@ -224,6 +241,21 @@ public class ItemBuilder {
 
         if (hideAdditionalTooltip) {
             meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        }
+
+        if(skullTexture != null && !skullTexture.isEmpty() && material.equals(Material.PLAYER_HEAD)) {
+            SkullMeta skullMeta = (SkullMeta) meta;
+            try {
+                PlayerProfile profile = Bukkit.createPlayerProfile(UUID.randomUUID());
+                PlayerTextures textures = profile.getTextures();
+                URL newTexture = new URL(new String(Base64.getDecoder().decode(skullTexture)).substring(28).replace("}}}", "").replace('"', ' ').trim());
+                textures.setSkin(newTexture);
+                profile.setTextures(textures);
+                skullMeta.setOwnerProfile(profile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            meta = skullMeta;
         }
 
         if(ItemLevel.canLevel(type)) {

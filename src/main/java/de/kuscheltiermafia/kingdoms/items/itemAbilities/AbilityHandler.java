@@ -20,6 +20,7 @@ public class AbilityHandler implements Listener {
 
     public static void registerAbility() {
         abilities.put("test_ability", new TestAbility());
+        abilities.put("tri_shortbow", new TriShotShortbow());
     }
 
     public static void updatePlayerCooldowns(Player p) {
@@ -39,28 +40,63 @@ public class AbilityHandler implements Listener {
                 for(String abilityID : abilityIDs) {
                     ItemAbility ability = abilities.get(abilityID);
                     if(ability == null) continue;
-                    if(ability.getCooldown(p) == 0) {
-                        // RIGHT CLICK WITHOUT SNEAKING
-                        if (ability.abilityType == ItemAbility.AbilityType.RIGHT_CLICK && (e.getAction().toString().contains("RIGHT_CLICK")) && !p.isSneaking()) {
-                            ability.rightClick(p, e);
-                        }
-                        // LEFT CLICK WITHOUT SNEAKING
-                        if (ability.abilityType == ItemAbility.AbilityType.LEFT_CLICK && (e.getAction().toString().contains("LEFT_CLICK")) && !p.isSneaking()) {
-                            ability.leftClick(p, e);
-                        }
-                        // RIGHT CLICK WITH SNEAKING
-                        if (ability.abilityType == ItemAbility.AbilityType.RIGHT_CLICK && (e.getAction().toString().contains("RIGHT_CLICK")) && p.isSneaking()) {
-                            ability.shiftRightClick(p, e);
-                        }
-                        // LEFT CLICK WITH SNEAKING
-                        if (ability.abilityType == ItemAbility.AbilityType.LEFT_CLICK && (e.getAction().toString().contains("LEFT_CLICK")) && p.isSneaking()) {
-                            ability.shiftLeftClick(p, e);
-                        }
-                    }else{
-                        p.sendMessage(ChatColor.RED + "Ability " + ability.abilityName + " is on cooldown for " + ChatColor.YELLOW + ability.getCooldown(p) + ChatColor.RED + " more seconds.");
+                    // RIGHT CLICK WITHOUT SNEAKING
+                    switch (ability.abilityType) {
+                        case RIGHT_CLICK:
+                            if (e.getAction().toString().contains("RIGHT_CLICK")) {
+                                if (p.isSneaking()) {
+                                    if(isOnCooldown(p, ability)) {
+                                        sendCooldownMessage(p, ability);
+                                        return;
+                                    }
+                                    ability.shiftRightClick(p, e);
+                                } else {
+                                    if(isOnCooldown(p, ability)) {
+                                        sendCooldownMessage(p, ability);
+                                        return;
+                                    }
+                                    ability.rightClick(p, e);
+                                }
+                            }
+                            break;
+                        case LEFT_CLICK:
+                            if (e.getAction().toString().contains("LEFT_CLICK")) {
+                                if (p.isSneaking()) {
+                                    if(isOnCooldown(p, ability)) {
+                                        sendCooldownMessage(p, ability);
+                                        return;
+                                    }
+                                    ability.shiftLeftClick(p, e);
+                                } else {
+                                    if(isOnCooldown(p, ability)) {
+                                        sendCooldownMessage(p, ability);
+                                        return;
+                                    }
+                                    ability.leftClick(p, e);
+                                }
+                            }
+                            break;
+                        case GENERAL_CLICK:
+                            if(isOnCooldown(p, ability)) {
+                                sendCooldownMessage(p, ability);
+                                return;
+                            }
+                            ability.onGeneralClick(p, e);
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
         }catch (Exception ignored) {}
+    }
+
+    private boolean isOnCooldown(Player p, ItemAbility ability) {
+        return ability.getCooldown(p) != 0;
+    }
+
+    private void sendCooldownMessage(Player p, ItemAbility ability) {
+        int cooldown = ability.getCooldown(p);
+        p.sendMessage(ChatColor.RED + "This ability is on cooldown for " + cooldown + " more seconds.");
     }
 }

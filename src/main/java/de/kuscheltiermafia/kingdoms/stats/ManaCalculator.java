@@ -1,6 +1,7 @@
 package de.kuscheltiermafia.kingdoms.stats;
 
 import de.kuscheltiermafia.kingdoms.Kingdoms;
+import de.kuscheltiermafia.kingdoms.stats.models.PlayerStatModel;
 import org.bukkit.entity.Player;
 
 public class ManaCalculator {
@@ -8,7 +9,7 @@ public class ManaCalculator {
     public static void manaRegenTick(Player p) {
         PlayerStatModel stats = Kingdoms.playerStatModelIdentifier.get(p);
 
-        double regenAmount = Math.ceil(stats.getStat(Stat.INTELLIGENCE) * 0.02 * (1 + (stats.getStat(Stat.MANA_REGENERATION) / 100)) * (1 + (stats.getStat(Stat.SPELLBOUND) / 1000)));
+        double regenAmount = Math.ceil(stats.getStat(Stat.INTELLIGENCE, true) * 0.02 * (1 + (stats.getStat(Stat.MANA_REGENERATION, true) / 100)) * (1 + (stats.getStat(Stat.SPELLBOUND, true) / 1000)));
 
         if(stats.getActiveMana() + regenAmount <= stats.getMaxMana()) {
             stats.setActiveMana(stats.getActiveMana() + regenAmount);

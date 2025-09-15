@@ -1,0 +1,12 @@
+{
+  "customName": "Funky Sunshade",
+  "material": "DIAMOND_HELMET",
+  "type": "HELMET",
+  "rarity": "RARE",
+  "maxStackSize": 1,
+  "stats":
+  {
+    "HEALTH":1000.0
+  },
+  "showInList": true
+}

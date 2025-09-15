@@ -1,9 +1,8 @@
 package de.kuscheltiermafia.kingdoms.menus;
 
-import de.kuscheltiermafia.kingdoms.data.PlayerStats;
+import de.kuscheltiermafia.kingdoms.data.PlayerData;
 import de.kuscheltiermafia.kingdoms.data.PlayerUtility;
 import de.kuscheltiermafia.kingdoms.items.ItemBuilder;
-import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import de.kuscheltiermafia.kingdoms.skills.Skill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -35,14 +34,14 @@ public class SkillsPage {
     private static HashMap<Integer, ItemStack> createSkillItems(Player p) {
         HashMap<Integer, ItemStack> skillItems = new HashMap<>();
         int[] slots = new int[]{19, 20, 21, 22, 23, 24, 25, 29, 30, 32, 33};
-        PlayerStats playerStats = PlayerUtility.getPlayerImage(p);
+        PlayerData playerSkills = PlayerUtility.getPlayerImage(p);
 
         for(Skill skill : Skill.values()) {
             int index = skill.ordinal();
 
             List<String> skillLore = new ArrayList<>();
-            skillLore.add(ChatColor.GRAY + "Current Level: " + playerStats.getValueBySkill(skill, false));
-            skillLore.add(ChatColor.GRAY + "Current Experience: " + playerStats.getValueBySkill(skill, true) + " / " + playerStats.getLevelXP((int) playerStats.getValueBySkill(skill, false)));
+            skillLore.add(ChatColor.GRAY + "Current Level: " + playerSkills.getValueBySkill(skill, false));
+            skillLore.add(ChatColor.GRAY + "Current Experience: " + playerSkills.getValueBySkill(skill, true) + " / " + playerSkills.getLevelXP((int) playerSkills.getValueBySkill(skill, false)));
 
             ItemStack skillItem = new ItemBuilder().setMaterial(skill.getIconItem()).setID("spacer" /*maybe skill_view_item*/).setCustomName(skill.getColor() + skill.getIcon() + " " + skill.getDisplayName()).setLore(skillLore).setMaxStackSize(1).temporary().build();
 

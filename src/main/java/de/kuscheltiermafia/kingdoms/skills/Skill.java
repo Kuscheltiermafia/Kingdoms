@@ -50,4 +50,13 @@ public enum Skill {
         return icon_item;
     }
 
+    public static Skill getSkillByID(String id) {
+        for(Skill skill : Skill.values()) {
+            if(skill.getCodeID().equalsIgnoreCase(id)) {
+                return skill;
+            }
+        }
+        return null;
+    }
+
 }

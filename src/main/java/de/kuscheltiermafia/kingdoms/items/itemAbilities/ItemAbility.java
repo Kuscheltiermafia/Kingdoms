@@ -5,7 +5,7 @@ import org.bukkit.event.Event;
 
 import java.util.HashMap;
 
-public class ItemAbility {
+public abstract class ItemAbility {
 
     public int manaCost;
     public int cooldown;
@@ -13,9 +13,10 @@ public class ItemAbility {
     public String abilityID;
     public HashMap<Player, Integer> cooldowns;
     public AbilityType abilityType;
+    public AbilityDisplayType displayType;
     public String[] description;
 
-    public ItemAbility(String abilityName, String abilityID, String[] description, int manaCost, int cooldown, AbilityType abilityType) {
+    public ItemAbility(String abilityName, String abilityID, String[] description, int manaCost, int cooldown, AbilityType abilityType, AbilityDisplayType displayType) {
         this.abilityName = abilityName;
         this.abilityID = abilityID;
         this.manaCost = manaCost;
@@ -23,6 +24,7 @@ public class ItemAbility {
         this.abilityType = abilityType;
         this.cooldowns = new HashMap<>();
         this.description = description;
+        this.displayType = displayType;
     }
 
     public void leftClick(Player p, Event e) {
@@ -41,6 +43,30 @@ public class ItemAbility {
         // Ability logic to be implemented in subclasses
     }
 
+    public void onGeneralClick(Player p, Event e) {
+        // Ability logic to be implemented in subclasses
+    }
+
+    public void passiveWhileUse(Player p) {
+        // Ability logic to be implemented in subclasses
+    }
+
+    public void passiveOnApply(Player p) {
+        // Ability logic to be implemented in subclasses
+    }
+
+    public void passiveOnRemove(Player p) {
+        // Ability logic to be implemented in subclasses
+    }
+
+    public void onHitEntity(Player p, Event e) {
+        // Ability logic to be implemented in subclasses
+    }
+
+    public AbilityDisplayType getDisplayType() {
+        return this.displayType;
+    }
+
     public int getCooldown(Player p) {
         return cooldowns.getOrDefault(p, 0);
     }
@@ -55,16 +81,35 @@ public class ItemAbility {
             if(time > 0) {
                 cooldowns.put(p, time - 1);
             } else {
-                cooldowns.remove(p);
+                cooldowns.put(p, 0);
             }
         }
     }
 
     public static enum AbilityType {
-        RIGHT_CLICK,
-        LEFT_CLICK,
-        SHIFT_RIGHT_CLICK,
-        SHIFT_LEFT_CLICK,
-        PASSIVE;
+        RIGHT_CLICK("RIGHT CLICK"),
+        LEFT_CLICK("LEFT CLICK"),
+        SHIFT_RIGHT_CLICK("SHIFT RIGHT CLICK"),
+        SHIFT_LEFT_CLICK("SHIFT LEFT CLICK"),
+        GENERAL_CLICK("ON USE"),
+        PASSIVE("PASSIVE");
+
+        final String name;
+        private AbilityType(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
+    public static enum AbilityDisplayType {
+        VISIBLE,
+        ITEM_TYPE,
+        HIDDEN;
+
+        private AbilityDisplayType() {
+        }
     }
 }

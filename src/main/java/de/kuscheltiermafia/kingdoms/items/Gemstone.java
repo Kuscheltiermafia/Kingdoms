@@ -33,7 +33,7 @@ public enum Gemstone {
     PEARL("Pearl", "pearl", ChatColor.WHITE, "⛏", Stat.BREAKING_SPEED, MobFamily.ROCKY),
     SERPENTINE("Serpentine", "serpentine", ChatColor.GREEN, "࿊", Stat.OVERHEAL, MobFamily.PLAGUED),
     JADE("Jade", "jade", ChatColor.DARK_GREEN, "⃠", Stat.VEIL, MobFamily.GUARDIAN),
-    SMOKY_QUARTZ("Smoky Quartz", "smoky_quartz", ChatColor.DARK_GRAY, "⛨", Stat.ABSORPTION, MobFamily.DEPTHS),
+    SMOKY_QUARTZ("Smoky Quartz", "smokey_quartz", ChatColor.DARK_GRAY, "⛨", Stat.ABSORPTION, MobFamily.DEPTHS),
     FLUORITE("Fluorite", "fluorite", ChatColor.LIGHT_PURPLE, "🍀", Stat.LUCK, MobFamily.SPECTRAL),
     SPINEL("Spinel", "spinel", ChatColor.RED, "ⵥ", Stat.MANA_STEAL, MobFamily.DEMONIC),
     PYRITE("Pyrite", "pyrite", ChatColor.YELLOW, "✠", Stat.DEFENSE, MobFamily.CONSTRUCT),

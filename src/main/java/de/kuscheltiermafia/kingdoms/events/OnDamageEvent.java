@@ -1,7 +1,5 @@
 package de.kuscheltiermafia.kingdoms.events;
 
-import de.kuscheltiermafia.kingdoms.Kingdoms;
-import de.kuscheltiermafia.kingdoms.mobs.MobHandler;
 import de.kuscheltiermafia.kingdoms.stats.DamageCalculator;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.craftbukkit.v1_21_R4.entity.CraftPlayer;
@@ -15,8 +13,6 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static de.kuscheltiermafia.kingdoms.mobs.MobHandler.updateMobHealthIndicator;
 
 public class OnDamageEvent implements Listener {
 
@@ -33,21 +29,13 @@ public class OnDamageEvent implements Listener {
 
     @EventHandler
     public void onEntityDamageEvent(EntityDamageByEntityEvent e) {
-        if(e.getEntity() instanceof LivingEntity) {
+        if(e.getEntity() instanceof LivingEntity && e.getDamager() instanceof LivingEntity){
             LivingEntity target = (LivingEntity) e.getEntity();
-            LivingEntity damager = (LivingEntity) e.getDamageSource().getCausingEntity();
+            LivingEntity damager = (LivingEntity) e.getDamager();
 
-            if(target instanceof Player && Kingdoms.playerStatModelIdentifier.containsKey(target)){
-                if(MobHandler.isCustomMob(damager)) {
-                    DamageCalculator.damagePlayer(DamageCalculator.calculateEntityDamage(damager), (Player) target);
-                }
-            }
-            if(damager instanceof Player && Kingdoms.playerStatModelIdentifier.containsKey(damager)){
-                if(MobHandler.isCustomMob(target)) {
-                    DamageCalculator.damageEntity(DamageCalculator.calculateFinalDamage((Player) damager), target);
-                    updateMobHealthIndicator(target);
-                }
-            }
+            DamageCalculator.onDamageByEntity(damager, target);
+
+            e.setCancelled(true);
         }
     }
 

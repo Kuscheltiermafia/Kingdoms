@@ -11,10 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static de.kuscheltiermafia.kingdoms.items.ItemHandler.ID;
 import static de.kuscheltiermafia.kingdoms.utils.TextUtils.toRoman;
@@ -67,18 +64,31 @@ public class ItemTextBuilder {
         }
 
         if(meta.getPersistentDataContainer().has(ItemHandler.ABILITIES)) {
-            finalLore.add(" ");
             ArrayList<String> abilityIDs = GsonHandler.fromJson(meta.getPersistentDataContainer().get(ItemHandler.ABILITIES, PersistentDataType.STRING), new TypeToken<ArrayList<String>>() {}.getType());
             for(String abilityID : abilityIDs) {
                 if(AbilityHandler.abilities.keySet().contains(abilityID)) {
                     ItemAbility ability = AbilityHandler.abilities.get(abilityID);
-                    finalLore.add(ChatColor.YELLOW + ability.abilityName + ": " + ChatColor.WHITE + ChatColor.BOLD + ability.abilityType);
-                    for(String line : ability.description) {
-                        finalLore.add("§7" + line);
+                    if(ability.getDisplayType().equals(ItemAbility.AbilityDisplayType.HIDDEN)) continue;
+                    if(ability.getDisplayType().equals(ItemAbility.AbilityDisplayType.VISIBLE)) {
+                        finalLore.add(" ");
+                        finalLore.add(ChatColor.YELLOW + ability.abilityName + ": " + ChatColor.WHITE + ChatColor.BOLD + ability.abilityType.getName());
+                        for (String line : ability.description) {
+                            finalLore.add("§7" + line);
+                        }
+                        if (ability.description.length > 0) {
+                            finalLore.add("");
+                        }
+                        if (ability.manaCost != 0) {
+                            finalLore.add("§bMana Cost: §f" + ability.manaCost);
+                        }
+                        if (ability.cooldown != 0) {
+                            finalLore.add("§aCooldown: §f" + ability.cooldown + "s");
+                        }
                     }
-                    finalLore.add("§bMana Cost: §f" + ability.manaCost);
-                    finalLore.add("§aCooldown: §f" + ability.cooldown + "s");
-                    finalLore.add("");
+                    if(ability.getDisplayType().equals(ItemAbility.AbilityDisplayType.ITEM_TYPE)) {
+                        finalLore.add(" ");
+                        finalLore.add(ChatColor.YELLOW + ability.abilityName + ": " + ChatColor.WHITE + ChatColor.BOLD + Arrays.toString(ability.description));
+                    }
                 }
             }
         }
@@ -143,8 +153,6 @@ public class ItemTextBuilder {
             finalLore.add(" ");
             finalLore.addAll(actualLore);
         }
-
-        //Insert logic Gems
 
         finalLore.add(" ");
         finalLore.add(ItemRarity.getById(meta.getPersistentDataContainer().get(ItemHandler.RARITY, PersistentDataType.STRING)).getColor()

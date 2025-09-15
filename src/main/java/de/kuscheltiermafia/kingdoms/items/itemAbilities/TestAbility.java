@@ -6,7 +6,7 @@ import org.bukkit.event.Event;
 
 public class TestAbility extends ItemAbility {
     public TestAbility() {
-        super("Test Ability", "test_ability", new String[] {"Just a test ability!"}, 10, 5, AbilityType.RIGHT_CLICK);
+        super("Test Ability", "test_ability", new String[] {"Just a test ability!"}, 10, 5, AbilityType.RIGHT_CLICK, AbilityDisplayType.VISIBLE);
     }
 
     @Override
