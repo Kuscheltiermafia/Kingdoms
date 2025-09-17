@@ -1,6 +1,7 @@
 package de.kuscheltiermafia.kingdoms.data;
 
 import de.kuscheltiermafia.kingdoms.Kingdoms;
+import de.kuscheltiermafia.kingdoms.stats.models.PlayerStatModel;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -20,6 +21,12 @@ public class PlayerUtility {
             return image;
         }
         return playerImage.get(player.getUniqueId().toString());
+    }
+
+    public static PlayerStatModel getPlayerStatModel(Player player) {
+        PlayerData data = getPlayerImage(player);
+        if (data == null) return null;
+        return data.getCorrespondingStatModel();
     }
 
     public static void setPlayerImage(Player player, PlayerData image) {

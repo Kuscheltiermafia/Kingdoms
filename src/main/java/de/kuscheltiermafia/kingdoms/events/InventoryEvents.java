@@ -1,13 +1,12 @@
 package de.kuscheltiermafia.kingdoms.events;
 
-import de.kuscheltiermafia.kingdoms.debug.ItemList;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
+import de.kuscheltiermafia.kingdoms.menus.GuiHandler;
+import de.kuscheltiermafia.kingdoms.menus.IPaginatedGui;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-
-import static de.kuscheltiermafia.kingdoms.debug.ItemList.itemListPage;
 
 public class InventoryEvents implements Listener {
 
@@ -15,18 +14,29 @@ public class InventoryEvents implements Listener {
     public void onInventoryClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
         try {
-            if (ItemHandler.checkItemID(e.getCurrentItem(), "spacer") || ItemHandler.checkItemID(e.getCurrentItem(), "placeholder") || ItemHandler.checkItemID(e.getCurrentItem(), "no_page_up_indicator") || ItemHandler.checkItemID(e.getCurrentItem(), "no_page_down_indicator")) {
+            if (ItemHandler.checkItemID(e.getCurrentItem(), "spacer") || ItemHandler.checkItemID(e.getCurrentItem(), "placeholder") || ItemHandler.checkItemID(e.getCurrentItem(), "no_page_up") || ItemHandler.checkItemID(e.getCurrentItem(), "no_page_down")) {
                 e.setCancelled(true);
-            }else if(ItemHandler.checkItemID(e.getCurrentItem(), "page_up_indicator")) {
+            }else if(GuiHandler.isGuiButton(e.getCurrentItem())) {
                 e.setCancelled(true);
-                ItemHandler.clearItem(p, "page_up_indicator", 1);
-                itemListPage.put(p, itemListPage.get(p) + 1);
-                ItemList.fillItemlist(e.getInventory(), itemListPage.get(p), p);
-            }else if(ItemHandler.checkItemID(e.getCurrentItem(), "page_down_indicator")) {
-                e.setCancelled(true);
-                ItemHandler.clearItem(p, "page_down_indicator", 1);
-                itemListPage.put(p, itemListPage.get(p) - 1);
-                ItemList.fillItemlist(e.getInventory(), itemListPage.get(p), p);
+
+                //Doesn't work for some mfing reason \/
+                if(e.getCurrentItem().getItemMeta().getItemName().contains("Go Back")) {
+                    System.out.println("Back button clicked + " + GuiHandler.getPreviousGui(p).getId());
+                    GuiHandler.getPreviousGui(p).changeGui(p, GuiHandler.getGuiLink(e.getCurrentItem()));
+                }
+                //Doesn't work for some mfing reason /\
+
+                if(GuiHandler.getGuiLink(e.getCurrentItem()).contains("_spage")) {
+                    GuiHandler.getGui(GuiHandler.getGuiLink(e.getCurrentItem()).replace("_spage", "")).changeGui(p, GuiHandler.getGuiLink(e.getCurrentItem()));
+                }
+                if(GuiHandler.getGuiLink(e.getCurrentItem()).contains("page_up") && GuiHandler.isPaginatedGui(GuiHandler.getGui(GuiHandler.getPreviousGui(p).getId()))) {
+                    IPaginatedGui paginatedGui = (IPaginatedGui) GuiHandler.getGui(GuiHandler.getPreviousGui(p).getId());
+                    paginatedGui.nextPage(p);
+                }
+                if(GuiHandler.getGuiLink(e.getCurrentItem()).contains("page_down") && GuiHandler.isPaginatedGui(GuiHandler.getGui(GuiHandler.getPreviousGui(p).getId()))) {
+                    IPaginatedGui paginatedGui = (IPaginatedGui) GuiHandler.getGui(GuiHandler.getPreviousGui(p).getId());
+                    paginatedGui.previousPage(p);
+                }
             }
         }catch (Exception ignored){}
     }

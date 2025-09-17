@@ -10,6 +10,7 @@ import de.kuscheltiermafia.kingdoms.items.crafting.CraftingEvents;
 import de.kuscheltiermafia.kingdoms.items.crafting.CraftingHandler;
 import de.kuscheltiermafia.kingdoms.items.itemAbilities.AbilityHandler;
 import de.kuscheltiermafia.kingdoms.items.itemEnchants.EnchantmentHandler;
+import de.kuscheltiermafia.kingdoms.menus.GuiHandler;
 import de.kuscheltiermafia.kingdoms.stats.models.PlayerStatModel;
 import de.kuscheltiermafia.kingdoms.stats.UpdatePlayerStats;
 import org.bukkit.Bukkit;
@@ -35,6 +36,8 @@ public final class Kingdoms extends JavaPlugin {
         ItemHandler.registerItems();
         CraftingHandler.initializeRecipes();
 
+        GuiHandler.registerGuis();
+
         RepeatingTasks.updateEachTick();
         RepeatingTasks.updateEachSecond();
 
@@ -49,7 +52,7 @@ public final class Kingdoms extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new OnDamageEvent(), this);
         Bukkit.getPluginManager().registerEvents(new UpdatePlayerStats(), this);
 
-        getCommand("itemlist").setExecutor(new ItemList());
+        getCommand("itemlist").setExecutor(new ItemListCommand());
 
         saveDefaultConfig();
 

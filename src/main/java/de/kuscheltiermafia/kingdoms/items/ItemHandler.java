@@ -47,13 +47,17 @@ public class ItemHandler {
     }
 
     private static void registerDebugItems() {
-        new ItemBuilder().setMaterial(Material.BARRIER).setID("no_page_up_indicator").setCustomName("§4No next Page available").setMaxStackSize(1).build();
-        new ItemBuilder().setMaterial(Material.BARRIER).setID("no_page_down_indicator").setCustomName("§4No previous Page available").setMaxStackSize(1).build();
-        new ItemBuilder().setMaterial(Material.ARROW).setID("page_up_indicator").setCustomName("§aNext Page").setMaxStackSize(1).build();
-        new ItemBuilder().setMaterial(Material.ARROW).setID("page_down_indicator").setCustomName("§aPrevious Page").setMaxStackSize(1).build();
+        new ItemBuilder().setMaterial(Material.BARRIER).setID("no_page_up").setCustomName("§4No next Page available").setMaxStackSize(1).build();
+        new ItemBuilder().setMaterial(Material.BARRIER).setID("no_page_down").setCustomName("§4No previous Page available").setMaxStackSize(1).build();
+        new ItemBuilder().setMaterial(Material.ARROW).setID("page_up_menuindicator").setCustomName("§aNext Page").setMaxStackSize(1).build();
+        new ItemBuilder().setMaterial(Material.ARROW).setID("page_down_menuindicator").setCustomName("§aPrevious Page").setMaxStackSize(1).build();
+        new ItemBuilder().setMaterial(Material.ARROW).setID("back_button_menuindicator").setCustomName("§cGo Back").setMaxStackSize(1).build();
         new ItemBuilder().setMaterial(Material.STRUCTURE_VOID).setID("placeholder").setCustomName("§5§l§kA§r§7 PLACEHOLDER §r§5§l§kA").setMaxStackSize(64).build();
         new ItemBuilder().setMaterial(Material.GRAY_STAINED_GLASS_PANE).setID("spacer").hideTooltip().setMaxStackSize(1).build();
-        System.out.println(GsonHandler.toJson(new ItemBuilder().setCurrentLevelProgress(7)));
+
+        for(int i = 0; i < 30; i++) {
+            new ItemBuilder().setMaterial(Material.DIAMOND).setID("debug_item_" + i).setCustomName("§bDebug Item " + i).setMaxStackSize(64).build();
+        }
     }
 
     public static ItemStack getItem(String id) {
