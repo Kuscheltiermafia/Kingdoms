@@ -23,11 +23,14 @@ public class InventoryGui {
     public void open(Player player, boolean freshOpened) {
         update(player);
         player.openInventory(inventory);
+        GuiHandler.currentGui.put(player, id);
         if(freshOpened) GuiHandler.setPreviousGui(player, id);
+        System.out.println("Opened GUI " + id + " for player " + player.getName() + " - Previous gui: " + GuiHandler.getPreviousGui(player).getId());
     }
 
     public void changeGui(Player player, String oldGuiID) {
         GuiHandler.setPreviousGui(player, oldGuiID);
+        System.out.println("Previous gui: " + GuiHandler.getPreviousGui(player).getId());
         open(player, false);
     }
 

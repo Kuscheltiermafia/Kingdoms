@@ -19,23 +19,25 @@ public class InventoryEvents implements Listener {
             }else if(GuiHandler.isGuiButton(e.getCurrentItem())) {
                 e.setCancelled(true);
 
-                //Doesn't work for some mfing reason \/
-                if(e.getCurrentItem().getItemMeta().getItemName().contains("Go Back")) {
-                    System.out.println("Back button clicked + " + GuiHandler.getPreviousGui(p).getId());
-                    GuiHandler.getPreviousGui(p).changeGui(p, GuiHandler.getGuiLink(e.getCurrentItem()));
-                }
-                //Doesn't work for some mfing reason /\
+                System.out.println("Gui button clicked: " + GuiHandler.getGuiLink(e.getCurrentItem()));
 
                 if(GuiHandler.getGuiLink(e.getCurrentItem()).contains("_spage")) {
-                    GuiHandler.getGui(GuiHandler.getGuiLink(e.getCurrentItem()).replace("_spage", "")).changeGui(p, GuiHandler.getGuiLink(e.getCurrentItem()));
+                    System.out.println("Special page button clicked: " + GuiHandler.getGuiLink(e.getCurrentItem()).replace("_spage", ""));
+                    GuiHandler.getGui(GuiHandler.getGuiLink(e.getCurrentItem()).replace("_spage", "")).changeGui(p, GuiHandler.currentGui.get(p));
                 }
-                if(GuiHandler.getGuiLink(e.getCurrentItem()).contains("page_up") && GuiHandler.isPaginatedGui(GuiHandler.getGui(GuiHandler.getPreviousGui(p).getId()))) {
-                    IPaginatedGui paginatedGui = (IPaginatedGui) GuiHandler.getGui(GuiHandler.getPreviousGui(p).getId());
-                    paginatedGui.nextPage(p);
+                if(GuiHandler.getGuiLink(e.getCurrentItem()).equals("back_button")) {
+                    System.out.println("Back button clicked + " + GuiHandler.getPreviousGui(p).getId());
+                    GuiHandler.getPreviousGui(p).changeGui(p, GuiHandler.currentGui.get(p));
                 }
-                if(GuiHandler.getGuiLink(e.getCurrentItem()).contains("page_down") && GuiHandler.isPaginatedGui(GuiHandler.getGui(GuiHandler.getPreviousGui(p).getId()))) {
-                    IPaginatedGui paginatedGui = (IPaginatedGui) GuiHandler.getGui(GuiHandler.getPreviousGui(p).getId());
-                    paginatedGui.previousPage(p);
+
+                if(!GuiHandler.isPaginatedGui(GuiHandler.getGui(GuiHandler.currentGui.get(p)))) return;
+                if(GuiHandler.getGuiLink(e.getCurrentItem()).equals("page_up")) {
+                    IPaginatedGui paginatedGuiUp = (IPaginatedGui) GuiHandler.getGui(GuiHandler.currentGui.get(p));
+                    paginatedGuiUp.nextPage(p);
+                }
+                if(GuiHandler.getGuiLink(e.getCurrentItem()).equals("page_down")) {
+                    IPaginatedGui paginatedGuiDown = (IPaginatedGui) GuiHandler.getGui(GuiHandler.currentGui.get(p));
+                    paginatedGuiDown.previousPage(p);
                 }
             }
         }catch (Exception ignored){}

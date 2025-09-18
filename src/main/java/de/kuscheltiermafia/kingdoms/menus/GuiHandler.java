@@ -10,6 +10,8 @@ public class GuiHandler {
     private static HashMap<String, InventoryGui> guis = new HashMap<>();
     private static HashMap<Player, String> previousGui = new HashMap<>();
 
+    public static HashMap<Player, String> currentGui = new HashMap<>();
+
     public static void registerGuis() {
         guis.put("tome_of_eras_main", new TomeOfEras());
         guis.put("item_list", new ItemList());

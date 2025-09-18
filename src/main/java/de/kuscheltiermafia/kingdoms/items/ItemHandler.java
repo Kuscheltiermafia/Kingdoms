@@ -54,10 +54,6 @@ public class ItemHandler {
         new ItemBuilder().setMaterial(Material.ARROW).setID("back_button_menuindicator").setCustomName("§cGo Back").setMaxStackSize(1).build();
         new ItemBuilder().setMaterial(Material.STRUCTURE_VOID).setID("placeholder").setCustomName("§5§l§kA§r§7 PLACEHOLDER §r§5§l§kA").setMaxStackSize(64).build();
         new ItemBuilder().setMaterial(Material.GRAY_STAINED_GLASS_PANE).setID("spacer").hideTooltip().setMaxStackSize(1).build();
-
-        for(int i = 0; i < 30; i++) {
-            new ItemBuilder().setMaterial(Material.DIAMOND).setID("debug_item_" + i).setCustomName("§bDebug Item " + i).setMaxStackSize(64).build();
-        }
     }
 
     public static ItemStack getItem(String id) {
