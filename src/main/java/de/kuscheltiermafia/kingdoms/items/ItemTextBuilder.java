@@ -7,6 +7,7 @@ import de.kuscheltiermafia.kingdoms.items.itemEnchants.EnchantmentHandler;
 import de.kuscheltiermafia.kingdoms.items.itemEnchants.ItemEnchant;
 import de.kuscheltiermafia.kingdoms.stats.Stat;
 import de.kuscheltiermafia.kingdoms.utils.GsonHandler;
+import de.kuscheltiermafia.kingdoms.wizardry.spells.SpellTextGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -69,7 +70,7 @@ public class ItemTextBuilder {
                 if(AbilityHandler.abilities.keySet().contains(abilityID)) {
                     ItemAbility ability = AbilityHandler.abilities.get(abilityID);
                     if(ability.getDisplayType().equals(ItemAbility.AbilityDisplayType.HIDDEN)) continue;
-                    if(ability.getDisplayType().equals(ItemAbility.AbilityDisplayType.VISIBLE)) {
+                    if(ability.getDisplayType().equals(ItemAbility.AbilityDisplayType.VISIBLE_NORMAL)) {
                         finalLore.add(" ");
                         finalLore.add(ChatColor.YELLOW + ability.abilityName + ": " + ChatColor.WHITE + ChatColor.BOLD + ability.abilityType.getName());
                         for (String line : ability.description) {
@@ -88,6 +89,10 @@ public class ItemTextBuilder {
                     if(ability.getDisplayType().equals(ItemAbility.AbilityDisplayType.ITEM_TYPE)) {
                         finalLore.add(" ");
                         finalLore.add(ChatColor.YELLOW + ability.abilityName + ": " + ChatColor.WHITE + ChatColor.BOLD + Arrays.toString(ability.description));
+                    }
+                    if(ability.getDisplayType().equals(ItemAbility.AbilityDisplayType.SPELL)) {
+                        finalLore.add(" ");
+                        finalLore.addAll(SpellTextGenerator.generateSpellAbilityLore(meta));
                     }
                 }
             }
@@ -166,7 +171,7 @@ public class ItemTextBuilder {
     private static String getDisplayName(ItemMeta meta) {
         String name = meta.getDisplayName();
 
-        HashMap<String, ItemBuilder> storedItems = GsonHandler.returnStoredItems();
+        HashMap<String, ItemBuilder> storedItems = GsonHandler.readJsonsFromFileAsMap("items", ItemBuilder.class);
         for(String key : storedItems.keySet()) {
             ItemBuilder builder = storedItems.get(key);
             if(meta.getPersistentDataContainer().get(ID, PersistentDataType.STRING).equals(key)) {

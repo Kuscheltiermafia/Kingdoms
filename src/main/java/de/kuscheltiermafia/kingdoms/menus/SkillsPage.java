@@ -13,22 +13,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class SkillsPage {
-    public static Inventory createSkillsList(Player p) {
-        Inventory skillList = org.bukkit.Bukkit.createInventory(null, 9 * 6, ChatColor.LIGHT_PURPLE + "Tome of Eras - Your Skills");
-
-        return skillList;
+public class SkillsPage extends InventoryGui{
+    public SkillsPage() {
+        super("skill_breakdown", 6, ChatColor.DARK_PURPLE + "Your Skills");
     }
 
-    public static void updateSkillsList(Inventory skillList, Player p) {
+    @Override
+    public void update(Player p) {
         HashMap<Integer, ItemStack> skillItems = createSkillItems(p);
         for(int i : skillItems.keySet()) {
-            skillList.setItem(i, skillItems.get(i));
+            setItem(i, skillItems.get(i));
         }
 
-        MenuUtils.placeReturnButton(skillList);
-
-        MenuUtils.fillWithSpacers(skillList);
+        addReturnButton();
+        fillEmptySlots(FillType.ENTIRE);
     }
 
     private static HashMap<Integer, ItemStack> createSkillItems(Player p) {

@@ -21,6 +21,10 @@ public class BaseRecipe {
         return 0;
     }
 
+    public void getPattern() {
+
+    }
+
     public ItemStack getResult() {
         return ItemHandler.getItem(result);
     }

@@ -1,5 +1,6 @@
-package de.kuscheltiermafia.kingdoms.items.itemAbilities;
+package de.kuscheltiermafia.kingdoms.items.itemAbilities.abilities;
 
+import de.kuscheltiermafia.kingdoms.items.itemAbilities.ItemAbility;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;

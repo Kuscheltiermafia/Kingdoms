@@ -32,7 +32,7 @@ public class ItemList extends InventoryGui implements IPaginatedGui{
             setItem(2, ItemHandler.getItem("page_up_menuindicator"));
         }else{setItem(2, ItemHandler.getItem("no_page_up"));}
 
-        setItem(45, "back_button_menuindicator");
+        addReturnButton();
 
         setItem(1, new ItemBuilder().setCustomName(ChatColor.DARK_RED + "Current Page: " + (getPage(p) + 1)).setID("spacer").setMaterial(Material.BOOK).setMaxStackSize(1).temporary().build());
 

@@ -120,7 +120,7 @@ public enum ItemLevel {
                 ItemType.BOW,
                 ItemType.LEGGINGS,
                 ItemType.BOOTS,
-                ItemType.SPELLCASTER,
+                ItemType.SPELLBOOK,
                 ItemType.PICKAXE,
                 ItemType.SHOVEL,
                 ItemType.HOE,

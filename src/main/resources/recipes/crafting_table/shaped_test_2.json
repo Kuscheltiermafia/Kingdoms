@@ -2,7 +2,7 @@
   "gridSize": [2, 2],
   "pattern":
   [ ["focken:1", "focken:1"],
-    [null, "focken:1", null]
+    [null, "focken:1"]
   ],
   "result": {
     "item": "ascend_item",

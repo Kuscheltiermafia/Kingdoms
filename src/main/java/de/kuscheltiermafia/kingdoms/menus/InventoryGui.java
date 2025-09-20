@@ -25,17 +25,19 @@ public class InventoryGui {
         player.openInventory(inventory);
         GuiHandler.currentGui.put(player, id);
         if(freshOpened) GuiHandler.setPreviousGui(player, id);
-        System.out.println("Opened GUI " + id + " for player " + player.getName() + " - Previous gui: " + GuiHandler.getPreviousGui(player).getId());
     }
 
     public void changeGui(Player player, String oldGuiID) {
         GuiHandler.setPreviousGui(player, oldGuiID);
-        System.out.println("Previous gui: " + GuiHandler.getPreviousGui(player).getId());
         open(player, false);
     }
 
     public void update(Player p) {
         // Override in subclasses
+    }
+
+    protected void addReturnButton() {
+        setItem(45, ItemHandler.getItem("back_button_menuindicator"));
     }
 
     protected void fillEmptySlots(FillType type) {

@@ -1,5 +1,6 @@
 package de.kuscheltiermafia.kingdoms.items;
 
+import com.google.common.reflect.TypeToken;
 import de.kuscheltiermafia.kingdoms.Kingdoms;
 import de.kuscheltiermafia.kingdoms.stats.Stat;
 import de.kuscheltiermafia.kingdoms.utils.GsonHandler;
@@ -30,6 +31,7 @@ public class ItemHandler {
     public static NamespacedKey STAT_ADDITITVE = new NamespacedKey(Kingdoms.getPlugin(), "stat_addition");
 
     public static NamespacedKey ABILITIES = new NamespacedKey(Kingdoms.getPlugin(), "abilities");
+    public static NamespacedKey SPELLS = new NamespacedKey(Kingdoms.getPlugin(), "spells");
     public static NamespacedKey ENCHANTMENTS = new NamespacedKey(Kingdoms.getPlugin(), "enchantments");
     public static NamespacedKey GEMSTONES = new NamespacedKey(Kingdoms.getPlugin(), "gemstones");
     public static NamespacedKey STORAGE = new NamespacedKey(Kingdoms.getPlugin(), "data_storage");
@@ -38,7 +40,7 @@ public class ItemHandler {
     public static HashMap<String, ItemStack> itemMap = new HashMap<>();
 
     public static void registerItems() {
-        HashMap<String, ItemBuilder> storedItems = GsonHandler.returnStoredItems();
+        HashMap<String, ItemBuilder> storedItems = GsonHandler.readJsonsFromFileAsMap("items", ItemBuilder.class);
         for(String key : storedItems.keySet()) {
             ItemBuilder builder = storedItems.get(key);
             ItemStack item = builder.setID(key).build();
@@ -86,7 +88,7 @@ public class ItemHandler {
 
         ArrayList<String> newLore = new ArrayList<>();
 
-        HashMap<String, ItemBuilder> storedItems = GsonHandler.returnStoredItems();
+        HashMap<String, ItemBuilder> storedItems = GsonHandler.readJsonsFromFileAsMap("items", ItemBuilder.class);
         for(String key : storedItems.keySet()) {
             ItemBuilder builder = storedItems.get(key);
             if(meta.getPersistentDataContainer().get(ID, PersistentDataType.STRING).equals(key)) {
@@ -121,5 +123,21 @@ public class ItemHandler {
         }catch (Exception e) {
             return false;
         }
+    }
+
+    public static void modifyStorage(ItemStack item, String key, String value) {
+        ItemMeta meta = item.getItemMeta();
+        if(!meta.getPersistentDataContainer().has(STORAGE, PersistentDataType.STRING)) meta.getPersistentDataContainer().set(STORAGE, PersistentDataType.STRING, "{}");
+        HashMap<String, String> storageMap = GsonHandler.fromJson(meta.getPersistentDataContainer().get(STORAGE, PersistentDataType.STRING), new TypeToken<HashMap<String, String>>() {}.getType());
+        storageMap.put(key, value);
+        meta.getPersistentDataContainer().set(STORAGE, PersistentDataType.STRING, GsonHandler.toJson(storageMap));
+        item.setItemMeta(meta);
+    }
+
+    public static String getStorage(ItemStack item, String key) {
+        ItemMeta meta = item.getItemMeta();
+        if(!meta.getPersistentDataContainer().has(STORAGE, PersistentDataType.STRING)) return null;
+        HashMap<String, String> storageMap = GsonHandler.fromJson(meta.getPersistentDataContainer().get(STORAGE, PersistentDataType.STRING), new TypeToken<HashMap<String, String>>() {}.getType());
+        return storageMap.getOrDefault(key, null);
     }
 }

@@ -86,4 +86,16 @@ public class ShapedRecipe extends BaseRecipe{
         }
         return 0;
     }
+
+    @Override
+    public void getPattern() {
+        for(List<RecipeIngredient> row : pattern) {
+            StringBuilder sb = new StringBuilder();
+            for(RecipeIngredient ingredient : row) {
+                if(!(ingredient == null)) sb.append(" - " + ingredient.getItemId() + " - ");
+                else sb.append(" - null - ");
+            }
+            System.out.println(sb.toString());
+        }
+    }
 }

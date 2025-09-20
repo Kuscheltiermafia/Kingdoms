@@ -1,0 +1,13 @@
+{"customName":"§7Novice's Spellbook",
+  "material":"BOOK",
+  "level": "BASIC",
+  "type": "SPELLBOOK",
+  "rarity":"UNCOMMON",
+  "maxStackSize":1,
+  "glint":false,"hideTooltip":false,
+  "hideAdditionalTooltip":false,
+  "stats":{"INTELLIGENCE":35, "MANA_REGENERATION":  5, "SPELLBOUND":  2},
+  "abilityKeys":[
+    "novice_spellbook"
+  ],
+  "showInList":true}

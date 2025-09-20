@@ -5,7 +5,7 @@ import org.bukkit.event.Event;
 
 import java.util.HashMap;
 
-public abstract class ItemAbility {
+public class ItemAbility {
 
     public int manaCost;
     public int cooldown;
@@ -86,7 +86,7 @@ public abstract class ItemAbility {
         }
     }
 
-    public static enum AbilityType {
+    public enum AbilityType {
         RIGHT_CLICK("RIGHT CLICK"),
         LEFT_CLICK("LEFT CLICK"),
         SHIFT_RIGHT_CLICK("SHIFT RIGHT CLICK"),
@@ -104,8 +104,9 @@ public abstract class ItemAbility {
         }
     }
 
-    public static enum AbilityDisplayType {
-        VISIBLE,
+    public enum AbilityDisplayType {
+        VISIBLE_NORMAL,
+        SPELL,
         ITEM_TYPE,
         HIDDEN;
 

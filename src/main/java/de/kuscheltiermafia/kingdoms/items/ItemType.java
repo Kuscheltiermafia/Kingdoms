@@ -6,7 +6,7 @@ import org.bukkit.inventory.EquipmentSlot;
 public enum ItemType {
     SWORD("Sword", "sword", ChatColor.RED, "⚔", EquipmentSlot.HAND),
     BOW("Bow", "bow", ChatColor.GREEN, "🏹", EquipmentSlot.HAND),
-    SPELLCASTER("Spellcaster", "spellcaster", ChatColor.LIGHT_PURPLE, "🔮", EquipmentSlot.HAND),
+    SPELLBOOK("Spellbook", "spellbook", ChatColor.LIGHT_PURPLE, "🔮", EquipmentSlot.HAND),
     DAGGER("Dagger", "dagger", ChatColor.DARK_AQUA, "🗡", EquipmentSlot.HAND),
     AXE("Axe", "axe", ChatColor.GOLD, "🪓", EquipmentSlot.HAND),
     HELMET("Helmet", "helmet", ChatColor.BLUE, "🪖", EquipmentSlot.HEAD),

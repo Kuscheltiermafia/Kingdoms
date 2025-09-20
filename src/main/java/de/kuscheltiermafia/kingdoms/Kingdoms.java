@@ -13,6 +13,7 @@ import de.kuscheltiermafia.kingdoms.items.itemEnchants.EnchantmentHandler;
 import de.kuscheltiermafia.kingdoms.menus.GuiHandler;
 import de.kuscheltiermafia.kingdoms.stats.models.PlayerStatModel;
 import de.kuscheltiermafia.kingdoms.stats.UpdatePlayerStats;
+import de.kuscheltiermafia.kingdoms.wizardry.spells.SpellHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,6 +38,7 @@ public final class Kingdoms extends JavaPlugin {
         CraftingHandler.initializeRecipes();
 
         GuiHandler.registerGuis();
+        SpellHandler.registerSpells();
 
         RepeatingTasks.updateEachTick();
         RepeatingTasks.updateEachSecond();
@@ -79,6 +81,8 @@ public final class Kingdoms extends JavaPlugin {
         manager.registerCommand(new ItemupgradesCommand());
         manager.registerCommand(new EntityCommand());
         manager.registerCommand(new modPlayer());
+        manager.registerCommand(new ManageSpellsCommand());
+        manager.registerCommand(new OpenGUICommand());
     }
 
     @Override

@@ -2,7 +2,11 @@ package de.kuscheltiermafia.kingdoms.items.itemAbilities;
 
 import com.google.common.reflect.TypeToken;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
+import de.kuscheltiermafia.kingdoms.items.itemAbilities.abilities.SpellBookAbility;
+import de.kuscheltiermafia.kingdoms.items.itemAbilities.abilities.TestAbility;
+import de.kuscheltiermafia.kingdoms.items.itemAbilities.abilities.TriShotShortbow;
 import de.kuscheltiermafia.kingdoms.utils.GsonHandler;
+import de.kuscheltiermafia.kingdoms.wizardry.spells.SpellHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,6 +25,12 @@ public class AbilityHandler implements Listener {
     public static void registerAbility() {
         abilities.put("test_ability", new TestAbility());
         abilities.put("tri_shortbow", new TriShotShortbow());
+        abilities.put("novice_spellbook", new SpellBookAbility(SpellHandler.SpellTier.NOVICE.getMaxSpells()));
+        abilities.put("apprentice_spellbook", new SpellBookAbility(SpellHandler.SpellTier.APPRENTICE.getMaxSpells()));
+        abilities.put("acquaintance_spellbook", new SpellBookAbility(SpellHandler.SpellTier.ACQUAINTANCE.getMaxSpells()));
+        abilities.put("mage_spellbook", new SpellBookAbility(SpellHandler.SpellTier.MAGE.getMaxSpells()));
+        abilities.put("archmage_spellbook", new SpellBookAbility(SpellHandler.SpellTier.ARCHMAGE.getMaxSpells()));
+        abilities.put("annihilation_spellbook", new SpellBookAbility(SpellHandler.SpellTier.ANNIHILATION.getMaxSpells()));
     }
 
     public static void updatePlayerCooldowns(Player p) {
@@ -40,7 +50,6 @@ public class AbilityHandler implements Listener {
                 for(String abilityID : abilityIDs) {
                     ItemAbility ability = abilities.get(abilityID);
                     if(ability == null) continue;
-                    // RIGHT CLICK WITHOUT SNEAKING
                     switch (ability.abilityType) {
                         case RIGHT_CLICK:
                             if (e.getAction().toString().contains("RIGHT_CLICK")) {

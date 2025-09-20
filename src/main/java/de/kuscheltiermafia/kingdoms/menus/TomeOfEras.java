@@ -45,8 +45,9 @@ public class TomeOfEras extends InventoryGui {
         PlayerData playerData = PlayerUtility.getPlayerImage(p);
         for(Skill skill : Skill.values()) {
             skilllore.add(skill.getColor() + skill.getIcon() + " " + skill.getDisplayName() + ": " + (int) playerData.getValueBySkill(skill, false));
+            System.out.println(skill.getDisplayName() + ": " + (int) playerData.getValueBySkill(skill, false));
         }
-        ItemStack playerSkill = new ItemBuilder().setMaterial(Material.EXPERIENCE_BOTTLE).setID("skills_spage_menuindicator").setCustomName(ChatColor.LIGHT_PURPLE + "Your Skill Levels: ").setLore(skilllore).addGlint().setMaxStackSize(1).build();
+        ItemStack playerSkill = new ItemBuilder().setMaterial(Material.EXPERIENCE_BOTTLE).setID("skill_breakdown_spage_menuindicator").setCustomName(ChatColor.LIGHT_PURPLE + "Your Skill Levels: ").setLore(skilllore).addGlint().setMaxStackSize(1).build();
 
         setItem(19, playerSkill);
 

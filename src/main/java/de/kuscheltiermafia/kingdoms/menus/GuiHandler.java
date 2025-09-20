@@ -15,6 +15,8 @@ public class GuiHandler {
     public static void registerGuis() {
         guis.put("tome_of_eras_main", new TomeOfEras());
         guis.put("item_list", new ItemList());
+        guis.put("skill_breakdown", new SkillsPage());
+        guis.put("spellbook", new SpellbookGui());
     }
 
     public static InventoryGui getGui(String id) {

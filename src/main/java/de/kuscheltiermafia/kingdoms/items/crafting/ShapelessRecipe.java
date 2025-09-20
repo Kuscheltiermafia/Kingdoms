@@ -52,4 +52,14 @@ public class ShapelessRecipe extends BaseRecipe {
         }
         return 0;
     }
+
+    @Override
+    public void getPattern() {
+        StringBuilder sb = new StringBuilder();
+        for(RecipeIngredient ingredient : ingredients) {
+            if(!(ingredient == null)) sb.append(" - " + ingredient.getItemId() + " - ");
+            else sb.append(" - null - ");
+        }
+        System.out.println(sb.toString());
+    }
 }

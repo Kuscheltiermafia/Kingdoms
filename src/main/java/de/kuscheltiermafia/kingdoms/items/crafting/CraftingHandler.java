@@ -1,5 +1,6 @@
 package de.kuscheltiermafia.kingdoms.items.crafting;
 
+import com.google.gson.JsonObject;
 import de.kuscheltiermafia.kingdoms.items.ItemBuilder;
 import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import de.kuscheltiermafia.kingdoms.utils.GsonHandler;
@@ -10,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CraftingHandler {
@@ -88,6 +90,22 @@ public class CraftingHandler {
     }
 
     public static void initializeRecipes() {
-        recipes = GsonHandler.returnCraftingTableRecipes();
+        recipes = new ArrayList<>();
+        List<JsonObject> objs = GsonHandler.readJsonsFromFileAsList("recipes/crafting_table", JsonObject.class);
+        for(JsonObject json : objs) {
+            try {
+                BaseRecipe recipe = RecipeTranslator.parse(json);
+                if(recipe != null) {
+                    recipes.add(recipe);
+                    /*
+                    System.out.println("Loaded crafting recipe for: " + recipe.result);
+                    System.out.println("Pattern: ");
+                    recipe.getPattern();
+                    */
+                }
+            } catch (Exception e) {
+                Bukkit.getLogger().warning("Failed to load crafting recipe: " + e.getMessage());
+            }
+        }
     }
 }
