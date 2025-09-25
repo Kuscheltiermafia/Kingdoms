@@ -4,31 +4,39 @@ import de.kuscheltiermafia.kingdoms.items.ItemHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class GuiHandler {
-    private static HashMap<String, InventoryGui> guis = new HashMap<>();
+    private static List<Class<? extends InventoryGui>> guis = new ArrayList<>();
     private static HashMap<Player, String> previousGui = new HashMap<>();
 
     public static HashMap<Player, String> currentGui = new HashMap<>();
 
     public static void registerGuis() {
-        guis.put("tome_of_eras_main", new TomeOfEras());
-        guis.put("item_list", new ItemList());
-        guis.put("skill_breakdown", new SkillsPage());
-        guis.put("spellbook", new SpellbookGui());
+        guis.add(TomeOfEras.class);
+        guis.add(ItemList.class);
+        guis.add(SkillsPage.class);
+        guis.add(SpellbookGui.class);
     }
 
-    public static InventoryGui getGui(String id) {
-        return guis.get(id);
-    }
-
-    public static InventoryGui getPreviousGui(Player p) {
-        if(previousGui.containsKey(p)) {
-            return guis.get(previousGui.get(p));
-        }else{
-            return null;
+    public static InventoryGui createGui(String id) {
+        for(Class<? extends InventoryGui> guiClass : guis) {
+            try {
+                InventoryGui guiInstance = guiClass.getDeclaredConstructor().newInstance();
+                if(guiInstance.id.equals(id)) {
+                    return guiInstance;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        return null;
+    }
+
+    public static String getPreviousGuiKey(Player p) {
+        return previousGui.getOrDefault(p, null);
     }
 
     public static void setPreviousGui(Player p, String id) {

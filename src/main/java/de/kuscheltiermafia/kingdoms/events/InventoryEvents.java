@@ -22,21 +22,19 @@ public class InventoryEvents implements Listener {
                 System.out.println("Gui button clicked: " + GuiHandler.getGuiLink(e.getCurrentItem()));
 
                 if(GuiHandler.getGuiLink(e.getCurrentItem()).contains("_spage")) {
-                    System.out.println("Special page button clicked: " + GuiHandler.getGuiLink(e.getCurrentItem()).replace("_spage", ""));
-                    GuiHandler.getGui(GuiHandler.getGuiLink(e.getCurrentItem()).replace("_spage", "")).changeGui(p, GuiHandler.currentGui.get(p));
+                    GuiHandler.createGui(GuiHandler.getGuiLink(e.getCurrentItem()).replace("_spage", "")).changeGui(p, GuiHandler.currentGui.get(p));
                 }
                 if(GuiHandler.getGuiLink(e.getCurrentItem()).equals("back_button")) {
-                    System.out.println("Back button clicked + " + GuiHandler.getPreviousGui(p).getId());
-                    GuiHandler.getPreviousGui(p).changeGui(p, GuiHandler.currentGui.get(p));
+                    GuiHandler.createGui(GuiHandler.getPreviousGuiKey(p)).changeGui(p, GuiHandler.currentGui.get(p));
                 }
 
-                if(!GuiHandler.isPaginatedGui(GuiHandler.getGui(GuiHandler.currentGui.get(p)))) return;
+                if(!GuiHandler.isPaginatedGui(GuiHandler.createGui(GuiHandler.currentGui.get(p)))) return;
                 if(GuiHandler.getGuiLink(e.getCurrentItem()).equals("page_up")) {
-                    IPaginatedGui paginatedGuiUp = (IPaginatedGui) GuiHandler.getGui(GuiHandler.currentGui.get(p));
+                    IPaginatedGui paginatedGuiUp = (IPaginatedGui) GuiHandler.createGui(GuiHandler.currentGui.get(p));
                     paginatedGuiUp.nextPage(p);
                 }
                 if(GuiHandler.getGuiLink(e.getCurrentItem()).equals("page_down")) {
-                    IPaginatedGui paginatedGuiDown = (IPaginatedGui) GuiHandler.getGui(GuiHandler.currentGui.get(p));
+                    IPaginatedGui paginatedGuiDown = (IPaginatedGui) GuiHandler.createGui(GuiHandler.currentGui.get(p));
                     paginatedGuiDown.previousPage(p);
                 }
             }

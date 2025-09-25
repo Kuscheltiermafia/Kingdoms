@@ -15,7 +15,7 @@ public class OpenGUICommand extends BaseCommand {
     @CommandCompletion("<gui>")
     @Default
     public static void openGUI(Player p, String gui) {
-        GuiHandler.getGui(gui).open(p, true);
+        GuiHandler.createGui(gui).open(p, true);
     }
 
 }

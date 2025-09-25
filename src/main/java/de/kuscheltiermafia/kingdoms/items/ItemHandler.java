@@ -136,8 +136,8 @@ public class ItemHandler {
 
     public static String getStorage(ItemStack item, String key) {
         ItemMeta meta = item.getItemMeta();
-        if(!meta.getPersistentDataContainer().has(STORAGE, PersistentDataType.STRING)) return null;
+        if(!meta.getPersistentDataContainer().has(STORAGE, PersistentDataType.STRING)) return "null";
         HashMap<String, String> storageMap = GsonHandler.fromJson(meta.getPersistentDataContainer().get(STORAGE, PersistentDataType.STRING), new TypeToken<HashMap<String, String>>() {}.getType());
-        return storageMap.getOrDefault(key, null);
+        return storageMap.getOrDefault(key, "null");
     }
 }

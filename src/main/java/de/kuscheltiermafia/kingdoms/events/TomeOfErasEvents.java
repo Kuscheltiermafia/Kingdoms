@@ -18,7 +18,7 @@ public class TomeOfErasEvents implements Listener {
 
                 UpdatePlayerStats.updatePlayerStats(p);
 
-                GuiHandler.getGui("tome_of_eras_main").open(p, true);
+                GuiHandler.createGui("tome_of_eras_main").open(p, true);
             }
         }
     }

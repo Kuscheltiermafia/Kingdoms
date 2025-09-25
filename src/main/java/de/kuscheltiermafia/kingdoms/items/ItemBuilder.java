@@ -1,8 +1,5 @@
 package de.kuscheltiermafia.kingdoms.items;
 
-import com.google.gson.JsonObject;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 import de.kuscheltiermafia.kingdoms.stats.Stat;
 import de.kuscheltiermafia.kingdoms.utils.GsonHandler;
 import org.bukkit.Bukkit;
@@ -14,10 +11,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
-import org.json.simple.JSONObject;
 
-import java.lang.reflect.Field;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
@@ -38,6 +32,8 @@ public class ItemBuilder {
     boolean glint;
     boolean hideTooltip;
     boolean hideAdditionalTooltip;
+    boolean hideRarity;
+    boolean hideType;
 
     HashMap<Stat, Double> stats;
     HashMap<Gemstone, Integer> gemstones;
@@ -212,8 +208,22 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder temporary() {
+    public ItemBuilder hideRarity() {
+        this.hideRarity = true;
+        return this;
+    }
+
+    public ItemBuilder hideType() {
+        this.hideType = true;
+        return this;
+    }
+
+    public ItemBuilder temporary(boolean hideNormals) {
         this.tempItem = true;
+        if(hideNormals) {
+            this.hideRarity = true;
+            this.hideType = true;
+        }
         return this;
     }
 
@@ -286,6 +296,9 @@ public class ItemBuilder {
         } else {
             meta.getPersistentDataContainer().set(ItemHandler.TYPE, PersistentDataType.STRING, ItemType.MISC.getId());
         }
+
+        if(hideRarity) ItemHandler.modifyStorage(genItem, "hideRarity", "true");
+        if(hideType) ItemHandler.modifyStorage(genItem, "hideType", "true");
 
         genItem.setItemMeta(meta);
         ItemHandler.updateItem(genItem);

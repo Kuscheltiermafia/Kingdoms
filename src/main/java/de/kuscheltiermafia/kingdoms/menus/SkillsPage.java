@@ -6,7 +6,6 @@ import de.kuscheltiermafia.kingdoms.items.ItemBuilder;
 import de.kuscheltiermafia.kingdoms.skills.Skill;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ public class SkillsPage extends InventoryGui{
             skillLore.add(ChatColor.GRAY + "Current Level: " + playerSkills.getValueBySkill(skill, false));
             skillLore.add(ChatColor.GRAY + "Current Experience: " + playerSkills.getValueBySkill(skill, true) + " / " + playerSkills.getLevelXP((int) playerSkills.getValueBySkill(skill, false)));
 
-            ItemStack skillItem = new ItemBuilder().setMaterial(skill.getIconItem()).setID("spacer" /*maybe skill_view_item*/).setCustomName(skill.getColor() + skill.getIcon() + " " + skill.getDisplayName()).setLore(skillLore).setMaxStackSize(1).temporary().build();
+            ItemStack skillItem = new ItemBuilder().setMaterial(skill.getIconItem()).setID("spacer" /*maybe skill_view_item*/).setCustomName(skill.getColor() + skill.getIcon() + " " + skill.getDisplayName()).setLore(skillLore).setMaxStackSize(1).temporary(true).build();
 
             skillItems.put(slots[index], skillItem);
         }

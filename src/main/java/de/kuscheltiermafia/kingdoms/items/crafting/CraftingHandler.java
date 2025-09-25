@@ -33,7 +33,7 @@ public class CraftingHandler {
     }
 
     private void setupLayout() {
-        resultBlocker = new ItemBuilder().setCustomName(ChatColor.RED + "No valid Recipe").setID("spacer").setMaterial(Material.BARRIER).temporary().build();
+        resultBlocker = new ItemBuilder().setCustomName(ChatColor.RED + "No valid Recipe").setID("spacer").setMaterial(Material.BARRIER).temporary(true).build();
 
         for(int i = 0; i < gui.getSize(); i++) {
             gui.setItem(i, ItemHandler.getItem("spacer"));

@@ -34,7 +34,7 @@ public class ItemList extends InventoryGui implements IPaginatedGui{
 
         addReturnButton();
 
-        setItem(1, new ItemBuilder().setCustomName(ChatColor.DARK_RED + "Current Page: " + (getPage(p) + 1)).setID("spacer").setMaterial(Material.BOOK).setMaxStackSize(1).temporary().build());
+        setItem(1, new ItemBuilder().setCustomName(ChatColor.DARK_RED + "Current Page: " + (getPage(p) + 1)).setID("spacer").setMaterial(Material.BOOK).setMaxStackSize(1).temporary(true).build());
 
         fillEmptySlots(FillType.BORDER);
 

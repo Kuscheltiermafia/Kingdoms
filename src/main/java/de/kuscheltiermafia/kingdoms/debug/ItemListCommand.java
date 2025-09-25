@@ -14,7 +14,7 @@ public class ItemListCommand implements CommandExecutor {
         if(sender instanceof Player) {
             Player p = (Player) sender;
 
-            GuiHandler.getGui("item_list").open(p, true);
+            GuiHandler.createGui("item_list").open(p, true);
         }
         return true;
     }

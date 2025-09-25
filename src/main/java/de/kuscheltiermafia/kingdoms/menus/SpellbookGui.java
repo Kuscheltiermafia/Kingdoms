@@ -33,26 +33,33 @@ public class SpellbookGui extends InventoryGui {
 
         for(int i = 0; i < maxSpells; i++) {
 
-
-            if(maxSpells % 2 == 0) currentSlot = validSlotsEven[i + (validSlotsEven.length - maxSpells / 2)];
-            else currentSlot = validSlotsUneven[i + (validSlotsUneven.length - (maxSpells / 2))];
+            if(maxSpells % 2 == 0)
+                currentSlot = validSlotsEven[i + (validSlotsEven.length - maxSpells) / 2];
+            else
+                currentSlot = validSlotsUneven[i + (validSlotsUneven.length - maxSpells) / 2];
 
             if(i < currentSpells.size()) {
                 BaseSpell currentSpell = SpellHandler.getSpellById(currentSpells.get(i));
-                ItemBuilder spellItem = new ItemBuilder().setMaterial(currentSpell.getDisplayItem()).setID(currentSpell.getId() + "_spell_qbutton_menuindicator").setCustomName(currentSpell.getColor() + currentSpell.getDisplayName()).temporary();
+                ItemBuilder spellItem = new ItemBuilder().setMaterial(currentSpell.getDisplayItem()).setID(currentSpell.getId() + "_spell_qbutton_menuindicator").setCustomName(currentSpell.getColor() + currentSpell.getDisplayName()).temporary(true);
 
                 if(SpellHandler.getSelectedSpell(currentItem).equals(currentSpell)) {
                     spellItem.addGlint();
-                    selectedSpellIndex = i;
+                    selectedSpellIndex = currentSlot;
                 }
                 setItem(currentSlot, spellItem.build());
             }else{
-                setItem(currentSlot, new ItemBuilder().setMaterial(Material.STRUCTURE_VOID).setCustomName(ChatColor.DARK_GRAY + "No Spell").setID("spacer").temporary().build());
+                setItem(currentSlot, new ItemBuilder().setMaterial(Material.STRUCTURE_VOID).setCustomName(ChatColor.DARK_GRAY + "No Spell").setID("spacer").temporary(true).build());
             }
         }
-        setItem(selectedSpellIndex - 9, new ItemBuilder().setMaterial(Material.LIME_STAINED_GLASS_PANE).setCustomName(ChatColor.GREEN + "Selected Spell").setID("spacer").temporary().build());
-        setItem(selectedSpellIndex + 9, new ItemBuilder().setMaterial(Material.LIME_STAINED_GLASS_PANE).setCustomName(ChatColor.GREEN + "Selected Spell").setID("spacer").temporary().build());
+        setItem(selectedSpellIndex - 9, new ItemBuilder().setMaterial(Material.LIME_STAINED_GLASS_PANE).setCustomName(ChatColor.GREEN + "Selected Spell").setID("spacer").temporary(true).build());
+        setItem(selectedSpellIndex + 9, new ItemBuilder().setMaterial(Material.LIME_STAINED_GLASS_PANE).setCustomName(ChatColor.GREEN + "Selected Spell").setID("spacer").temporary(true).build());
 
         fillEmptySlots(FillType.BORDER);
+
+        for(int i = 0; i < 27; i++) {
+            if(inventory.getItem(i) == null) {
+                setItem(i, new ItemBuilder().setMaterial(Material.BARRIER).setCustomName(ChatColor.RED + "Currently not unlocked!").setID("spacer").temporary(true).build());
+            }
+        }
     }
 }

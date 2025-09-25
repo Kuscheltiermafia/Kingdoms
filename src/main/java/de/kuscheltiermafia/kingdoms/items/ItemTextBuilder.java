@@ -9,6 +9,8 @@ import de.kuscheltiermafia.kingdoms.stats.Stat;
 import de.kuscheltiermafia.kingdoms.utils.GsonHandler;
 import de.kuscheltiermafia.kingdoms.wizardry.spells.SpellTextGenerator;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -159,10 +161,21 @@ public class ItemTextBuilder {
             finalLore.addAll(actualLore);
         }
 
-        finalLore.add(" ");
-        finalLore.add(ItemRarity.getById(meta.getPersistentDataContainer().get(ItemHandler.RARITY, PersistentDataType.STRING)).getColor()
-                + ItemRarity.getById(meta.getPersistentDataContainer().get(ItemHandler.RARITY, PersistentDataType.STRING)).getDisplayName()
-                + " " + ItemType.getById(meta.getPersistentDataContainer().get(ItemHandler.TYPE, PersistentDataType.STRING)).getDisplayName());
+        StringBuilder rarity = new StringBuilder();
+        ItemStack parseMeta = new ItemStack(Material.BARRIER);
+        parseMeta.setItemMeta(meta);
+        if(!ItemHandler.getStorage(parseMeta, "hideRarity").equals("true") || !ItemHandler.getStorage(parseMeta, "hideType").equals("true")) finalLore.add(" ");
+
+        if(!ItemHandler.getStorage(parseMeta, "hideRarity").equals("true")) {
+            rarity.append(ItemRarity.getById(meta.getPersistentDataContainer().get(ItemHandler.RARITY, PersistentDataType.STRING)).getColor());
+            rarity.append(ItemRarity.getById(meta.getPersistentDataContainer().get(ItemHandler.RARITY, PersistentDataType.STRING)).getDisplayName());
+        }
+
+        if(!ItemHandler.getStorage(parseMeta, "hideType").equals("true")) {
+            rarity.append(" ");
+            rarity.append(ItemType.getById(meta.getPersistentDataContainer().get(ItemHandler.TYPE, PersistentDataType.STRING)).getDisplayName());
+        }
+        finalLore.add(rarity.toString());
 
         meta.setLore(finalLore);
         return meta;

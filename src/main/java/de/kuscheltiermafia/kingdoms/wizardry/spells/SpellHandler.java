@@ -50,7 +50,7 @@ public class SpellHandler {
 
     public static List<String> getSpellSet(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
-        if(!meta.getPersistentDataContainer().has(ItemHandler.SPELLS, PersistentDataType.STRING)) return new ArrayList<String>();
+        if(!meta.getPersistentDataContainer().has(ItemHandler.SPELLS, PersistentDataType.STRING)) return new ArrayList<>();
         return GsonHandler.fromJson(meta.getPersistentDataContainer().get(ItemHandler.SPELLS, PersistentDataType.STRING), STRING_LIST_TYPE);
     }
 
@@ -76,9 +76,9 @@ public class SpellHandler {
         List<String> spellSet = getSpellSet(item);
 
         int spellIndex = spellSet.indexOf(currentSpell != null ? currentSpell.getId() : "");
-        if((spellIndex + 1) > (spellSet.size() - 1)) spellIndex = 0;
+        if((spellIndex + 1) > (spellSet.size() - 1)) selectSpell(getSpellById(spellSet.get((0))), item);
+        else selectSpell(getSpellById(spellSet.get((spellIndex + 1))), item);
 
-        selectSpell(getSpellById(spellSet.get((spellIndex + 1))), item);
         ItemHandler.updateItem(item);
     }
 
